@@ -1,1 +1,1 @@
-## My personal [blog](https://ctnguyenvn.github.io)
+## My personal [blog](https://ctnguyenvn.me)
