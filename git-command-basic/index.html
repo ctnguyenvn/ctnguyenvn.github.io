@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+    <title>
+         Tổng hợp một số lệnh cơ bản khi sử dụng git/github | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv
+
+Một số cheat sheet &amp; tip link git
+
+
+  https://quickref.me/git
+  http://schuber…/cseg_git_cheat_sheet.pdf
+  https://github.com/git-tips/tips
+
+
+Một số lệnh cơ bản
+
+
+Cấu hình thông tin user/email
+
+Cấu hình user/email
+
+ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;"
+ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
+
+
+Xem cấu hình
+
+ctnguyenvn[~]$ git config --list
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Tổng hợp một số lệnh cơ bản khi sử dụng git/github - Culi vật vã theo năm tháng"
+    />
+    <meta
+        property="twitter:title"
+        content="Tổng hợp một số lệnh cơ bản khi sử dụng git/github - Culi vật vã theo năm tháng"
+    />
+     
+    <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Culi vật vã theo năm tháng"
+        href="https://.ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://.ctnguyenvn.me/git-command-basic/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://.ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div class="wrapper">
+            <div class="topbar"><nav>
+    <input type="checkbox" id="check" />
+    <label for="check" class="checkbtn"
+        ><i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                />
+            </svg> </i
+    ></label>
+    <div class="site-author">
+        <a href="/">ctnguyenvn</a>
+		<p>Culi vật vã theo năm tháng</p>
+    </div>
+    <ul>
+        <li><a href="/category/linux-sysad">Linux Sysad</a></li>
+        <li><a href="/category/tutorials">Tutorials</a></li>
+        <li><a href="/category/tip-tricks">Tip & Trick</a></li>
+        <li><a href="/category/dfir">DFIR</a></li>
+        <li><a href="/archive">Archive</a></li>
+    </ul>
+</nav>
+</div>
+            <div class="main">
+                 <div class="post">
+
+    </div>
+<div class="post">
+    <article>
+        <div class="post-title">
+            <p>Feb 13 2021</p>
+            <p><a href="/git-command-basic/">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a></p>
+        </div>
+        <div class="post-content"><p>Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv</p>
+
+<p>Một số cheat sheet &amp; tip link git</p>
+
+<ul>
+  <li><a href="https://quickref.me/git">https://quickref.me/git</a></li>
+  <li><a href="http://schubert.atmos.colostate.edu/~cslocum/cseg_git_cheat_sheet.pdf">http://schuber…/cseg_git_cheat_sheet.pdf</a></li>
+  <li><a href="https://github.com/git-tips/tips">https://github.com/git-tips/tips</a></li>
+</ul>
+
+<h3 id="một-số-lệnh-cơ-bản">Một số lệnh cơ bản</h3>
+<hr />
+
+<h5 id="cấu-hình-thông-tin-useremail">Cấu hình thông tin user/email</h5>
+
+<p>Cấu hình user/email</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;"
+ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
+</code></pre></div></div>
+
+<p>Xem cấu hình</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git config --list
+</code></pre></div></div>
+
+<!--more-->
+
+<h5 id="tạo-key--thêm-key">Tạo key &amp;&amp; thêm key</h5>
+
+<p>Tạo key</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ssh-keygen -t ed25519 -C "your_email@example.com" -f "$HOME/.ssh/&lt;file_key_name&gt;"
+hoặc
+ctnguyenvn[~]$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f "$HOME/.ssh/&lt;file_key_name&gt;"
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ssh-keygen -t ed25519 -C "ctnguyenvn.xxx@gmail.com" -f "$HOME/.ssh/ctnguyenvn-git"
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Enter…(nhập passphrase nếu muốn)</p>
+</blockquote>
+
+<p>Thêm key vào ssh-agent</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ssh-agent /bin/bash
+ctnguyenvn[~]$ ssh-add "$HOME/.ssh/&lt;file_key_name&gt;"
+ctnguyenvn[~]$ ssh-add -l"
+</code></pre></div></div>
+
+<blockquote>
+  <p>More:
+<a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account">Thêm key vào tài khoản github</a></p>
+</blockquote>
+
+<h5 id="clone-một-repository">Clone một repository</h5>
+
+<p>Clone tại local server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git clone &lt;/path/to/folder&gt;
+</code></pre></div></div>
+
+<p>Clone tại remote server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git clone https://github.com/&lt;username&gt;/&lt;repo&gt;.git
+hoặc
+ctnguyenvn[~]$ git clone git@github.com:&lt;username&gt;/&lt;repo&gt;.git
+</code></pre></div></div>
+
+<h5 id="khởi-tạo-git-cho-thư-mục-bất-kỳ">Khởi tạo .git cho thư mục bất kỳ</h5>
+
+<p>Để tạo control version cho bất kỳ thư mục nào với git có thể khởi tạo như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ cd &lt;/path/to/folder&gt;
+ctnguyenvn[~]$ git init
+</code></pre></div></div>
+
+<h5 id="thêm-file-vào-local-repository">Thêm file vào local repository</h5>
+
+<p>Thêm một file vào local repository</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git add &lt;file_name&gt;
+</code></pre></div></div>
+
+<p>Thêm tất cả file/folder</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git add .
+</code></pre></div></div>
+
+<h5 id="commit-file-vào-local-repository">Commit file vào local repository</h5>
+
+<p>Commit với thông điệp cho file cụ thể</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git commit -m "&lt;messenger commit&gt;" &lt;/path/to/file|folder&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu không chỉ định file cụ thể, thông điệp sẽ được thay đổi cho tất cả
+các file đã được add ở trên</p>
+</blockquote>
+
+<p>Thay đổi nội dung thông điệp commit gần nhất</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git commit --amend -m "&lt;messenger commit&gt;"
+</code></pre></div></div>
+
+<h5 id="cập-nhật-thay-đổi-lên-remote-repository">Cập nhật thay đổi lên remote repository</h5>
+
+<p>Cập nhật lên remote server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git push -u &lt;remote&gt; &lt;local branch&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: option <code class="language-plaintext highlighter-rouge">-u</code> chỉ up stream, <code class="language-plaintext highlighter-rouge">remote</code> có thể kiểm tra với <code class="language-plaintext highlighter-rouge">git remote -v</code></p>
+</blockquote>
+
+<h5 id="thêm-một-remote-repository">Thêm một remote repository</h5>
+
+<p>Để thêm một remote repository</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote add &lt;name&gt; &lt;url&gt;
+</code></pre></div></div>
+
+<p>Ví dụ</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote add upstream https://github.com/ctnguyenvn/mydemo.git
+</code></pre></div></div>
+
+<p>Xem danh sách các remote url đã thêm</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote -v
+</code></pre></div></div>
+
+<h5 id="thay-đổi-phương-thức-kết-nối-ssh---https">Thay đổi phương thức kết nối SSH &lt;-&gt; HTTPS</h5>
+
+<p>Chuyển từ phương thức SSH -&gt; HTTPS</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
+</code></pre></div></div>
+
+<p>Chuyển từ phương thức HTTPS -&gt; SSH</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: <code class="language-plaintext highlighter-rouge">origin</code> là <code class="language-plaintext highlighter-rouge">remote name</code>, nếu xuất hiện lỗi
+<code class="language-plaintext highlighter-rouge">fatal: No such remote 'xxx'</code> thì cần kiểm tra lại <code class="language-plaintext highlighter-rouge">remote name</code> trên remote
+server có tồn tại không.</p>
+</blockquote>
+
+<h5 id="tạoxóa-nhánh--di-chuyển-giữa-các-nhánh">Tạo/xóa nhánh &amp;&amp; di chuyển giữa các nhánh</h5>
+
+<p>Liệt kê danh sách nhánh và tạo nhánh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git branch
+ctnguyenvn[~]$ git branch &lt;new_branch_name&gt;
+</code></pre></div></div>
+
+<p>Xóa nhánh trên local server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git branch -d &lt;name-of-branch&gt;
+</code></pre></div></div>
+
+<p>Xóa nhánh trên remote server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git push &lt;remote-name&gt; --delete &lt;name-of-branch&gt;
+</code></pre></div></div>
+
+<p>Di chuyển nhánh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git checkout &lt;name-of-branch&gt;
+</code></pre></div></div>
+
+<h5 id="cập-nhật-từ-remote-repository">Cập nhật từ remote repository</h5>
+
+<p>Cập nhật dữ liệu (history và objects) từ remote</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git fetch
+</code></pre></div></div>
+
+<p>Cập nhật commit mới nhất từ remote repository</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git pull &lt;remote-name&gt; [name-of-branch]
+</code></pre></div></div>
+
+<h5 id="xem-trạng-thái--lịch-sử-các-git-command-đã-thực-hiện">Xem trạng thái &amp;&amp; lịch sử các git command đã thực hiện</h5>
+
+<p>Hiển thị trạng thái</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git status
+</code></pre></div></div>
+
+<p>Xem lịch sử log/commit</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git log
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Sử dụng <code class="language-plaintext highlighter-rouge">git help log</code> để xem một số option cụ thể như <code class="language-plaintext highlighter-rouge">--oneline</code>,
+<code class="language-plaintext highlighter-rouge">--stat</code>…</p>
+</blockquote>
+
+<p>Xem lịch sử thay đổi cụ thể từ ai</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git blame &lt;/path/to/file&gt;
+</code></pre></div></div>
+
+<p>Bài viết chỉ mang tính chất ghi chép cơ bản trong quá trình thực hiện một số
+thao tác với git khi làm việc, không giải thích cụ thể hoạt động/chi tiết các
+lệnh. Cụ thể xem thêm tại <a href="https://git-scm.com/book/en/v2/">git book</a></p>
+</div>
+        <div class="post-meta">
+			<span>
+            Post in
+			</span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
+            </span>
+			<span> &nbsp; With tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+
+            <span class="post-tag">
+                 
+            </span>
+        </div>
+    </article>
+
+<!-- <div><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://.ctnguyenvn.me/git-command-basic/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+</div> -->
+
+</div>
+
+            </div>
+            <div class="footer"><div class="footer__inner">
+    @2023 <a href="https://.ctnguyenvn.me">ctnguyenvn</a> |
+    <a href="https://.ctnguyenvn.me/about">About</a>
+</div>
+</div>
+        </div>
+    </body>
+	<script src="/assets/js/custom.js"></script>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+    <title>
+         bash-shell | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Culi vật vã theo năm tháng" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="bash-shell - Culi vật vã theo năm tháng"
+    />
+    <meta
+        property="twitter:title"
+        content="bash-shell - Culi vật vã theo năm tháng"
+    />
+     
+    <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Culi vật vã theo năm tháng"
+        href="https://.ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://.ctnguyenvn.me/tag/bash-shell/index.html" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://.ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div class="wrapper">
+            <div class="topbar"><nav>
+    <input type="checkbox" id="check" />
+    <label for="check" class="checkbtn"
+        ><i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                />
+            </svg> </i
+    ></label>
+    <div class="site-author">
+        <a href="/">ctnguyenvn</a>
+		<p>Culi vật vã theo năm tháng</p>
+    </div>
+    <ul>
+        <li><a href="/category/linux-sysad">Linux Sysad</a></li>
+        <li><a href="/category/tutorials">Tutorials</a></li>
+        <li><a href="/category/tip-tricks">Tip & Trick</a></li>
+        <li><a href="/category/dfir">DFIR</a></li>
+        <li><a href="/archive">Archive</a></li>
+    </ul>
+</nav>
+</div>
+            <div class="main">
+                 <div class="post">
+	<p class="head-autopage">Posts tagged in: bash shell </p>
+    
+    <article>
+        <div class="post-title">
+            <p>Jul  3 2019</p>
+            <p><a href="/some-regex/">Một số regex hay dùng</a></p>
+        </div>
+        <div class="post-content"><p>Regex (Regular Expressions) hay biểu thức chính quy là một tập các ký tự dùng để
+mô tả một chuỗi nào đó theo những quy tắc, cú pháp nhất định. Regex không những
+được sử dụng trong lập trình mà còn kết hợp mạnh mẽ đối với các công cụ như
+grep, sed,… trên môi trường Linux.</p>
+
+<p>Một số ký tự cơ bản trong regex:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ký tự</th>
+      <th>Ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\</code></td>
+      <td>Đươc sử dụng để bỏ qua ký tự đặc biệt</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">^</code></td>
+      <td>Ký tự đánh dấu bắt đầu 1 chuỗi</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$</code></td>
+      <td>Ký tự đánh dấu kết thúc 1 chuỗi</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>Một ký tự (đơn) bất kỳ</td>
+    </tr>
+    <tr>
+      <td>|</td>
+      <td>sử dụng như <code class="language-plaintext highlighter-rouge">OR</code>. Ví dụ <code class="language-plaintext highlighter-rouge">IPv4                                                                                                                                              | IPv6</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">()</code></td>
+      <td>Sử dụng như <code class="language-plaintext highlighter-rouge">GROUP</code> (độ ưu tiên). Ví dụ <code class="language-plaintext highlighter-rouge">IP (v4                                                                                                                            | v6)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[]</code></td>
+      <td>Một dãy các ký tự. Ví dụ <code class="language-plaintext highlighter-rouge">[abc]</code>. Có thể kết hợp với <code class="language-plaintext highlighter-rouge">^</code> ở đầu để chỉ phủ định (<code class="language-plaintext highlighter-rouge">NOT</code>) hoặc với <code class="language-plaintext highlighter-rouge">-</code> để chỉ ký tự liên tiếp như <code class="language-plaintext highlighter-rouge">[0-9]</code> (từ 0 -&gt; 9) hay <code class="language-plaintext highlighter-rouge">[a-z]</code> (từ a -&gt; z)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">?</code></td>
+      <td>Kiểm tra có 0 hoặc 1 ký tự phía trước. Ví dụ <code class="language-plaintext highlighter-rouge">https?</code> sẽ khớp với <code class="language-plaintext highlighter-rouge">http và https</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">*</code></td>
+      <td>Biểu diễn 0 hoặc 1 hoặc nhiều hơn 1 ký tự bất kỳ phía trước</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">+</code></td>
+      <td>Ký tự phía trước xuất hiện 1 hoặc nhiều lần</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{n}</code></td>
+      <td>Ký tự phía trước xuất hiện <code class="language-plaintext highlighter-rouge">n</code> lần</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{min,}</code></td>
+      <td>Ký tự phía trước xuất hiện <code class="language-plaintext highlighter-rouge">min</code> lần trở lên</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{min,max}</code></td>
+      <td>Ký tự phía trước xuất hiện tối thiểu <code class="language-plaintext highlighter-rouge">min</code> lần và tối đa <code class="language-plaintext highlighter-rouge">max</code> lần</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Xem full tại
+<a href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Regular_Expressions">đây</a></p>
+</blockquote>
+
+</div>
+        <div class="post-meta">
+            <span> Post in </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
+                <a
+                    href="/category/tip-tricks"
+                    >tip-tricks,</a
+                >
+                 
+            </span>
+
+            <span> with tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+            <span class="post-tag">
+                 
+                <a
+                    href="/tag/regex"
+                    >regex,</a
+                >  
+                <a
+                    href="/tag/bash-shell"
+                    >Bash shell,</a
+                >  
+            </span>
+        </div>
+    </article>
+
+    
+    <!-- pagination -->
+    <!-- Pagination links -->
+<div class="pagination">
+  
+    <span class="previous">Previous</span>
+  
+  <span class="page_number ">
+    Page: 1 of 1
+  </span>
+  
+    <span class="next ">Next</span>
+  
+</div>
+
+</div>
+
+
+            </div>
+            <div class="footer"><div class="footer__inner">
+    @2023 <a href="https://.ctnguyenvn.me">ctnguyenvn</a> |
+    <a href="https://.ctnguyenvn.me/about">About</a>
+</div>
+</div>
+        </div>
+    </body>
+	<script src="/assets/js/custom.js"></script>
+</html>

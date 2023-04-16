@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+    <title>
+         Một số cái beep trong shell | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Hôm nay tôi lang thang và thấy mấy cái này và tôi biết tôi cần note lại cho
+mình. Tôi cũng xin nói luôn tôi cũng chưa biết gọi chúng là cái gì nên tạm thời
+gọi là cái beep vậy. Khi làm việc với shell trên linux và… có đôi chút về
+bash thì nó thật sự hữu ích :smiley:
+
+
+  
+    
+      Command
+      Description
+      Example
+    
+  
+  
+    
+      &amp;
+      Chạy lệnh với background
+      ls &amp;
+    
+    
+      &amp;&amp;
+      Biểu thức AND
+      if [ “$foo” -ge “0” ] &amp;&amp; [ “$foo” -le “9”]
+    
+    
+      **
+      Biểu thức OR
+      if [ “$foo” -lt “0” ] ** [ “$foo” -gt “9” ]
+    
+    
+      ^
+      Ký tự bắt đầu dòng/chuỗi
+      grep “^foo”
+    
+    
+      $
+      Ký tự kết thúc dòng/chuỗi
+      grep “foo$”
+    
+    
+      =
+      Phép bằng hoặc gán
+      if [ “$foo” = “bar” ]
+    
+    
+      !
+      Phép NOT
+      if [ “$foo” != “bar” ]
+    
+    
+      $$
+      PID của shell hiện tại
+      echo “my PID = $$”
+    
+    
+      $!
+      PID của background command cuối cùng
+      ls &amp; echo “PID of ls = $!”
+    
+    
+      $?
+      Trạng thái thoát của lệnh cuối cùng
+      ls ; echo “ls returned code $?”
+    
+    
+      $0
+      Tên của lệnh hiện tại
+      echo “I am $0”
+    
+    
+      $1
+      Đối số đầu tiên của lệnh hiện tại
+      echo “My first argument is $1”
+    
+    
+      $9
+      Đối số thứ 9 của lệnh hiện tại
+      echo “My ninth argument is $9”
+    
+    
+      $@
+      Tất cả các đối số (parameters) của lệnh hiện tại
+      echo “My arguments are $@”
+    
+    
+      $*
+      Tất cả các đối số của lệnh hiện tại (trừ khoản trống và trích dẫn)
+      echo “My arguments are $*”
+    
+    
+      -eq
+      So sánh bằng
+      if [ “$foo” -eq “9” ]
+    
+    
+      -ne
+      So sánh không bằng
+      if [ “$foo” -ne “9” ]
+    
+    
+      -lt
+      So sánh nhỏ hơn
+      if [ “$foo” -lt “9” ]
+    
+    
+      -le
+      So sánh nhỏ hơn hoặc bằng
+      if [ “$foo” -le “9” ]
+    
+    
+      -gt
+      So sánh lớn hơn
+      if [ “$foo” -gt “9” ]
+    
+    
+      -ge
+      So sánh lớn hơn hoặc bằng
+      if [ “$foo” -ge “9” ]
+    
+    
+      -z
+      Chuỗi có chiều dài 0
+      if [ -z “$foo” ]
+    
+    
+      -n
+      Chuỗi có chiều dài khác 0
+      if [ -n “$foo” ]
+    
+    
+      -d
+      Là một thư mục
+      if [ -d /bin ]
+    
+    
+      -f
+      Là một file
+      if [ -f /bin/ls ]
+    
+    
+      -r
+      Là một file có thể đọc được
+      if [ -r /bin/ls ]
+    
+    
+      -w
+      Là một file có thể ghi được
+      if [ -w /bin/ls ]
+    
+    
+      -x
+      Là một file có thể thực thi
+      if [ -x /bin/ls ]
+    
+    
+      Updating...
+      …
+      …
+    
+  
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Một số cái beep trong shell - Culi vật vã theo năm tháng"
+    />
+    <meta
+        property="twitter:title"
+        content="Một số cái beep trong shell - Culi vật vã theo năm tháng"
+    />
+     
+    <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Culi vật vã theo năm tháng"
+        href="https://.ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://.ctnguyenvn.me/qick-arguments/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://.ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div class="wrapper">
+            <div class="topbar">
+<nav>
+    <input type="checkbox" id="check">
+    <label for="check" class="checkbtn"><i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"></path>
+            </svg> </i></label>
+    <div class="site-author">
+        <a href="/">ctnguyenvn</a>
+		<p>Culi vật vã theo năm tháng</p>
+    </div>
+    <ul>
+        <li><a href="/category/linux-sysad">Linux Sysad</a></li>
+        <li><a href="/category/tutorials">Tutorials</a></li>
+        <li><a href="/category/tip-tricks">Tip &amp; Trick</a></li>
+        <li><a href="/category/dfir">DFIR</a></li>
+        <li><a href="/archive">Archive</a></li>
+    </ul>
+</nav>
+</div>
+            <div class="main">
+                 <div class="post">
+
+    </div>
+<div class="post">
+    <article>
+        <div class="post-title">
+            <p>May 22 2019</p>
+            <p><a href="/qick-arguments/">Một số cái beep trong shell</a></p>
+        </div>
+        <div class="post-content">
+<p>Hôm nay tôi lang thang và thấy mấy cái này và tôi biết tôi cần note lại cho
+mình. Tôi cũng xin nói luôn tôi cũng chưa biết gọi chúng là cái gì nên tạm thời
+gọi là cái <code class="language-plaintext highlighter-rouge">beep</code> vậy. Khi làm việc với shell trên linux và… có đôi chút về
+bash thì nó thật sự hữu ích <img class="emoji" title=":smiley:" alt=":smiley:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f603.png" height="20" width="20"></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">&amp;</code></strong></td>
+      <td>Chạy lệnh với background</td>
+      <td>ls <strong><code class="language-plaintext highlighter-rouge">&amp;</code></strong>
+</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">&amp;&amp;</code></strong></td>
+      <td>Biểu thức AND</td>
+      <td>if [ “$foo” -ge “0” ] <strong><code class="language-plaintext highlighter-rouge">&amp;&amp;</code></strong> [ “$foo” -le “9”]</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">**</code></td>
+      <td>Biểu thức OR</td>
+      <td>if [ “$foo” -lt “0” ] <code class="language-plaintext highlighter-rouge">**</code> [ “$foo” -gt “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">^</code></strong></td>
+      <td>Ký tự bắt đầu dòng/chuỗi</td>
+      <td>grep “<strong><code class="language-plaintext highlighter-rouge">^</code></strong>foo”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$</code></strong></td>
+      <td>Ký tự kết thúc dòng/chuỗi</td>
+      <td>grep “foo<strong><code class="language-plaintext highlighter-rouge">$</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">=</code></strong></td>
+      <td>Phép bằng hoặc gán</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">=</code></strong> “bar” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">!</code></strong></td>
+      <td>Phép NOT</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">!</code></strong>= “bar” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$$</code></strong></td>
+      <td>PID của shell hiện tại</td>
+      <td>echo “my PID = <strong><code class="language-plaintext highlighter-rouge">$$</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$!</code></strong></td>
+      <td>PID của background command cuối cùng</td>
+      <td>ls &amp; echo “PID of ls = <strong><code class="language-plaintext highlighter-rouge">$!</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$?</code></strong></td>
+      <td>Trạng thái thoát của lệnh cuối cùng</td>
+      <td>ls ; echo “ls returned code <strong><code class="language-plaintext highlighter-rouge">$?</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$0</code></strong></td>
+      <td>Tên của lệnh hiện tại</td>
+      <td>echo “I am <strong><code class="language-plaintext highlighter-rouge">$0</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$1</code></strong></td>
+      <td>Đối số đầu tiên của lệnh hiện tại</td>
+      <td>echo “My first argument is <strong><code class="language-plaintext highlighter-rouge">$1</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$9</code></strong></td>
+      <td>Đối số thứ 9 của lệnh hiện tại</td>
+      <td>echo “My ninth argument is <strong><code class="language-plaintext highlighter-rouge">$9</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$@</code></strong></td>
+      <td>Tất cả các đối số (parameters) của lệnh hiện tại</td>
+      <td>echo “My arguments are <strong><code class="language-plaintext highlighter-rouge">$@</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">$*</code></strong></td>
+      <td>Tất cả các đối số của lệnh hiện tại (trừ khoản trống và trích dẫn)</td>
+      <td>echo “My arguments are <strong><code class="language-plaintext highlighter-rouge">$*</code></strong>”</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-eq</code></strong></td>
+      <td>So sánh bằng</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">-eq</code></strong> “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-ne</code></strong></td>
+      <td>So sánh không bằng</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">-ne</code></strong> “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-lt</code></strong></td>
+      <td>So sánh nhỏ hơn</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">-lt</code></strong> “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-le</code></strong></td>
+      <td>So sánh nhỏ hơn hoặc bằng</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">-le</code></strong> “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-gt</code></strong></td>
+      <td>So sánh lớn hơn</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">-gt</code></strong> “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-ge</code></strong></td>
+      <td>So sánh lớn hơn hoặc bằng</td>
+      <td>if [ “$foo” <strong><code class="language-plaintext highlighter-rouge">-ge</code></strong> “9” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-z</code></strong></td>
+      <td>Chuỗi có chiều dài 0</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-z</code></strong> “$foo” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-n</code></strong></td>
+      <td>Chuỗi có chiều dài khác 0</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-n</code></strong> “$foo” ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-d</code></strong></td>
+      <td>Là một thư mục</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-d</code></strong> /bin ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-f</code></strong></td>
+      <td>Là một file</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-f</code></strong> /bin/ls ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-r</code></strong></td>
+      <td>Là một file có thể đọc được</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-r</code></strong> /bin/ls ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-w</code></strong></td>
+      <td>Là một file có thể ghi được</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-w</code></strong> /bin/ls ]</td>
+    </tr>
+    <tr>
+      <td><strong><code class="language-plaintext highlighter-rouge">-x</code></strong></td>
+      <td>Là một file có thể thực thi</td>
+      <td>if [ <strong><code class="language-plaintext highlighter-rouge">-x</code></strong> /bin/ls ]</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Updating...</code></td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--more-->
+
+<p>Tôi sẽ update thêm nếu như biết được những cái mới hơn.</p>
+</div>
+        <div class="post-meta">
+			<span>
+            Post in
+			</span>
+            <i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bookmark" viewbox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"></path>
+                </svg>
+            </i>
+            <span>
+                 
+            </span>
+			<span>   With tagged </span>
+            <i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-tag" viewbox="0 0 16 16">
+                    <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"></path>
+                    <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"></path>
+                </svg>
+            </i>
+
+            <span class="post-tag">
+                 
+            </span>
+        </div>
+    </article>
+
+<!-- <div><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://.ctnguyenvn.me/qick-arguments/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+</div> -->
+
+</div>
+
+            </div>
+            <div class="footer">
+<div class="footer__inner">
+    @2023 <a href="https://.ctnguyenvn.me">ctnguyenvn</a> |
+    <a href="https://.ctnguyenvn.me/about">About</a>
+</div>
+</div>
+        </div>
+    </body>
+	<script src="/assets/js/custom.js"></script>
+</html>

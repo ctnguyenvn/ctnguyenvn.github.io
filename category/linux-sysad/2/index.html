@@ -2,7 +2,7 @@
 <html lang="vi">
     <head>
     <title>
-         ctnguyenvn - Culi vật vã theo năm tháng 
+         linux-sysad - page 2 | ctnguyenvn 
     </title>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,11 +14,11 @@
     
     <meta
         property="og:title"
-        content="ctnguyenvn - Culi vật vã theo năm tháng"
+        content="linux-sysad - page 2 - Culi vật vã theo năm tháng"
     />
     <meta
         property="twitter:title"
-        content="ctnguyenvn - Culi vật vã theo năm tháng"
+        content="linux-sysad - page 2 - Culi vật vã theo năm tháng"
     />
      
     <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
@@ -43,7 +43,7 @@
         title=" - Culi vật vã theo năm tháng"
         href="https://.ctnguyenvn.me/feed.xml"
     />
-    <link rel="canonical" href="https://.ctnguyenvn.me/index.html" />
+    <link rel="canonical" href="https://.ctnguyenvn.me/category/linux-sysad/2/index.html" />
     <meta name="theme-color" content="#000000" />
     <link
         rel="icon"
@@ -89,189 +89,70 @@
 </div>
             <div class="main">
                  <div class="post">
+	<p class="head-autopage"> Category Archives: linux sysad   page 2 </p>
     
     <article>
         <div class="post-title">
-            <p>Feb 22 2023</p>
-            <p><a href="/collect-log-from-cisco-ios-to-ELK/">Thu thập log từ Cisco IOS về SIEM (ELK)</a></p>
+            <p>Jan 31 2021</p>
+            <p><a href="/zabbix-install-config-full/">Cài đặt và cấu hình Zabbix 5.0</a></p>
         </div>
-        <div class="post-content"><p>Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này.</p>
+        <div class="post-content"><p>Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device
+như hình sau</p>
 
-<h3 id="sơ-lược-mô-hình">Sơ lược mô hình</h3>
+<h3 id="1-giới-thiệu-mô-hình-lab">1. Giới thiệu mô hình lab</h3>
 
-<p>Trong bài viết này tôi sẽ chia sẻ một bài Lab nhỏ nhằm thu thập một số nhật ký cần thiết trên các thiết bị router/switch về hệ thống SIEM. Cụ thể tôi sẽ sử dụng IOS Version 12.4 Router 3700 Software (C3725-ADVENTERPRISEK9-M) giả lập trên phần mềm GNS3 kết hợp với ELK. ELK được build trên docker theo mô hình AIO và được cài đặt trên máy ảo vmware chạy hệ điều hành CentOS 7.</p>
+<p><img src="https://ctnguyenvn.me/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
 
-<p>Mô hình cơ bản như sau</p>
-
-<p><img src="/images/ELK/cisco/1.png" alt="" /></p>
+<table>
+  <thead>
+    <tr>
+      <th>Thông tin</th>
+      <th> </th>
+      <th>Hostname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R1</td>
+      <td>Cisco 3640</td>
+      <td>R-C3640</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>CentOS 7</td>
+      <td>LinuxAgent</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>Ubuntu 18.04</td>
+      <td>Zabbix-Server</td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>Windows server 2012</td>
+      <td>WindowAgent</td>
+    </tr>
+    <tr>
+      <td>Soft</td>
+      <td>GNS3 2.2.17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>IP</td>
+      <td>Như mô hình</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
-  <p>Lưu ý: Hiện tại tôi gửi log về logstash nhằm mục đích parse manual, tuy nhiên thực tế hiện tại filebeat có module cisco tương đối đủ để auto parse mà không cần parse tay ở logstash. Ngược lại với cách này yêu cầu dựng 1 server trung gian khác chạy filebeat để listen nên tôi không đề cập trong bài viết này.</p>
+  <p>Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông
+qua R1.</p>
 </blockquote>
 
 </div>
         <div class="post-meta">
-			<span>
-            Post in
-			</span>
-            <i>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-bookmark"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
-                    />
-                </svg>
-            </i>
-            <span>
-                 
-                <a
-                    href="/category/linux-sysad"
-                    >linux-sysad,</a
-                >
-                 
-            </span>
-			<span> &nbsp; With tagged </span>
-            <i>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-tag"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
-                    />
-                    <path
-                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
-                    />
-                </svg>
-            </i>
-
-            <span class="post-tag">
-                 
-                <a
-                    href="/tag/collect-log"
-                    >collect-log,</a
-                > 
-                <a
-                    href="/tag/elk"
-                    >ELK,</a
-                > 
-            </span>
-        </div>
-    </article>
-
-    
-    <article>
-        <div class="post-title">
-            <p>Dec 25 2022</p>
-            <p><a href="/investigate-printNightmare/">Lượn qua PrintNightmare của letsdefend challenge</a></p>
-        </div>
-        <div class="post-content"><p>Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới <a href="https://www.linkedin.com/in/bohan-zhang-078751137/">Bohan Zhang</a> tại <a href="https://app.letsdefend.io/challenge/PrintNightmare">đây</a></p>
-
-<p>Thông tin:</p>
-
-<ul>
-  <li>Our system exploited by PrintNightmare vulnerability. You should investigate the case.</li>
-  <li>pcap/memory file: <a href="https://api.letsdefend.io/download/downloadfile/PrintNightmare.zip">download</a> / pass: infected</li>
-  <li>Công cụ sử dụng: Brim / Wireshark / Redline</li>
-</ul>
-
-<p>Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài này có thể là attacker đã khai thác thành công và tất cả những gì chúng ta cần truy vết là những gì sau đó.</p>
-
-<p>Sau khi tải file được cung cấp và giải nén ta được một số file quan trọng gồm:</p>
-
-<ul>
-  <li>AnalysisSession1.mans -&gt; Analysis session mở với Redline</li>
-  <li>challenge-v1.pcapng -&gt; Traffic giữa attacker với nạn nhân</li>
-  <li>suricata.rules -&gt; rule alert của suricata với lỗ hỗng PrintNightmare</li>
-</ul>
-
-</div>
-        <div class="post-meta">
-			<span>
-            Post in
-			</span>
-            <i>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-bookmark"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
-                    />
-                </svg>
-            </i>
-            <span>
-                 
-                <a
-                    href="/category/dfir"
-                    >dfir,</a
-                >
-                 
-            </span>
-			<span> &nbsp; With tagged </span>
-            <i>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-tag"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
-                    />
-                    <path
-                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
-                    />
-                </svg>
-            </i>
-
-            <span class="post-tag">
-                 
-                <a
-                    href="/tag/games"
-                    >Games,</a
-                > 
-                <a
-                    href="/tag/forensic"
-                    >Forensic,</a
-                > 
-            </span>
-        </div>
-    </article>
-
-    
-    <article>
-        <div class="post-title">
-            <p>Nov  6 2022</p>
-            <p><a href="/mot-so-vim-key-co-ban/">Một số key trong vim giúp edit nhanh hơn</a></p>
-        </div>
-        <div class="post-content"><p>Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại <a href="https://github.com/ctnguyenvn/vimrc/tree/neovim">vim repo</a> trong một số plugin mà tôi hay dùng.</p>
-
-<p><img src="https://ctnguyenvn.me/images/nvim/neovim-avt.webp" alt="neovim" class="center-image" /></p>
-
-<p>Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại <a href="https://devhints.io/vim">đây</a>.</p>
-
-</div>
-        <div class="post-meta">
-			<span>
-            Post in
-			</span>
+            <span> Post in </span>
             <i>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -294,12 +175,13 @@
                 >
                  
                 <a
-                    href="/category/tip-tricks"
-                    >tip-tricks,</a
+                    href="/category/tutorials"
+                    >tutorials,</a
                 >
                  
             </span>
-			<span> &nbsp; With tagged </span>
+
+            <span> with tagged </span>
             <i>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -317,17 +199,16 @@
                     />
                 </svg>
             </i>
-
             <span class="post-tag">
                  
                 <a
-                    href="/tag/vim"
-                    >vim,</a
-                > 
+                    href="/tag/tools"
+                    >Tools,</a
+                >  
                 <a
-                    href="/tag/linux-command"
-                    >linux command,</a
-                > 
+                    href="/tag/monitoring"
+                    >Monitoring,</a
+                >  
             </span>
         </div>
     </article>
@@ -335,36 +216,47 @@
     
     <article>
         <div class="post-title">
-            <p>Apr  3 2021</p>
-            <p><a href="/dig-command/">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a></p>
+            <p>Jan 25 2021</p>
+            <p><a href="/lvm/">Cơ bản về LVM (logical Volume management)</a></p>
         </div>
-        <div class="post-content"><p><code class="language-plaintext highlighter-rouge">Dig</code> là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS.
-<code class="language-plaintext highlighter-rouge">Dig</code> thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn.
-Các truy vấn phổ biến gồm NS, CNAME, MX, TXT…</p>
+        <div class="post-content"><p>Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
+lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung
+lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng
+Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group
+như <code class="language-plaintext highlighter-rouge">working</code>, <code class="language-plaintext highlighter-rouge">devops</code> thay vì các tên truyền thống mặc định như <code class="language-plaintext highlighter-rouge">sda</code>, <code class="language-plaintext highlighter-rouge">sdb</code>.</p>
 
-<h3 id="1-cài-đặt-dig">1. Cài đặt Dig</h3>
+<h3 id="1-giới-thiệu">1. Giới thiệu</h3>
 
-<p>Đối với Ubuntu/Debian</p>
+<p><strong>Volume Group (VG)</strong> - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập
+hợp/ánh xạ các <code class="language-plaintext highlighter-rouge">Physical Volume</code> và <code class="language-plaintext highlighter-rouge">Logical Volume</code> thành một đơn vị chung về
+mặt khởi tạo. Cụ thể <code class="language-plaintext highlighter-rouge">Volume Group</code> tập hợp các ổ cứng vật lý
+(<code class="language-plaintext highlighter-rouge">Physical Volume</code>) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng
+khối có kích thước bằng nhau, sau đó sẽ tạo các <code class="language-plaintext highlighter-rouge">Logical Volume</code> từ chúng.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo apt install dnsutils
-</code></pre></div></div>
+<p><strong>Physical Volume (PV)</strong> - là thành phần cơ bản được sử dụng trong LVM cho phép
+tạo các <code class="language-plaintext highlighter-rouge">Volume group</code>, chúng có thể là các ổ cứng HDD, SSD hay có thể là
+software raid.</p>
 
-<p>Đối với CentOS/Fedora</p>
+<p><strong>Logical Volume (LV)</strong> - là phân vùng luận lý được tạo ra từ <code class="language-plaintext highlighter-rouge">Volume Group</code>, về
+mặt lý thuyết có thể xem <code class="language-plaintext highlighter-rouge">Logical Volume</code> giống như partition trên các hệ thống
+non-LVM, tuy nhiên <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể được thay đổi kích trước dễ dàng mà
+không làm gián đoạn hệ thống.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo yum install bind-utils
-</code></pre></div></div>
+<p><strong>Physical Extent (PE)</strong> và <strong>Logical Extent (LE)</strong> - <code class="language-plaintext highlighter-rouge">Physical Volume</code> được
+chia thành các khối bằng nhau gọi là <code class="language-plaintext highlighter-rouge">Physical Extent</code>, tương tự đối với phân
+vùng <code class="language-plaintext highlighter-rouge">Logical Volume</code> được gọi là <code class="language-plaintext highlighter-rouge">Logical Extent</code>.</p>
 
-<p>Có thể kiểm tra kết quả cài đặt dig như sau:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig -v
-DiG 9.16.13
-</code></pre></div></div>
+<p><strong>Extent</strong> - là đơn vị nhỏ nhất của <code class="language-plaintext highlighter-rouge">Volume Group</code>, cũng là kỹ thuật giúp LVM có
+thể thay đổi dung lượng các <code class="language-plaintext highlighter-rouge">Logical Volume</code> mà không làm gián đoạn hệ thống như
+đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng
+<code class="language-plaintext highlighter-rouge">Extent</code> tương ứng, nghĩa là ánh xạ số lượng <code class="language-plaintext highlighter-rouge">Physical Extent</code> trên
+<code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Extent</code> trên <code class="language-plaintext highlighter-rouge">Logical Volume</code>. Lưu ý rằng việc
+ánh xạ <code class="language-plaintext highlighter-rouge">Extent</code> từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể không cần phải
+là các khối <code class="language-plaintext highlighter-rouge">Extent</code> liên tục từ <code class="language-plaintext highlighter-rouge">Physical Volume</code></p>
 
 </div>
         <div class="post-meta">
-			<span>
-            Post in
-			</span>
+            <span> Post in </span>
             <i>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -387,7 +279,8 @@ DiG 9.16.13
                 >
                  
             </span>
-			<span> &nbsp; With tagged </span>
+
+            <span> with tagged </span>
             <i>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -405,17 +298,16 @@ DiG 9.16.13
                     />
                 </svg>
             </i>
-
             <span class="post-tag">
                  
+                <a
+                    href="/tag/linux-system"
+                    >Linux system,</a
+                >  
                 <a
                     href="/tag/notes"
                     >Notes,</a
-                > 
-                <a
-                    href="/tag/linux-command"
-                    >linux command,</a
-                > 
+                >  
             </span>
         </div>
     </article>
@@ -423,40 +315,34 @@ DiG 9.16.13
     
     <article>
         <div class="post-title">
-            <p>Feb 13 2021</p>
-            <p><a href="/git-command-basic/">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a></p>
+            <p>Jan  4 2021</p>
+            <p><a href="/install-Warp-CloudFlare-on-linux/">Cài đặt VPN Warp CloudFlare trên Linux</a></p>
         </div>
-        <div class="post-content"><p>Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv</p>
+        <div class="post-content"><p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
+CloudFlare. Hiện tại <a href="https://1.1.1.1/">Warp client</a> chỉ hỗ trợ Anroid/IOS và
+windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta
+có thể sử dụng warp thông qua Wireguard.</p>
 
-<p>Một số cheat sheet &amp; tip link git</p>
+<h4 id="cài-đặt-wireguard">Cài đặt Wireguard</h4>
 
-<ul>
-  <li><a href="https://quickref.me/git">https://quickref.me/git</a></li>
-  <li><a href="http://schubert.atmos.colostate.edu/~cslocum/cseg_git_cheat_sheet.pdf">http://schuber…/cseg_git_cheat_sheet.pdf</a></li>
-  <li><a href="https://github.com/git-tips/tips">https://github.com/git-tips/tips</a></li>
-</ul>
+<p>Arch</p>
 
-<h3 id="một-số-lệnh-cơ-bản">Một số lệnh cơ bản</h3>
-<hr />
-
-<h5 id="cấu-hình-thông-tin-useremail">Cấu hình thông tin user/email</h5>
-
-<p>Cấu hình user/email</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;"
-ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S wireguard-tools
 </code></pre></div></div>
 
-<p>Xem cấu hình</p>
+<p>Ubuntu</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git config --list
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo apt install wireguard
 </code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu sử dụng Linux distro khác thì có thể xem cài đặt tại
+<a href="https://www.wireguard.com/install/">đây</a></p>
+</blockquote>
 
 </div>
         <div class="post-meta">
-			<span>
-            Post in
-			</span>
+            <span> Post in </span>
             <i>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -479,7 +365,8 @@ ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
                 >
                  
             </span>
-			<span> &nbsp; With tagged </span>
+
+            <span> with tagged </span>
             <i>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -497,17 +384,188 @@ ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
                     />
                 </svg>
             </i>
-
             <span class="post-tag">
                  
                 <a
-                    href="/tag/git"
-                    >Git,</a
-                > 
+                    href="/tag/vpn"
+                    >VPN,</a
+                >  
+            </span>
+        </div>
+    </article>
+
+    
+    <article>
+        <div class="post-title">
+            <p>Dec 29 2020</p>
+            <p><a href="/Spanning-Tree-Protocol/">Spanning Tree Protocol (STP)</a></p>
+        </div>
+        <div class="post-content"><p>Một mạng mạnh mẽ được thiết kế không chỉ đem lại tính hiệu quả cho việc truyền
+các gói hoặc frame, mà còn phải xem xét làm thế nào để khôi phục hoạt động của
+mạng một cách nhanh chóng khi mạng xảy ra lỗi.</p>
+
+<p>Trong môi trường lớp 2 (switching hoặc bridging), không sử dụng giao thức định
+tuyến và cũng không cho phép các con đường dự phòng, thay vì bridge cung cấp
+việc truyền dữ liệu giữa các mạng hoặc các port của switch. Giao thức Spanning
+Tree cung cấp liên kết dự phòng để mạng chuyển mạch lớp 2 có thể khôi phục từ
+lỗi mà không cần có sự can thiệp kịp thời. STP được định nghĩa trong chuẩn RFC
+IEEE 802.1D.</p>
+
+<p>Trong một mạng xảy ra nối vòng (vòng lặp) sẽ xuất hiện các hiện tượng sau:</p>
+
+<p><img src="https://ctnguyenvn.me/images/STP-Protocol/1.jpg" alt="STP" class="center-image" /></p>
+
+<ul>
+  <li>
+    <p>Broadcast storm: Là hiện tượng rất nhiều frame chạy liên tục trong môi
+trường các Switch đấu vòng – dự phòng khi chưa thực hiện chống loop – STP.
+Làm cho tốc độ hệ thống mạng chậm và có thể làm treo các switch tốc tộ thấp</p>
+  </li>
+  <li>
+    <p>Multi Frame copy: hiện tượng đa bản sao frame (1 thiết bị nhận rất nhiều
+frame giống nhau)</p>
+  </li>
+  <li>
+    <p>Instability MAC table: hiện tượng bảng MAC không ổn định.</p>
+  </li>
+</ul>
+
+</div>
+        <div class="post-meta">
+            <span> Post in </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
                 <a
-                    href="/tag/notes"
-                    >Notes,</a
-                > 
+                    href="/category/linux-sysad"
+                    >linux-sysad,</a
+                >
+                 
+            </span>
+
+            <span> with tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+            <span class="post-tag">
+                 
+                <a
+                    href="/tag/protocols"
+                    >Protocols,</a
+                >  
+                <a
+                    href="/tag/networks"
+                    >Networks,</a
+                >  
+                <a
+                    href="/tag/ccna"
+                    >CCNA,</a
+                >  
+            </span>
+        </div>
+    </article>
+
+    
+    <article>
+        <div class="post-title">
+            <p>Dec 14 2020</p>
+            <p><a href="/HTTP-Protocol/">Giao thức HTTP (Hyper Text Transfer Protocol)</a></p>
+        </div>
+        <div class="post-content"><p><a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> (HyperText
+Transfer Protocol - Giao thức truyền tải siêu văn bản) là giao thức nằm ở tầng
+Application Layer, được sử dụng để liên hệ thông tin giữa các máy chủ dịch vụ và
+máy sử dụng dịch vụ.</p>
+
+<h3 id="1-giới-thiệu">1. Giới thiệu</h3>
+
+<p>Từ lúc ra đời đến nay HTTP trải qua nhiều phiên bản, tuy nhiên phiên bản hoàn
+chỉnh đầu tiên của HTTP là <strong>HTTP 0.9</strong> (năm 1991), tiếp theo là <strong>HTTP 1.0</strong>
+(năm 1996), <strong>HTTP 1.1</strong> (năm 1997) và sau đó gần đây nhất là 2x (<strong>HTTP 2.0</strong>).</p>
+
+<p>Tuy phiên bản 2.0 đã ra đời nhưng vì một số lý do mà nó hiện vẫn chưa được phổ
+biến. Phiên bản <strong>HTTP 1.1</strong> hiện vẫn là phiên bản HTTP phổ biến nhất, có thể
+tham khảo thêm tại <a href="https://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a>. Sự khác
+biệt lớn giữa HTTP/1.0 và HTTP/1.1 là HTTP/1.0 sử dụng một kết nối mới cho mỗi
+Yêu cầu/Phản hồi trao đổi, trong khi đó kết nối trong HTTP/1.1 có thể được sử
+dụng cho một hoặc nhiều Request/Response (Yêu cầu/Phản hồi).</p>
+
+</div>
+        <div class="post-meta">
+            <span> Post in </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
+                <a
+                    href="/category/linux-sysad"
+                    >linux-sysad,</a
+                >
+                 
+            </span>
+
+            <span> with tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+            <span class="post-tag">
+                 
+                <a
+                    href="/tag/protocols"
+                    >Protocols,</a
+                >  
             </span>
         </div>
     </article>
@@ -517,17 +575,20 @@ ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
     <!-- Pagination links -->
 <div class="pagination">
   
-    <span class="previous">Previous</span>
+    <a href="/category/linux-sysad/" class="previous">
+      Previous
+    </a>
   
   <span class="page_number ">
-    Page: 1 of 3
+    Page: 2 of 2
   </span>
   
-    <a href="/2/" class="next">Next</a>
+    <span class="next ">Next</span>
   
 </div>
 
 </div>
+
 
             </div>
             <div class="footer"><div class="footer__inner">

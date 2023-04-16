@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+    <title>
+         networks | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Culi vật vã theo năm tháng" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="networks - Culi vật vã theo năm tháng"
+    />
+    <meta
+        property="twitter:title"
+        content="networks - Culi vật vã theo năm tháng"
+    />
+     
+    <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Culi vật vã theo năm tháng"
+        href="https://.ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://.ctnguyenvn.me/tag/networks/index.html" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://.ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div class="wrapper">
+            <div class="topbar"><nav>
+    <input type="checkbox" id="check" />
+    <label for="check" class="checkbtn"
+        ><i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                />
+            </svg> </i
+    ></label>
+    <div class="site-author">
+        <a href="/">ctnguyenvn</a>
+		<p>Culi vật vã theo năm tháng</p>
+    </div>
+    <ul>
+        <li><a href="/category/linux-sysad">Linux Sysad</a></li>
+        <li><a href="/category/tutorials">Tutorials</a></li>
+        <li><a href="/category/tip-tricks">Tip & Trick</a></li>
+        <li><a href="/category/dfir">DFIR</a></li>
+        <li><a href="/archive">Archive</a></li>
+    </ul>
+</nav>
+</div>
+            <div class="main">
+                 <div class="post">
+	<p class="head-autopage">Posts tagged in: networks </p>
+    
+    <article>
+        <div class="post-title">
+            <p>Dec 29 2020</p>
+            <p><a href="/Spanning-Tree-Protocol/">Spanning Tree Protocol (STP)</a></p>
+        </div>
+        <div class="post-content"><p>Một mạng mạnh mẽ được thiết kế không chỉ đem lại tính hiệu quả cho việc truyền
+các gói hoặc frame, mà còn phải xem xét làm thế nào để khôi phục hoạt động của
+mạng một cách nhanh chóng khi mạng xảy ra lỗi.</p>
+
+<p>Trong môi trường lớp 2 (switching hoặc bridging), không sử dụng giao thức định
+tuyến và cũng không cho phép các con đường dự phòng, thay vì bridge cung cấp
+việc truyền dữ liệu giữa các mạng hoặc các port của switch. Giao thức Spanning
+Tree cung cấp liên kết dự phòng để mạng chuyển mạch lớp 2 có thể khôi phục từ
+lỗi mà không cần có sự can thiệp kịp thời. STP được định nghĩa trong chuẩn RFC
+IEEE 802.1D.</p>
+
+<p>Trong một mạng xảy ra nối vòng (vòng lặp) sẽ xuất hiện các hiện tượng sau:</p>
+
+<p><img src="https://ctnguyenvn.me/images/STP-Protocol/1.jpg" alt="STP" class="center-image" /></p>
+
+<ul>
+  <li>
+    <p>Broadcast storm: Là hiện tượng rất nhiều frame chạy liên tục trong môi
+trường các Switch đấu vòng – dự phòng khi chưa thực hiện chống loop – STP.
+Làm cho tốc độ hệ thống mạng chậm và có thể làm treo các switch tốc tộ thấp</p>
+  </li>
+  <li>
+    <p>Multi Frame copy: hiện tượng đa bản sao frame (1 thiết bị nhận rất nhiều
+frame giống nhau)</p>
+  </li>
+  <li>
+    <p>Instability MAC table: hiện tượng bảng MAC không ổn định.</p>
+  </li>
+</ul>
+
+</div>
+        <div class="post-meta">
+            <span> Post in </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
+                <a
+                    href="/category/linux-sysad"
+                    >linux-sysad,</a
+                >
+                 
+            </span>
+
+            <span> with tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+            <span class="post-tag">
+                 
+                <a
+                    href="/tag/protocols"
+                    >Protocols,</a
+                >  
+                <a
+                    href="/tag/networks"
+                    >Networks,</a
+                >  
+                <a
+                    href="/tag/ccna"
+                    >CCNA,</a
+                >  
+            </span>
+        </div>
+    </article>
+
+    
+    <!-- pagination -->
+    <!-- Pagination links -->
+<div class="pagination">
+  
+    <span class="previous">Previous</span>
+  
+  <span class="page_number ">
+    Page: 1 of 1
+  </span>
+  
+    <span class="next ">Next</span>
+  
+</div>
+
+</div>
+
+
+            </div>
+            <div class="footer"><div class="footer__inner">
+    @2023 <a href="https://.ctnguyenvn.me">ctnguyenvn</a> |
+    <a href="https://.ctnguyenvn.me/about">About</a>
+</div>
+</div>
+        </div>
+    </body>
+	<script src="/assets/js/custom.js"></script>
+</html>

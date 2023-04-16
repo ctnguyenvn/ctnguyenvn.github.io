@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+    <title>
+         games | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Culi vật vã theo năm tháng" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="games - Culi vật vã theo năm tháng"
+    />
+    <meta
+        property="twitter:title"
+        content="games - Culi vật vã theo năm tháng"
+    />
+     
+    <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Culi vật vã theo năm tháng"
+        href="https://.ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://.ctnguyenvn.me/tag/games/index.html" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://.ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div class="wrapper">
+            <div class="topbar"><nav>
+    <input type="checkbox" id="check" />
+    <label for="check" class="checkbtn"
+        ><i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                />
+            </svg> </i
+    ></label>
+    <div class="site-author">
+        <a href="/">ctnguyenvn</a>
+		<p>Culi vật vã theo năm tháng</p>
+    </div>
+    <ul>
+        <li><a href="/category/linux-sysad">Linux Sysad</a></li>
+        <li><a href="/category/tutorials">Tutorials</a></li>
+        <li><a href="/category/tip-tricks">Tip & Trick</a></li>
+        <li><a href="/category/dfir">DFIR</a></li>
+        <li><a href="/archive">Archive</a></li>
+    </ul>
+</nav>
+</div>
+            <div class="main">
+                 <div class="post">
+	<p class="head-autopage">Posts tagged in: games </p>
+    
+    <article>
+        <div class="post-title">
+            <p>Dec 25 2022</p>
+            <p><a href="/investigate-printNightmare/">Lượn qua PrintNightmare của letsdefend challenge</a></p>
+        </div>
+        <div class="post-content"><p>Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới <a href="https://www.linkedin.com/in/bohan-zhang-078751137/">Bohan Zhang</a> tại <a href="https://app.letsdefend.io/challenge/PrintNightmare">đây</a></p>
+
+<p>Thông tin:</p>
+
+<ul>
+  <li>Our system exploited by PrintNightmare vulnerability. You should investigate the case.</li>
+  <li>pcap/memory file: <a href="https://api.letsdefend.io/download/downloadfile/PrintNightmare.zip">download</a> / pass: infected</li>
+  <li>Công cụ sử dụng: Brim / Wireshark / Redline</li>
+</ul>
+
+<p>Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài này có thể là attacker đã khai thác thành công và tất cả những gì chúng ta cần truy vết là những gì sau đó.</p>
+
+<p>Sau khi tải file được cung cấp và giải nén ta được một số file quan trọng gồm:</p>
+
+<ul>
+  <li>AnalysisSession1.mans -&gt; Analysis session mở với Redline</li>
+  <li>challenge-v1.pcapng -&gt; Traffic giữa attacker với nạn nhân</li>
+  <li>suricata.rules -&gt; rule alert của suricata với lỗ hỗng PrintNightmare</li>
+</ul>
+
+</div>
+        <div class="post-meta">
+            <span> Post in </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
+                <a
+                    href="/category/dfir"
+                    >dfir,</a
+                >
+                 
+            </span>
+
+            <span> with tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+            <span class="post-tag">
+                 
+                <a
+                    href="/tag/games"
+                    >Games,</a
+                >  
+                <a
+                    href="/tag/forensic"
+                    >Forensic,</a
+                >  
+            </span>
+        </div>
+    </article>
+
+    
+    <!-- pagination -->
+    <!-- Pagination links -->
+<div class="pagination">
+  
+    <span class="previous">Previous</span>
+  
+  <span class="page_number ">
+    Page: 1 of 1
+  </span>
+  
+    <span class="next ">Next</span>
+  
+</div>
+
+</div>
+
+
+            </div>
+            <div class="footer"><div class="footer__inner">
+    @2023 <a href="https://.ctnguyenvn.me">ctnguyenvn</a> |
+    <a href="https://.ctnguyenvn.me/about">About</a>
+</div>
+</div>
+        </div>
+    </body>
+	<script src="/assets/js/custom.js"></script>
+</html>

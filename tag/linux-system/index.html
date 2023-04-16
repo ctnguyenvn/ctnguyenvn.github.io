@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+    <title>
+         linux-system | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Culi vật vã theo năm tháng" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="linux-system - Culi vật vã theo năm tháng"
+    />
+    <meta
+        property="twitter:title"
+        content="linux-system - Culi vật vã theo năm tháng"
+    />
+     
+    <meta property="og:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://.ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+
+
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://.ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Culi vật vã theo năm tháng"
+        href="https://.ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://.ctnguyenvn.me/tag/linux-system/index.html" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://.ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div class="wrapper">
+            <div class="topbar"><nav>
+    <input type="checkbox" id="check" />
+    <label for="check" class="checkbtn"
+        ><i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                />
+            </svg> </i
+    ></label>
+    <div class="site-author">
+        <a href="/">ctnguyenvn</a>
+		<p>Culi vật vã theo năm tháng</p>
+    </div>
+    <ul>
+        <li><a href="/category/linux-sysad">Linux Sysad</a></li>
+        <li><a href="/category/tutorials">Tutorials</a></li>
+        <li><a href="/category/tip-tricks">Tip & Trick</a></li>
+        <li><a href="/category/dfir">DFIR</a></li>
+        <li><a href="/archive">Archive</a></li>
+    </ul>
+</nav>
+</div>
+            <div class="main">
+                 <div class="post">
+	<p class="head-autopage">Posts tagged in: linux system </p>
+    
+    <article>
+        <div class="post-title">
+            <p>Jan 25 2021</p>
+            <p><a href="/lvm/">Cơ bản về LVM (logical Volume management)</a></p>
+        </div>
+        <div class="post-content"><p>Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
+lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung
+lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng
+Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group
+như <code class="language-plaintext highlighter-rouge">working</code>, <code class="language-plaintext highlighter-rouge">devops</code> thay vì các tên truyền thống mặc định như <code class="language-plaintext highlighter-rouge">sda</code>, <code class="language-plaintext highlighter-rouge">sdb</code>.</p>
+
+<h3 id="1-giới-thiệu">1. Giới thiệu</h3>
+
+<p><strong>Volume Group (VG)</strong> - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập
+hợp/ánh xạ các <code class="language-plaintext highlighter-rouge">Physical Volume</code> và <code class="language-plaintext highlighter-rouge">Logical Volume</code> thành một đơn vị chung về
+mặt khởi tạo. Cụ thể <code class="language-plaintext highlighter-rouge">Volume Group</code> tập hợp các ổ cứng vật lý
+(<code class="language-plaintext highlighter-rouge">Physical Volume</code>) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng
+khối có kích thước bằng nhau, sau đó sẽ tạo các <code class="language-plaintext highlighter-rouge">Logical Volume</code> từ chúng.</p>
+
+<p><strong>Physical Volume (PV)</strong> - là thành phần cơ bản được sử dụng trong LVM cho phép
+tạo các <code class="language-plaintext highlighter-rouge">Volume group</code>, chúng có thể là các ổ cứng HDD, SSD hay có thể là
+software raid.</p>
+
+<p><strong>Logical Volume (LV)</strong> - là phân vùng luận lý được tạo ra từ <code class="language-plaintext highlighter-rouge">Volume Group</code>, về
+mặt lý thuyết có thể xem <code class="language-plaintext highlighter-rouge">Logical Volume</code> giống như partition trên các hệ thống
+non-LVM, tuy nhiên <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể được thay đổi kích trước dễ dàng mà
+không làm gián đoạn hệ thống.</p>
+
+<p><strong>Physical Extent (PE)</strong> và <strong>Logical Extent (LE)</strong> - <code class="language-plaintext highlighter-rouge">Physical Volume</code> được
+chia thành các khối bằng nhau gọi là <code class="language-plaintext highlighter-rouge">Physical Extent</code>, tương tự đối với phân
+vùng <code class="language-plaintext highlighter-rouge">Logical Volume</code> được gọi là <code class="language-plaintext highlighter-rouge">Logical Extent</code>.</p>
+
+<p><strong>Extent</strong> - là đơn vị nhỏ nhất của <code class="language-plaintext highlighter-rouge">Volume Group</code>, cũng là kỹ thuật giúp LVM có
+thể thay đổi dung lượng các <code class="language-plaintext highlighter-rouge">Logical Volume</code> mà không làm gián đoạn hệ thống như
+đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng
+<code class="language-plaintext highlighter-rouge">Extent</code> tương ứng, nghĩa là ánh xạ số lượng <code class="language-plaintext highlighter-rouge">Physical Extent</code> trên
+<code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Extent</code> trên <code class="language-plaintext highlighter-rouge">Logical Volume</code>. Lưu ý rằng việc
+ánh xạ <code class="language-plaintext highlighter-rouge">Extent</code> từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể không cần phải
+là các khối <code class="language-plaintext highlighter-rouge">Extent</code> liên tục từ <code class="language-plaintext highlighter-rouge">Physical Volume</code></p>
+
+</div>
+        <div class="post-meta">
+            <span> Post in </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-bookmark"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
+                    />
+                </svg>
+            </i>
+            <span>
+                 
+                <a
+                    href="/category/linux-sysad"
+                    >linux-sysad,</a
+                >
+                 
+            </span>
+
+            <span> with tagged </span>
+            <i>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-tag"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+                    />
+                    <path
+                        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+                    />
+                </svg>
+            </i>
+            <span class="post-tag">
+                 
+                <a
+                    href="/tag/linux-system"
+                    >Linux system,</a
+                >  
+                <a
+                    href="/tag/notes"
+                    >Notes,</a
+                >  
+            </span>
+        </div>
+    </article>
+
+    
+    <!-- pagination -->
+    <!-- Pagination links -->
+<div class="pagination">
+  
+    <span class="previous">Previous</span>
+  
+  <span class="page_number ">
+    Page: 1 of 1
+  </span>
+  
+    <span class="next ">Next</span>
+  
+</div>
+
+</div>
+
+
+            </div>
+            <div class="footer"><div class="footer__inner">
+    @2023 <a href="https://.ctnguyenvn.me">ctnguyenvn</a> |
+    <a href="https://.ctnguyenvn.me/about">About</a>
+</div>
+</div>
+        </div>
+    </body>
+	<script src="/assets/js/custom.js"></script>
+</html>
