@@ -20,6 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+// searching
+const f = document.getElementById('searchForm');
+const q = document.getElementById('query');
+const google = 'https://www.google.com/search?q=site%3A';
+const site = window.location.host;
+
+function submitted(event) {
+    event.preventDefault();
+    const url = google + site + '+' + q.value;
+    const win = window.open(url, '_blank');
+    win.focus();
+}
+
+f.addEventListener('submit', submitted);
+
+
 // dark theme
 let darkMode = localStorage.getItem("darkMode");
 
