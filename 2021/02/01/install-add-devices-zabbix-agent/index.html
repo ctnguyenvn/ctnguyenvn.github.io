@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Giám sát một số devices với zabbix agent, SNMP | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Trong
+bài viết trước
+tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này
+tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình
+thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau:
+
+
+
+
+  
+    
+      Thông tin
+       
+      Hostname
+    
+  
+  
+    
+      R1
+      Cisco 3640
+      R-C3640
+    
+    
+      Linux
+      CentOS 7
+      LinuxAgent
+    
+    
+      Linux
+      Ubuntu 18.04
+      Zabbix-Server
+    
+    
+      Windows
+      Windows server 2012
+      WindowAgent
+    
+    
+      Soft
+      GNS3 2.2.17
+       
+    
+    
+      IP
+      Như mô hình
+       
+    
+  
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Giám sát một số devices với zabbix agent, SNMP - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="Giám sát một số devices với zabbix agent, SNMP - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <h1 class="mt-1">Giám sát một số devices với zabbix agent, SNMP</h1>
+                        <p>
+						<span class="button is-info is-light is-small mr-2">
+							 01-02-2021
+						</span>
+                                 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/tools"
+                                    >Tools</a
+                                > 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/monitoring"
+                                    >Monitoring</a
+                                > 
+                        </p>
+                        <p><p>Trong
+<a href="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full">bài viết trước</a>
+tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này
+tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình
+thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau:</p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Thông tin</th>
+      <th> </th>
+      <th>Hostname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R1</td>
+      <td>Cisco 3640</td>
+      <td>R-C3640</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>CentOS 7</td>
+      <td>LinuxAgent</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>Ubuntu 18.04</td>
+      <td>Zabbix-Server</td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>Windows server 2012</td>
+      <td>WindowAgent</td>
+    </tr>
+    <tr>
+      <td>Soft</td>
+      <td>GNS3 2.2.17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>IP</td>
+      <td>Như mô hình</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--more-->
+
+<h3 id="1-thêm-linux-os-vào-zabbix-sử-dụng-zabbix-agent">1 Thêm Linux OS vào Zabbix (sử dụng zabbix agent)</h3>
+
+<h4 id="11-cài-đặt-zabbix-agent-centos-7">1.1 Cài đặt zabbix agent (CentOS 7)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+ctnguyenvn[~]$ yum install zabbix-agent -y
+</code></pre></div></div>
+
+<h4 id="12-cấu-hình-zabbix-agent">1.2 Cấu hình zabbix agent</h4>
+
+<p>Trên máy agent Linux, mở file cấu hình zabbix agent tại
+<code class="language-plaintext highlighter-rouge">/etc/zabbix_agentd.conf</code> và thay đổi như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ vim /etc/zabbix_agentd.conf
++++ snip some code +++
+Server=172.17.10.10     &lt;== domain hoặc IP zabbix server
++++ snip some code +++
+ServerActive=172.17.10.10   &lt;== domain hoặc IP zabbix server
++++ snip some code +++
+Hostname=LinuxAgent         &lt;==Hostname của máy Linux Agent hiện tại
++++ snip some code +++
+</code></pre></div></div>
+
+<p>Khởi động zabbix agent</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ systemctl start zabbix-agent
+ctnguyenvn[~]$ systemctl enable zabbix-agent
+</code></pre></div></div>
+
+<p>Và allow firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ firewall-cmd --zone=public --add-service=zabbix-agent --permanent
+ctnguyenvn[~]$ firewall-cmd --reload
+</code></pre></div></div>
+
+<h4 id="13-tạo-host-trên-zabbix-server">1.3 Tạo host trên zabbix server</h4>
+
+<p>Trên trình duyệt truy cập vào zabbix server</p>
+
+<p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/9.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host Name</code>, <code class="language-plaintext highlighter-rouge">IP</code> đúng với <code class="language-plaintext highlighter-rouge">hostname</code> và <code class="language-plaintext highlighter-rouge">ip</code> của máy
+Linux agent cần thêm vào zabbix.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/10.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> có thể chọn như hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/11.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Tiếp theo nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
+khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
+<code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>ZBX</strong> (chứng tỏ đã thêm host mới này sử dụng zabbix
+agent)</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/12.png" alt="zabbix" class="center-image" /></p>
+
+<h3 id="2-thêm-windows-os-vào-zabbix-sử-dụng-zabbix-agent">2. Thêm Windows OS vào Zabbix (sử dụng zabbix agent)</h3>
+
+<h4 id="21-cài-đặt-zabbix-agent">2.1 Cài đặt zabbix agent</h4>
+
+<p>Truy cập vào <a href="https://www.zabbix.com/download_agents">đây</a> và chọn phiên bản phù
+hợp với windows hiện tại. Ví dụ trong bài lab này tôi sử dụng zabbix agent 5.0
+trên windows server 2012 r2 tại
+<a href="https://www.zabbix.com/download_agents?version=5.0+LTS&amp;release=5.0.8&amp;os=Windows&amp;os_version=Any&amp;hardware=amd64&amp;encryption=OpenSSL&amp;packaging=MSI">đây</a></p>
+
+<p><strong><em>(i)</em></strong> <em>Sau khi tải về và run file cài đặt (file .MSI) ta sẽ được như sau,
+nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/13.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo chọn <code class="language-plaintext highlighter-rouge">I accept....</code> và nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/14.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host name</code>, <code class="language-plaintext highlighter-rouge">Zabbix Server IP/DNS</code> và nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/15.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Đặt đúng tên máy để cấu hình chính xác hơn khi thêm thiết bị vào máy
+chủ zabbix. Ở đây tôi cũng đã đặt hostname trên máy window server 2012r2 này
+là WINDOWSAGENT</p>
+</blockquote>
+
+<p><strong><em>(iv)</em></strong> <em>Nhấn <code class="language-plaintext highlighter-rouge">Next</code> ở cửa sổ tiếp theo</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/16.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(v)</em></strong> <em>Cuối cùng nhấn <code class="language-plaintext highlighter-rouge">Install</code> và đợi quá trình cài đặt zabbix agent hoàn
+tất.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/17.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(vi)</em></strong> <em>Nhấn <code class="language-plaintext highlighter-rouge">Finish</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/18.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Có thể cần phải mở firewall port 10050 trên máy window server này cho
+phép kết nối từ zabbix server</p>
+</blockquote>
+
+<h4 id="22-tạo-host-trên-zabbix-server">2.2 Tạo host trên zabbix server</h4>
+
+<p>Tương tự như thêm host mới với linux OS, trên trình duyệt truy cập vào zabbix
+server</p>
+
+<p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/19.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host Name</code>, <code class="language-plaintext highlighter-rouge">IP</code> đúng với <code class="language-plaintext highlighter-rouge">hostname</code> và <code class="language-plaintext highlighter-rouge">ip</code> của máy
+Windows agent cần thêm vào zabbix.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/20.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> có thể chọn như hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/21.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Tiếp theo nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
+khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
+<code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>ZBX</strong> (chứng tỏ đã thêm host mới này sử dụng zabbix
+agent)</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/22.png" alt="zabbix" class="center-image" /></p>
+
+<h3 id="3-thêm-router-cisco-vào-zabbix-sử-dụng-snmp">3. Thêm Router Cisco vào Zabbix (sử dụng SNMP)</h3>
+
+<h4 id="31-cấu-hình-cisco-device">3.1 Cấu hình Cisco device</h4>
+
+<p>Truy cập vào Cisco router và thực hiện enable SNMP, cấu hình <code class="language-plaintext highlighter-rouge">community</code>,
+<code class="language-plaintext highlighter-rouge">contact</code>, <code class="language-plaintext highlighter-rouge">zabbix server</code>… cơ bản như sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R-C3640# config terminal
+R-C3640(config)# snmp-server community zabbix-congtrulab ro
+R-C3640(config)# snmp-server contact admin admin@congtrulab.local
+R-C3640(config)# snmp-server location Sysad-Room
+R-C3640(config)# end
+R-C3640# wr
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Chuỗi community cần phải nhớ chính xác để thiết lập kết nối với zabbix
+server</p>
+</blockquote>
+
+<h4 id="32-tạo-host-trên-zabbix-server">3.2 Tạo host trên zabbix server</h4>
+
+<p>Trên trình duyệt truy cập vào zabbix server.</p>
+
+<p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới.
+Sau đó nhập thông tin như hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/23.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Ở bước 2 chỉ là xóa phương thức sử dụng agent, thay vào đó sẽ sử dụng
+<code class="language-plaintext highlighter-rouge">SNMP</code> bằng cách chọn số 3 -&gt; 4 (trong hình)</p>
+</blockquote>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập đúng IP của Cisco router, port và SNMP version như
+hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/24.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> chọn như hình</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/25.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Macros</code> cột <code class="language-plaintext highlighter-rouge">Macro</code> nhập <strong>{$SNMP_COMMUNITY}</strong> và
+<code class="language-plaintext highlighter-rouge">Value</code> nhập đúng <code class="language-plaintext highlighter-rouge">Community</code> <strong>zabbix-congtrulab</strong> đã cấu hình ở trên</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/26.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(v)</em></strong> <em>Cuối cùng nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
+khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
+<code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>SNMP</strong> (chứng tỏ đã thêm host mới này sử dụng SNMP)</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/27.png" alt="zabbix" class="center-image" /></p>
+
+<h3 id="4-cấu-hình-tạo-report-qua-email">4. Cấu hình tạo report qua email</h3>
+
+<p>Zabbix hỗ trợ rất nhiều phương thức report, trong bài biết này sẽ hướng dẫn cơ
+bản cấu hình report thông qua Email. Cụ thể như sau:</p>
+
+<p><strong><em>(i)</em></strong> <em>Trên trình duyệt truy cập vào zabbix server. Chọn <code class="language-plaintext highlighter-rouge">Administraion</code> -&gt;
+<code class="language-plaintext highlighter-rouge">Media types</code>, lúc này sẽ xuất hiện rất nhiều <code class="language-plaintext highlighter-rouge">media types</code> có sẵn, nhấp chọn
+<code class="language-plaintext highlighter-rouge">Email</code> hoặc chọn <code class="language-plaintext highlighter-rouge">create media types</code> để tạo mới.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/28.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo tùy thuộc vào mail server mà cần nhập đúng thông tin mail
+server. Cụ thể trong bài này tôi sử dụng gmail, do đó sẽ nhập thông tin như hình
+sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/29.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Việc này cho phép zabbix server sử dụng email này để đăng nhập và gửi
+mail, do đó cần phải kích hoạt
+<a href="https://myaccount.google.com/lesssecureapps"><code class="language-plaintext highlighter-rouge">less secure app</code></a> trên tài
+khoản gmail</p>
+</blockquote>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo trước khi thử nghiệm kết quả ta cần kích hoạt 1 report
+bất kỳ cho việc test này bằng cách vào <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Actions</code> -&gt; nhấn vào
+<strong>disable</strong> tại một <code class="language-plaintext highlighter-rouge">trigger action</code> muốn test</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/30.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Sau đó sẽ thấy trạng thái <strong>Enable</strong> tại report này</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/31.png" alt="zabbix" class="center-image" /></p>
+
+<p>Sau khi cấu hình gửi report qua email thành công, tiếp theo sẽ cấu hình người
+nhận report. Trong bài lab này tôi sẽ cấu hình gửi đến admin hiện tại.</p>
+
+<p>Truy cập vào trình duyệt zabbix server,</p>
+
+<p><strong><em>(v)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">User setting</code> -&gt; <code class="language-plaintext highlighter-rouge">Media</code> -&gt; chọn <code class="language-plaintext highlighter-rouge">Type</code> <strong>Email</strong> và Email
+người nhận report. Ngoài ra có thể chọn các mức cảnh báo như sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/32.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(vi)</em></strong> <em>Sau đó nhấn <code class="language-plaintext highlighter-rouge">Add</code> -&gt; <code class="language-plaintext highlighter-rouge">Update</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/33.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(vii)</em></strong> <em>Cuối cùng để kiểm tra quá trình gửi report đã thành công chưa, tôi
+thử thay đổi RAM/CPU trên VM Windows Server chạy Agent và reboot. Kết quả nhận
+được qua mail ví dụ như CPU như sau.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/34.png" alt="zabbix" class="center-image" /></p>
+
+<p>Trong bài này tôi chỉ đơn giản thêm các thiết bị vào zabbix với mục đích lưu
+trữ. Tuy nhiên việc cấu hình để giám sát các hoạt động cụ thể khác trên router
+như CPU, Network Interface,… hay trên Linux, windows server cần nhiều hơn nữa.</p>
+</p>
+                    </div>
+					<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>

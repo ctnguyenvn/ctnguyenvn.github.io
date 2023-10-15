@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         linux-sysad | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Happy Investigating" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="linux-sysad - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="linux-sysad - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/category/linux-sysad/index.html" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-8 is-offset-2">
+                <figure class="image is-16by9">
+                    <img src="https://ctnguyenvn.me/assets/img/home-head.png" alt="" />
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <p class="pb-1 mb-0">
+                            22-02-2023
+                        </p>
+                        <h1 class="title mt-1">
+                            <a class="has-text-info-dark" href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/"
+                                >Thu thập log từ Cisco IOS về SIEM (ELK)</a
+                            >
+                        </h1>
+                        <p>
+                            Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command…...
+                        </p>
+                        <p>
+                             
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/collect-log"
+                                >collect-log</a
+                            > 
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/elk"
+                                >ELK</a
+                            > 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <p class="pb-1 mb-0">
+                            06-11-2022
+                        </p>
+                        <h1 class="title mt-1">
+                            <a class="has-text-info-dark" href="/2022/11/06/mot-so-vim-key-co-ban/"
+                                >Một số key trong vim giúp edit nhanh hơn</a
+                            >
+                        </h1>
+                        <p>
+                            Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau...
+                        </p>
+                        <p>
+                             
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/vim"
+                                >vim</a
+                            > 
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/linux-command"
+                                >linux command</a
+                            > 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <p class="pb-1 mb-0">
+                            03-04-2021
+                        </p>
+                        <h1 class="title mt-1">
+                            <a class="has-text-info-dark" href="/2021/04/03/dig-command/"
+                                >Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a
+                            >
+                        </h1>
+                        <p>
+                            Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig...
+                        </p>
+                        <p>
+                             
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/notes"
+                                >Notes</a
+                            > 
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/linux-command"
+                                >linux command</a
+                            > 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <p class="pb-1 mb-0">
+                            13-02-2021
+                        </p>
+                        <h1 class="title mt-1">
+                            <a class="has-text-info-dark" href="/2021/02/13/git-command-basic/"
+                                >Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a
+                            >
+                        </h1>
+                        <p>
+                            Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn...
+                        </p>
+                        <p>
+                             
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/git"
+                                >Git</a
+                            > 
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/notes"
+                                >Notes</a
+                            > 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <p class="pb-1 mb-0">
+                            01-02-2021
+                        </p>
+                        <h1 class="title mt-1">
+                            <a class="has-text-info-dark" href="/2021/02/01/install-add-devices-zabbix-agent/"
+                                >Giám sát một số devices với zabbix agent, SNMP</a
+                            >
+                        </h1>
+                        <p>
+                            Trong bài viết trước tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình thêm việc nhận thông báo qua email. Mô hình cụ...
+                        </p>
+                        <p>
+                             
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/tools"
+                                >Tools</a
+                            > 
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/monitoring"
+                                >Monitoring</a
+                            > 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <p class="pb-1 mb-0">
+                            31-01-2021
+                        </p>
+                        <h1 class="title mt-1">
+                            <a class="has-text-info-dark" href="/2021/01/31/zabbix-install-config-full/"
+                                >Cài đặt và cấu hình Zabbix 5.0</a
+                            >
+                        </h1>
+                        <p>
+                            Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device như hình sau 1. Giới thiệu mô hình lab Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17...
+                        </p>
+                        <p>
+                             
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/tools"
+                                >Tools</a
+                            > 
+                            <a
+                                class="tag is-info is-medium mr-1"
+                                href="/tag/monitoring"
+                                >Monitoring</a
+                            > 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<!-- pagination -->
+
+<section class="section pt-0"><!-- Pagination links -->
+
+<div class="container">
+    <div class="columns">
+        <div class="column is-8 is-offset-2 px-1">
+            <nav class="" role="navigation" aria-label="pagination">
+                
+                <span class="pagination-link button is-info is-light">Previous</span>
+                
+                <span class="page_number">
+                    <!-- Page: 1 of 2 -->
+                </span>
+                
+                <a href="/category/linux-sysad/p2/" class="pagination-link button is-info is-light"
+                    >Next</a
+                >
+                
+            </nav>
+        </div>
+    </div>
+</div>
+</section>
+
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>

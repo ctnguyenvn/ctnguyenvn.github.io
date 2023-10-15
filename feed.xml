@@ -1,0 +1,2467 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://ctnguyenvn.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ctnguyenvn.me/" rel="alternate" type="text/html" /><updated>2023-10-15T18:32:40+07:00</updated><id>https://ctnguyenvn.me/feed.xml</id><title type="html">ctnguyenvn</title><subtitle>Happy Investigating</subtitle><author><name>ctnguyenvn</name></author><entry><title type="html">Tìm kiếm subdomain không sử dụng brute-force</title><link href="https://ctnguyenvn.me/2023/07/01/subdomain-enumeration-without-bruteforce/" rel="alternate" type="text/html" title="Tìm kiếm subdomain không sử dụng brute-force" /><published>2023-07-01T00:00:00+07:00</published><updated>2023-07-01T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2023/07/01/subdomain-enumeration-without-bruteforce</id><content type="html" xml:base="https://ctnguyenvn.me/2023/07/01/subdomain-enumeration-without-bruteforce/"><![CDATA[<p>Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua các search engine như bing/google…</p>
+
+<p>Tiếp theo tôi xin chia sẻ về tìm kiếm subdomain (passive scanning) mà tôi hay dùng</p>
+
+<h4 id="tìm-kiếm-subdomain-manual">Tìm kiếm subdomain manual</h4>
+
+<p>Suy cho cùng việc tìm kiếm không tác động trực tiếp đến target này phổ biến 2 loại là sử dụng search engine như Google, Bing cùng một số trang web như virustotal, censys, shodan… và thông qua thông tin về các certificate của webdomain đó.</p>
+
+<p>Đối với search engine như Google, Bing tôi thường sử dụng <a href="https://www.exploit-db.com/google-hacking-database">dorks</a> cơ bản như:</p>
+
+<p>Đơn giản là <code class="language-plaintext highlighter-rouge">site:domain.com</code>, <code class="language-plaintext highlighter-rouge">-site:domain.com</code> hoặc kết hợp cả 2 ví như</p>
+
+<p><img src="/images/subdomain-enum/1.jpg" alt="" /></p>
+
+<p>hay như <code class="language-plaintext highlighter-rouge">site:redhat.com -inurl:research.redhat.com -intitle:"Red hat"</code></p>
+
+<p><img src="/images/subdomain-enum/2.jpg" alt="" /></p>
+
+<p>Ưu điểm của việc này là có thể tìm kiếm một số subdomain không sử dụng HTTPS có thể bị xót.</p>
+
+<p>Đối với thông tin từ các certs, tôi thường tìm một số thông tin trên các trang gồm:</p>
+
+<ul>
+  <li><a href="https://crt.sh/">crt.sh</a></li>
+  <li><a href="https://search.censys.io/">censys.io</a></li>
+  <li><a href="https://www.virustotal.com/">virustotal</a></li>
+  <li><a href="https://shodan.io/">shodan</a></li>
+</ul>
+
+<p>Ưu điểm của các trang này là hiển thị nhanh chóng các subdomain. Tuy nhiên chúng ta vẫn phải trích xuất chúng một cách thủ công mặc dù có thể chưa hoàn toàn xác định được các domain này có còn hoạt động hay không. Trong một số trường hợp nhất định việc tìm kiếm này đôi khi cũng có nhiều thông tin hữu ích.</p>
+
+<p><img src="/images/subdomain-enum/3.jpg" alt="" /></p>
+
+<h4 id="tìm-kiếm-subdomain-sử-dụng-công-cụ">Tìm kiếm subdomain sử dụng công cụ</h4>
+
+<p>Việc sử dụng một công cụ nào đó thay thế về cơ bản chỉ là tự động hoá quá trình tìm kiếm manual. Có nhiều công cụ thực hiện công việc này như <a href="https://github.com/owasp-amass/amass">amass</a>, <a href="https://github.com/guelfoweb/knock">Knock</a>, <a href="https://github.com/aboul3la/Sublist3r">Sublist3r</a> hay đối với tôi thì công cụ thường xuyên xử dụng nhất là <a href="https://github.com/projectdiscovery/subfinder">subfinder</a>, công cụ này tốc độ nhanh và đặc biệt các option khá đơn giản khi sử dụng. Tất nhiên amass cũng là công cụ khá mạnh và hỗ trợ rất nhiều tính năng khác (kể cả bruteforce - active scanning).</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="nv">$.</span>/subfinder <span class="nt">-d</span> bachhoaxanh.com
+
+               __    _____           __         
+   _______  __/ /_  / __<span class="o">(</span>_<span class="o">)</span>___  ____/ /__  _____
+  / ___/ / / / __ <span class="se">\/</span> /_/ / __ <span class="se">\/</span> __  / _ <span class="se">\/</span> ___/
+ <span class="o">(</span>__  <span class="o">)</span> /_/ / /_/ / __/ / / / / /_/ /  __/ /    
+/____/<span class="se">\_</span>_,_/_.___/_/ /_/_/ /_/<span class="se">\_</span>_,_/<span class="se">\_</span>__/_/
+
+        projectdiscovery.io
+
+<span class="o">[</span>INF] Current subfinder version v2.6.0 <span class="o">(</span>latest<span class="o">)</span>
+<span class="o">[</span>INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml
+<span class="o">[</span>INF] Enumerating subdomains <span class="k">for </span>bachhoaxanh.com
+www.bachhoaxanh.com
+cms.bachhoaxanh.com
+hddt.bachhoaxanh.com
+autodiscover.bachhoaxanh.com
+mail.bachhoaxanh.com
+owa.bachhoaxanh.com
+staging.bachhoaxanh.com
+alpha.bachhoaxanh.com
+beta.bachhoaxanh.com
+vieclam.bachhoaxanh.com
+bachhoaxanh.com
+<span class="o">[</span>INF] Found 11 subdomains <span class="k">for </span>bachhoaxanh.com <span class="k">in </span>30 seconds 2 milliseconds
+</code></pre></div></div>
+
+<p>Ưu điểm của phương thức này là thời gian tìm kiếm nhanh, ngoài ra hỗ trợ resolve ra các địa chỉ IP và cũng hỗ trợ kiểm tra trạng thái các subdomain này active/non-active.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="nv">$.</span>/subfinder <span class="nt">-active</span> <span class="nt">-ip</span> <span class="nt">-d</span> bachhoaxanh.com
+
+               __    _____           __         
+   _______  __/ /_  / __<span class="o">(</span>_<span class="o">)</span>___  ____/ /__  _____
+  / ___/ / / / __ <span class="se">\/</span> /_/ / __ <span class="se">\/</span> __  / _ <span class="se">\/</span> ___/
+ <span class="o">(</span>__  <span class="o">)</span> /_/ / /_/ / __/ / / / / /_/ /  __/ /    
+/____/<span class="se">\_</span>_,_/_.___/_/ /_/_/ /_/<span class="se">\_</span>_,_/<span class="se">\_</span>__/_/
+
+        projectdiscovery.io
+
+<span class="o">[</span>INF] Current subfinder version v2.6.0 <span class="o">(</span>latest<span class="o">)</span>
+<span class="o">[</span>INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml
+<span class="o">[</span>INF] Enumerating subdomains <span class="k">for </span>bachhoaxanh.com
+alpha.bachhoaxanh.com,14.161.40.155,leakix
+beta.bachhoaxanh.com,14.161.40.155,leakix
+www.bachhoaxanh.com,103.48.76.192,digitorus
+bachhoaxanh.com,103.48.76.192,digitorus
+mail.bachhoaxanh.com,203.113.172.93,crtsh
+vieclam.bachhoaxanh.com,103.48.76.199,anubis
+staging.bachhoaxanh.com,103.48.76.192,leakix
+hddt.bachhoaxanh.com,103.48.76.141,anubis
+cms.bachhoaxanh.com,103.48.76.192,anubis
+<span class="o">[</span>INF] Found 9 subdomains <span class="k">for </span>bachhoaxanh.com <span class="k">in </span>5 seconds 443 milliseconds
+</code></pre></div></div>
+
+<p>Tuy nhiên các công cụ này chỉ hỗ trợ một số trang miễn phí. Đối với một số trang khác để hiệu quả hơn trong việc tìm kiếm chúng ta cần sử dụng API key, có thể thêm vào config tại <code class="language-plaintext highlighter-rouge">~/.config/subfinder/provider-config.yaml</code>.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">└──╼ $cat /home/admin/.config/subfinder/provider-config.yaml</span>
+<span class="na">censys</span><span class="pi">:</span> <span class="pi">[]</span>
+    <span class="pi">-</span> <span class="s">ac331e2f-b635-4581-878a-66d4e79a2c13:dd53-1b6e-4655-83f6-f347b363def9</span>
+<span class="na">certspotter</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">dnsdb</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">dnsrepo</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">github</span><span class="pi">:</span> 
+    <span class="pi">-</span> <span class="s">ghp_dbyJGU3jv1xmwk4SDXavrLDJ4dl2pSJMHHA1</span>
+<span class="na">passivetotal</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">hunterman@simbox.io:HUnice_123</span>
+<span class="na">shodan</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">PSKINdQe1GyxGgecYz2191H2JoS9qvgD</span>
+    <span class="pi">-</span> <span class="s">OefcMxcunkm72Po71vVtX8zUN57vQtAC</span>
+    <span class="pi">-</span> <span class="s">pHHlgpFt8Ka3Stb5UlTxcaEwciOeF2QM</span>
+<span class="na">threatbook</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">virustotal</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">whoisxmlapi</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">zoomeye</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">zoomeyeapi</span><span class="pi">:</span> <span class="pi">[]</span>
+</code></pre></div></div>
+
+<p>Như vậy qua bài viết đơn giản này chúng ta có thể tìm kiếm các subdomain phục vụ cho một số nhu cầu công việc mà không cần phải dò quét tác động trực tiếp đến target.</p>]]></content><author><name>ctnguyenvn</name></author><category term="tutorials" /><category term="enumeration" /><summary type="html"><![CDATA[Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua các search engine như bing/google… Tiếp theo tôi xin chia sẻ về tìm kiếm subdomain (passive scanning) mà tôi hay dùng Tìm kiếm subdomain manual Suy cho cùng việc tìm kiếm không tác động trực tiếp đến target này phổ biến 2 loại là sử dụng search engine như Google, Bing cùng một số trang web như virustotal, censys, shodan… và thông qua thông tin về các certificate của webdomain đó. Đối với search engine như Google, Bing tôi thường sử dụng dorks cơ bản như: Đơn giản là site:domain.com, -site:domain.com hoặc kết hợp cả 2 ví như hay như site:redhat.com -inurl:research.redhat.com -intitle:"Red hat" Ưu điểm của việc này là có thể tìm kiếm một số subdomain không sử dụng HTTPS có thể bị xót. Đối với thông tin từ các certs, tôi thường tìm một số thông tin trên các trang gồm: crt.sh censys.io virustotal shodan Ưu điểm của các trang này là hiển thị nhanh chóng các subdomain. Tuy nhiên chúng ta vẫn phải trích xuất chúng một cách thủ công mặc dù có thể chưa hoàn toàn xác định được các domain này có còn hoạt động hay không. Trong một số trường hợp nhất định việc tìm kiếm này đôi khi cũng có nhiều thông tin hữu ích. Tìm kiếm subdomain sử dụng công cụ Việc sử dụng một công cụ nào đó thay thế về cơ bản chỉ là tự động hoá quá trình tìm kiếm manual. Có nhiều công cụ thực hiện công việc này như amass, Knock, Sublist3r hay đối với tôi thì công cụ thường xuyên xử dụng nhất là subfinder, công cụ này tốc độ nhanh và đặc biệt các option khá đơn giản khi sử dụng. Tất nhiên amass cũng là công cụ khá mạnh và hỗ trợ rất nhiều tính năng khác (kể cả bruteforce - active scanning). └──╼ $./subfinder -d bachhoaxanh.com __ _____ __ _______ __/ /_ / __(_)___ ____/ /__ _____ / ___/ / / / __ \/ /_/ / __ \/ __ / _ \/ ___/ (__ ) /_/ / /_/ / __/ / / / / /_/ / __/ / /____/\__,_/_.___/_/ /_/_/ /_/\__,_/\___/_/ projectdiscovery.io [INF] Current subfinder version v2.6.0 (latest) [INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml [INF] Enumerating subdomains for bachhoaxanh.com www.bachhoaxanh.com cms.bachhoaxanh.com hddt.bachhoaxanh.com autodiscover.bachhoaxanh.com mail.bachhoaxanh.com owa.bachhoaxanh.com staging.bachhoaxanh.com alpha.bachhoaxanh.com beta.bachhoaxanh.com vieclam.bachhoaxanh.com bachhoaxanh.com [INF] Found 11 subdomains for bachhoaxanh.com in 30 seconds 2 milliseconds Ưu điểm của phương thức này là thời gian tìm kiếm nhanh, ngoài ra hỗ trợ resolve ra các địa chỉ IP và cũng hỗ trợ kiểm tra trạng thái các subdomain này active/non-active. └──╼ $./subfinder -active -ip -d bachhoaxanh.com __ _____ __ _______ __/ /_ / __(_)___ ____/ /__ _____ / ___/ / / / __ \/ /_/ / __ \/ __ / _ \/ ___/ (__ ) /_/ / /_/ / __/ / / / / /_/ / __/ / /____/\__,_/_.___/_/ /_/_/ /_/\__,_/\___/_/ projectdiscovery.io [INF] Current subfinder version v2.6.0 (latest) [INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml [INF] Enumerating subdomains for bachhoaxanh.com alpha.bachhoaxanh.com,14.161.40.155,leakix beta.bachhoaxanh.com,14.161.40.155,leakix www.bachhoaxanh.com,103.48.76.192,digitorus bachhoaxanh.com,103.48.76.192,digitorus mail.bachhoaxanh.com,203.113.172.93,crtsh vieclam.bachhoaxanh.com,103.48.76.199,anubis staging.bachhoaxanh.com,103.48.76.192,leakix hddt.bachhoaxanh.com,103.48.76.141,anubis cms.bachhoaxanh.com,103.48.76.192,anubis [INF] Found 9 subdomains for bachhoaxanh.com in 5 seconds 443 milliseconds Tuy nhiên các công cụ này chỉ hỗ trợ một số trang miễn phí. Đối với một số trang khác để hiệu quả hơn trong việc tìm kiếm chúng ta cần sử dụng API key, có thể thêm vào config tại ~/.config/subfinder/provider-config.yaml. └──╼ $cat /home/admin/.config/subfinder/provider-config.yaml censys: [] - ac331e2f-b635-4581-878a-66d4e79a2c13:dd53-1b6e-4655-83f6-f347b363def9 certspotter: [] dnsdb: [] dnsrepo: [] github: - ghp_dbyJGU3jv1xmwk4SDXavrLDJ4dl2pSJMHHA1 passivetotal: - hunterman@simbox.io:HUnice_123 shodan: - PSKINdQe1GyxGgecYz2191H2JoS9qvgD - OefcMxcunkm72Po71vVtX8zUN57vQtAC - pHHlgpFt8Ka3Stb5UlTxcaEwciOeF2QM threatbook: [] virustotal: [] whoisxmlapi: [] zoomeye: [] zoomeyeapi: [] Như vậy qua bài viết đơn giản này chúng ta có thể tìm kiếm các subdomain phục vụ cho một số nhu cầu công việc mà không cần phải dò quét tác động trực tiếp đến target.]]></summary></entry><entry><title type="html">Thu thập log từ Cisco IOS về SIEM (ELK)</title><link href="https://ctnguyenvn.me/2023/02/22/collect-log-from-cisco-ios-to-ELK/" rel="alternate" type="text/html" title="Thu thập log từ Cisco IOS về SIEM (ELK)" /><published>2023-02-22T00:00:00+07:00</published><updated>2023-02-22T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2023/02/22/collect-log-from-cisco-ios-to-ELK</id><content type="html" xml:base="https://ctnguyenvn.me/2023/02/22/collect-log-from-cisco-ios-to-ELK/"><![CDATA[<p>Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này.</p>
+
+<h3 id="sơ-lược-mô-hình">Sơ lược mô hình</h3>
+
+<p>Trong bài viết này tôi sẽ chia sẻ một bài Lab nhỏ nhằm thu thập một số nhật ký cần thiết trên các thiết bị router/switch về hệ thống SIEM. Cụ thể tôi sẽ sử dụng IOS Version 12.4 Router 3700 Software (C3725-ADVENTERPRISEK9-M) giả lập trên phần mềm GNS3 kết hợp với ELK. ELK được build trên docker theo mô hình AIO và được cài đặt trên máy ảo vmware chạy hệ điều hành CentOS 7.</p>
+
+<p>Mô hình cơ bản như sau</p>
+
+<p><img src="/images/ELK/cisco/1.png" alt="" /></p>
+
+<blockquote>
+  <p>Lưu ý: Hiện tại tôi gửi log về logstash nhằm mục đích parse manual, tuy nhiên thực tế hiện tại filebeat có module cisco tương đối đủ để auto parse mà không cần parse tay ở logstash. Ngược lại với cách này yêu cầu dựng 1 server trung gian khác chạy filebeat để listen nên tôi không đề cập trong bài viết này.</p>
+</blockquote>
+
+<!--more-->
+
+<h3 id="start-elk-docker-version">Start ELK (docker version)</h3>
+
+<p>Trong bài viết này tôi không tập trung vào cài đặt ELK, tuy nhiên tôi đã chuẩn bị sẵn một chút để start một ELK Stack nhỏ phục vụ công việc test collect/parse log tại <a href="https://github.com/ctnguyenvn/mini-elk-docker">đây</a>. Sau khi clone về bạn cần chạy script <code class="language-plaintext highlighter-rouge">init-lab.sh</code> để check một số thứ.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[admin@elk ~]$ git clone https://github.com/ctnguyenvn/mini-elk-docker
+[admin@elk ~]$ cd mini-elk-docker
+[admin@elk mini-elk-docker]$ bash init-lab.sh
+[admin@elk mini-elk-docker]$ docker-compose up -d --build
+</code></pre></div></div>
+
+<p>Trong stack này hiện tại khi start lên logstash đã lắng nghe một số port nhất định như <code class="language-plaintext highlighter-rouge">5045/udp|tcp</code>, <code class="language-plaintext highlighter-rouge">5047/udp|tcp</code>,… Sau khi start ELK Stack chúng ta có thể truy cập vào giao diện của kibana tại địa chỉ <code class="language-plaintext highlighter-rouge">http://&lt;IP-Server&gt;:5601</code> với tài khoản <code class="language-plaintext highlighter-rouge">elastic/changeme</code></p>
+
+<blockquote>
+  <p>Lưu ý mặc định version ELK hiện tại đang thiết lập à 7.16.2, có thể thay đổi version bằng cách edit nội dung file <code class="language-plaintext highlighter-rouge">.env</code> tại thư mục <code class="language-plaintext highlighter-rouge">mini-elk-docker</code>.</p>
+</blockquote>
+
+<h3 id="cấu-hình-gửi-syslog-về-logstash-trên-cisco-ios">Cấu hình gửi syslog về logstash trên cisco ios</h3>
+
+<p>Trước khi cấu hình syslog tôi thực hiện một vài config cơ bản như đặt hostname/IP hay tạo user… như sau. Truy cập vào console router 1 và thực hiện</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R1# configure terminal
+R1(config)# hostname Router1
+Router1(config)# username admin01 privilege 15 password admin123
+
+# cấu hình ssh/telnet service --&gt;
+
+Router1(config)# ip domain-name congtrlab.local
+Router1(config)# crypto key generate rsa  (lưu ý nên nhập key lenght 2048)
+Router1(config)# ip ssh version 2
+Router1(config)# ip ssh time-out 60
+
+Router1(config)# line vty 0 4
+Router1(config-line)# privilege level 15
+Router1(config-line)# password admin
+Router1(config-line)# login local
+Router1(config-line)# transport input ssh telnet
+Router1(config-line)# exit
+
+# thiết lập IP Address --&gt;
+
+Router1(config)# int f0/0
+Router1(config-if)# ip address 172.16.0.140 255.255.255.0
+Router1(config-if)# no shutdown
+Router1(config-if)# end
+Router1# write
+</code></pre></div></div>
+
+<blockquote>
+  <p>Tương tự đối với router 2, lưu ý thay đổi thông tin IP address phù hợp theo sơ đồ. Đối với lab này không cần đến 2 router tuy nhiên để dể dàng phân biệt log trên các thiết bị nên tôi đã sử dụng 2 router cùng gửi log về SIEM để thoả mãn mong muốn này.</p>
+</blockquote>
+
+<p>Từ mô hình trên ta thấy ELK hiện tại đang có IP là <code class="language-plaintext highlighter-rouge">172.16.0.150</code> và logstash đang lắng nghe tại port <code class="language-plaintext highlighter-rouge">5047 UDP</code>. Để cấu hình gửi syslog về ELK tôi thực hiện như sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># cấu hình syslog server --&gt;
+
+Router1# configure terminal
+Router1(config)# logging userinfo
+Router1(config)# logging host 172.16.0.150 transport udp port 5047
+Router1(config)# logging trap notifications
+Router1(config)# logging origin-id hostname
+
+# cấu hình logging logon --&gt;
+
+Router1(config)# login on-failure log
+Router1(config)# login on-success log
+Router1(config)# login block-for 60 attempts 3 within 60
+
+# cấu hình logging command history --&gt;
+
+Router1(config)# archive
+Router1(config-archive)# log config
+Router1(config-archive-log-cfg)# logging enable
+Router1(config-archive-log-cfg)# hidekeys
+Router1(config-archive-log-cfg)# notify syslog
+Router1(config-archive-log-cfg)# end
+Router1# write
+</code></pre></div></div>
+<blockquote>
+  <p>Tương tự config đối với router 2. Ngoài ra bạn có thể thay thế log level tùy theo nhu cầu.</p>
+</blockquote>
+
+<h3 id="collect--parse-một-số-log-nhận-được-trên-logstash">Collect &amp; Parse một số log nhận được trên logstash</h3>
+
+<p>Sau khi cấu hình thành công trên router, tôi thực hiện một vài thao tác như ssh vào router, test một vài command… và quay lại kibana kết quả:</p>
+
+<p><img src="/images/ELK/cisco/2.png" alt="" /></p>
+
+<p>Thực hiện tạo index trên Kibana Index Patterns</p>
+
+<p><img src="/images/ELK/cisco/3.png" alt="" /></p>
+
+<p>Quay lại Kibana Discover tôi được một số log với syslog format như sau</p>
+
+<p><img src="/images/ELK/cisco/4.jpg" alt="" /></p>
+
+<p>Tiếp theo để parse một số log logon và history command như yêu cầu ban đầu, tôi thực hiện chỉnh sửa <code class="language-plaintext highlighter-rouge">filter {}</code> trên pipeline config của logstash với nội dung như sau:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>admin@elk mini-elk-docker]<span class="nv">$ </span><span class="nb">cat </span>logstash/pipeline/logstash.conf
+
+<span class="c"># input</span>
+input <span class="o">{</span>
+    udp <span class="o">{</span>
+        port <span class="o">=&gt;</span> 5047
+        <span class="nb">type</span> <span class="o">=&gt;</span> <span class="s2">"cisco"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c"># filter</span>
+filter <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[</span><span class="nb">type</span><span class="o">]</span> <span class="o">==</span> <span class="s2">"cisco"</span> <span class="o">{</span>
+        grok <span class="o">{</span>
+            match <span class="o">=&gt;</span> <span class="o">{</span>
+                <span class="s2">"message"</span> <span class="o">=&gt;</span> <span class="s2">"&lt;%{NUMBER:priority}&gt;%{NUMBER:log.seq}: %{DATA:log.source}: %{DATA:event.datetime}: </span><span class="se">\%</span><span class="s2">%{WORD:facility}-%{INT:severity}-%{WORD:mnemonic}:( )?%{GREEDYDATA:msg}"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="s2">"CFGLOG_LOGGEDCMD"</span> <span class="k">in</span> <span class="o">[</span>mnemonic]  <span class="o">{</span>
+            grok <span class="o">{</span>
+                match <span class="o">=&gt;</span> <span class="o">{</span>
+                    <span class="s2">"msg"</span> <span class="o">=&gt;</span> <span class="s2">"User:%{USERNAME:user.name}%{SPACE}logged command:%{GREEDYDATA:user.command}"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">else if</span> <span class="s2">"LOGIN_SUCCESS"</span> <span class="k">in</span> <span class="o">[</span>mnemonic] or <span class="s2">"LOGIN_FAILED"</span> <span class="k">in</span> <span class="o">[</span>mnemonic] <span class="o">{</span>
+            grok <span class="o">{</span>
+                match <span class="o">=&gt;</span> <span class="o">{</span>
+                    <span class="s2">"msg"</span> <span class="o">=&gt;</span> <span class="s2">"Login %{WORD:event.status} </span><span class="se">\[</span><span class="s2">user: %{USERNAME:event.user}</span><span class="se">\]</span><span class="s2"> </span><span class="se">\[</span><span class="s2">Source: %{IPORHOST:event.source}</span><span class="se">\]</span><span class="s2"> </span><span class="se">\[</span><span class="s2">localport: %{NUMBER:event.service}</span><span class="se">\]</span><span class="s2"> (</span><span class="se">\[</span><span class="s2">Reason: %{DATA:event.reason}</span><span class="se">\]</span><span class="s2"> )?at %{GREEDYDATA:event.at}"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">[</span>severity] <span class="o">{</span>
+            translate <span class="o">{</span>
+                <span class="nb">source</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">"severity"</span><span class="o">]</span>
+                target <span class="o">=&gt;</span> <span class="s2">"[severity_desc]"</span>
+                dictionary <span class="o">=&gt;</span> <span class="o">{</span>
+                  <span class="s2">"0"</span> <span class="o">=&gt;</span> <span class="s2">"emergencies"</span>
+                  <span class="s2">"1"</span> <span class="o">=&gt;</span> <span class="s2">"alerts"</span>
+                  <span class="s2">"2"</span> <span class="o">=&gt;</span> <span class="s2">"critical"</span>
+                  <span class="s2">"3"</span> <span class="o">=&gt;</span> <span class="s2">"errors"</span>
+                  <span class="s2">"4"</span> <span class="o">=&gt;</span> <span class="s2">"warnings"</span>
+                  <span class="s2">"5"</span> <span class="o">=&gt;</span> <span class="s2">"notifications"</span>
+                  <span class="s2">"6"</span> <span class="o">=&gt;</span> <span class="s2">"informational"</span>
+                  <span class="s2">"7"</span> <span class="o">=&gt;</span> <span class="s2">"debugging"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c"># output</span>
+output <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[</span><span class="nb">type</span><span class="o">]</span> <span class="o">==</span> <span class="s2">"cisco"</span> <span class="o">{</span>
+        elasticsearch <span class="o">{</span>
+          hosts <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">"http://es01:9200"</span><span class="o">]</span>
+          index <span class="o">=&gt;</span> <span class="s2">"log-cisco-%{+YYYY.MM.dd}"</span>
+          user <span class="o">=&gt;</span> <span class="s2">"elastic"</span>
+          password <span class="o">=&gt;</span> <span class="s2">"changeme"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý <code class="language-plaintext highlighter-rouge">input {}</code> và <code class="language-plaintext highlighter-rouge">output {}</code> có thể không cần thay đổi, nếu muốn parse lại một số trường nào đó có thể thay đổi tại <code class="language-plaintext highlighter-rouge">filter {}</code>. Tất nhiên đây chỉ giới hạn trong một bài lab nhỏ mô phỏng toàn bộ quá trình collect &amp; parse log trên các thiết bị cisco ios.</p>
+</blockquote>
+
+<h3 id="kiểm-tra-kết-quả">Kiểm tra kết quả</h3>
+
+<p>Sau khi lưu cấu hình tại pipeline của logstash, container logstash sẽ tự động reload lại config. Kết quả sau một vài thao tác bất kỳ như trên (SSH/execute command) trên kibaba tôi nhận được kết quả như mong muốn. Bạn có thể kiểm tra lại với log history command.</p>
+
+<p><img src="/images/ELK/cisco/5.jpg" alt="" /></p>
+
+<p>Lưu ý: Các field trong config parse log chỉ là tham khảo, bạn có thể tùy chỉnh theo nhu cầu.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="collect-log" /><category term="ELK" /><summary type="html"><![CDATA[Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này. Sơ lược mô hình Trong bài viết này tôi sẽ chia sẻ một bài Lab nhỏ nhằm thu thập một số nhật ký cần thiết trên các thiết bị router/switch về hệ thống SIEM. Cụ thể tôi sẽ sử dụng IOS Version 12.4 Router 3700 Software (C3725-ADVENTERPRISEK9-M) giả lập trên phần mềm GNS3 kết hợp với ELK. ELK được build trên docker theo mô hình AIO và được cài đặt trên máy ảo vmware chạy hệ điều hành CentOS 7. Mô hình cơ bản như sau Lưu ý: Hiện tại tôi gửi log về logstash nhằm mục đích parse manual, tuy nhiên thực tế hiện tại filebeat có module cisco tương đối đủ để auto parse mà không cần parse tay ở logstash. Ngược lại với cách này yêu cầu dựng 1 server trung gian khác chạy filebeat để listen nên tôi không đề cập trong bài viết này.]]></summary></entry><entry><title type="html">PrintNightmare của letsdefend challenge</title><link href="https://ctnguyenvn.me/2022/12/25/investigate-printNightmare/" rel="alternate" type="text/html" title="PrintNightmare của letsdefend challenge" /><published>2022-12-25T00:00:00+07:00</published><updated>2022-12-25T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2022/12/25/investigate-printNightmare</id><content type="html" xml:base="https://ctnguyenvn.me/2022/12/25/investigate-printNightmare/"><![CDATA[<p>Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới <a href="https://www.linkedin.com/in/bohan-zhang-078751137/">Bohan Zhang</a> tại <a href="https://app.letsdefend.io/challenge/PrintNightmare">đây</a></p>
+
+<p>Thông tin:</p>
+
+<ul>
+  <li>Our system exploited by PrintNightmare vulnerability. You should investigate the case.</li>
+  <li>pcap/memory file: <a href="https://api.letsdefend.io/download/downloadfile/PrintNightmare.zip">download</a> / pass: infected</li>
+  <li>Công cụ sử dụng: Brim / Wireshark / Redline</li>
+</ul>
+
+<p>Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài này có thể là attacker đã khai thác thành công và tất cả những gì chúng ta cần truy vết là những gì sau đó.</p>
+
+<p>Sau khi tải file được cung cấp và giải nén ta được một số file quan trọng gồm:</p>
+
+<ul>
+  <li>AnalysisSession1.mans -&gt; Analysis session mở với Redline</li>
+  <li>challenge-v1.pcapng -&gt; Traffic giữa attacker với nạn nhân</li>
+  <li>suricata.rules -&gt; rule alert của suricata với lỗ hỗng PrintNightmare</li>
+</ul>
+
+<!--more-->
+
+<h4 id="looking-through-the-alerts-in-brim-what-is-the-vulnerability-name-and-its-corresponding-cve">Looking through the alerts in Brim, what is the vulnerability name and its corresponding CVE?</h4>
+
+<p>Tại câu này chỉ cần xem rule alert của suricata sẽ thấy nội dung được đề cập trong msg</p>
+
+<p><img src="/images/PrintNightmare/2.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {printnightmare, cve-2021-34527}</p>
+</blockquote>
+
+<h4 id="what-is-attackers-ip">What is Attacker’s IP?</h4>
+
+<p>Mở file pcap được cung cấp tôi chỉ thấy có mỗi 2 IP gồm 10.10.10.2 và 10.10.10.4, paste một trong hai IP này kiểu gì cũng đúng :)). Đùa thôi, như ban đầu đã đề cập tôi suy đoán rằng attacker khai thác victim và bắt đầu share file để tải dll độc hại về. Như vậy IP attacker sẽ là server share file (server) và victim sẽ đóng vai trò download file, tiếp tục kiểm tra traffic tôi thấy địa chỉ 10.10.10.4 request đến 10.10.10.2 một file có tên là <code class="language-plaintext highlighter-rouge">notsostealthy.dll</code></p>
+
+<p><img src="/images/PrintNightmare/3.png" alt="" /></p>
+
+<p>Như vậy có thể khẳng định IP của attacker là 10.10.10.2</p>
+
+<blockquote>
+  <p>sloved: {10.10.10.2}</p>
+</blockquote>
+
+<h4 id="what-is-attackers-share-path">What is Attacker’s share path?</h4>
+
+<p>Sử dụng Wireshark hoặc Brim tôi có thể dể dàng thấy đường dẫn share folder</p>
+
+<p><img src="/images/PrintNightmare/4.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {\\10.10.10.2\share}</p>
+</blockquote>
+
+<h4 id="what-is-the-name-of-the-malicious-dll-file-hosted-by-the-attacker">What is the name of the malicious DLL file hosted by the attacker?</h4>
+
+<p>Như hình trên chúng ta cũng thấy tên file dll victim đã tải về <code class="language-plaintext highlighter-rouge">notsostealthy.dll</code></p>
+
+<blockquote>
+  <p>sloved: {notsostealthy.dll}</p>
+</blockquote>
+
+<h4 id="what-is-the-sha256-hash-of-the-dll-file">What is the sha256 hash of the DLL file?</h4>
+
+<p>Mở pcap với wireshark sau đó File -&gt; Export Objects -&gt; SMB tôi tải các file dll về và check sẽ được SHA256. Tuy nhiên lưu ý dll tại packet 165 hoặc 228 mới là dll đúng.</p>
+
+<p><img src="/images/PrintNightmare/5.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {fa1ee835869ea97559359568043aea3a52508b360cfc5195a3d7fbb60cef55a5}</p>
+</blockquote>
+
+<h4 id="what-is-the-email-address-used-for-the-self-signed-ssl-certificate-in-the-traffic">What is the email address used for the self-signed SSL Certificate in the traffic?</h4>
+
+<p>Tìm kiếm ssl trên wireshark có thể thấy tại packet 245 (server hello) chứa email được sử dụng khi establed connection</p>
+
+<p><img src="/images/PrintNightmare/6.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {override@shields.mertz.net}</p>
+</blockquote>
+
+<h4 id="what-is-the-domain-user-used-by-the-attacker-to-exploit-the-vulnerability">What is the domain user used by the attacker to exploit the vulnerability?</h4>
+
+<p>Ở câu này tôi có thể sử dụng Redline hoặc wireshark để tìm thông tin tài khoản được attacker sử dụng. Trên wireshark tìm kiếm ssl và tôi thấy tại packet 65 (session setup request) cung cấp thông tin user xác thực cho quá trình thiết lập share SMB.</p>
+
+<p><img src="/images/PrintNightmare/7.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {bellybear\jesse.harmon}</p>
+</blockquote>
+
+<h4 id="what-is-the-exploit-servers-hostname">What is the exploit server’s hostname?</h4>
+
+<p>Trên wireshark tìm kiếm smb2 và tôi có thể thấy thông tin Hostname của server attacker</p>
+
+<p><img src="/images/PrintNightmare/8.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {WIN-FLO4EU2VMSM}</p>
+</blockquote>
+
+<h4 id="what-is-the-username-created-by-the-attacker-for-persistence">What is the username created by the attacker for persistence?</h4>
+
+<p>Ở câu này tôi có thể tìm kiếm dựa trên event log hoặc đơn giản chọn user -&gt; và tìm kiếm user nghi ngờ.</p>
+
+<p><img src="/images/PrintNightmare/9.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {hacker}</p>
+</blockquote>
+
+<h4 id="what-is-the-event-id-for-user-creation-in-windows-and-when-was-the-user-being-created">What is the event ID for user creation in Windows, and when was the user being created?</h4>
+
+<p>Như câu trên đề cập, tôi chọn Eventlog và tìm kiếm event id 4720 (created user). Kết quả có 5 event match và tìm kiếm event id 4720 với user được tạo là <code class="language-plaintext highlighter-rouge">hacker</code></p>
+
+<p><img src="/images/PrintNightmare/10.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {4720, 2021-08-16 19:31:46z}</p>
+</blockquote>
+
+<h4 id="what-process-name-is-used-to-establish-the-shell-connection-between-the-attackers-machine-and-the-windows-server-and-what-is-the-listening-port-on-the-attackers-machine">What process name is used to establish the shell connection between the attacker’s machine and the Windows server? and what is the listening port on the attacker’s machine?</h4>
+
+<p>Sử dụng Redline, chọn Ports -&gt; Established Ports kết quả chỉ có 1 connection với thông tin cần tìm</p>
+
+<p><img src="/images/PrintNightmare/11.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {rundll32.exe, 443}</p>
+</blockquote>
+
+<h4 id="the-attacker-used-a-famous-post-exploitation-framework-to-create-the-dll-file-and-establish-the-shell-connection-to-the-windows-server-what-is-the-payload-the-attacker-used">The attacker used a famous post-exploitation framework to create the DLL file and establish the shell connection to the Windows server, what is the payload the attacker used?</h4>
+
+<p>Ở câu này có vẻ hơi mông lung, post-exploitation framework được sử dụng phổ biến có lẽ là với metasploit còn establish shell với window thì sau một hồi google search lòng vòng và thử một vài payloads thì kết quả là payload <code class="language-plaintext highlighter-rouge">windows/x64/meterpreter/reverse_https</code>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>search reverse_https <span class="nb">type</span>:payload platform:window
+</code></pre></div></div>
+
+<p><img src="/images/PrintNightmare/12.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {windows/x64/meterpreter/reverse_https}</p>
+</blockquote>
+
+<h4 id="the-attacker-left-a-text-file-for-the-user-administrator-can-you-find-what-the-filename-is">The attacker left a text file for the user Administrator, can you find what the filename is?</h4>
+
+<p>Cuối cùng trên Redline chọn File System tôi thấy file nghi ngờ được attacker để lại tại thư mục C:\Users\Administrator\Documents với tên <code class="language-plaintext highlighter-rouge">This-Is-Really-A-Nightmare.txt</code></p>
+
+<p><img src="/images/PrintNightmare/13.png" alt="" /></p>
+
+<blockquote>
+  <p>sloved: {This-Is-Really-A-Nightmare.txt}</p>
+</blockquote>
+
+<h3 id="summary">Summary</h3>
+
+<p>Lỗ hỗng <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527">PrintNightmare</a> là lỗ hỗng trên Windows Print Spooler cho phép kẻ tấn công sau khi khai thác thành công có thể chạy mã tùy ý với đặc quyền hệ thống. Sau đó chúng có thể cài đặt chương trình; xem, thay đổi hoặc xóa dữ liệu; hoặc tạo tài khoản mới với đầy đủ quyền của người dùng,…</p>]]></content><author><name>ctnguyenvn</name></author><category term="dfir" /><category term="Games" /><category term="Forensic" /><summary type="html"><![CDATA[Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case. pcap/memory file: download / pass: infected Công cụ sử dụng: Brim / Wireshark / Redline Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài này có thể là attacker đã khai thác thành công và tất cả những gì chúng ta cần truy vết là những gì sau đó. Sau khi tải file được cung cấp và giải nén ta được một số file quan trọng gồm: AnalysisSession1.mans -&gt; Analysis session mở với Redline challenge-v1.pcapng -&gt; Traffic giữa attacker với nạn nhân suricata.rules -&gt; rule alert của suricata với lỗ hỗng PrintNightmare]]></summary></entry><entry><title type="html">Một số key trong vim giúp edit nhanh hơn</title><link href="https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban/" rel="alternate" type="text/html" title="Một số key trong vim giúp edit nhanh hơn" /><published>2022-11-06T00:00:00+07:00</published><updated>2022-11-06T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban</id><content type="html" xml:base="https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban/"><![CDATA[<p>Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại <a href="https://github.com/ctnguyenvn/vimrc/tree/neovim">vim repo</a> trong một số plugin mà tôi hay dùng.</p>
+
+<p><img src="https://ctnguyenvn.me/images/nvim/neovim-avt.webp" alt="neovim" class="center-image" /></p>
+
+<p>Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại <a href="https://devhints.io/vim">đây</a>.</p>
+
+<!--more-->
+
+<h4 id="một-số-vim-key-hay-dùng">Một số vim key hay dùng</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0</code> / <code class="language-plaintext highlighter-rouge">$</code> / <code class="language-plaintext highlighter-rouge">^</code></td>
+      <td>Di chuyển con trỏ đến đầu dòng / cuối dòng / đầu câu (không tính khoảng trống đầu dòng)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">A</code> / <code class="language-plaintext highlighter-rouge">I</code></td>
+      <td>Di chuyển đến cuối dòng / đầu dòng và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code> / <code class="language-plaintext highlighter-rouge">O</code></td>
+      <td>Thêm dòng phía dưới / phía trên dòng hiện tại và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">H</code> / <code class="language-plaintext highlighter-rouge">M</code> / <code class="language-plaintext highlighter-rouge">L</code></td>
+      <td>Di chuyển dòng đầu tiên / dòng giữa và dòng cuối của screen hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">e</code> / <code class="language-plaintext highlighter-rouge">b</code></td>
+      <td>Di chuyển đến cuối word / đầu word</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gg</code> / <code class="language-plaintext highlighter-rouge">G</code></td>
+      <td>Di chuyển đến dòng đầu tiên / cuối cùng của file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;</code> / <code class="language-plaintext highlighter-rouge">&gt;</code></td>
+      <td>Indent / unIndent</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[{</code> / <code class="language-plaintext highlighter-rouge">]}</code> / <code class="language-plaintext highlighter-rouge">[(</code> / <code class="language-plaintext highlighter-rouge">])</code></td>
+      <td>Di chuyển đến <code class="language-plaintext highlighter-rouge">{</code>/<code class="language-plaintext highlighter-rouge">}</code> hoặc <code class="language-plaintext highlighter-rouge">(</code>/<code class="language-plaintext highlighter-rouge">)</code> của scope hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dd</code> / <code class="language-plaintext highlighter-rouge">d^</code> / <code class="language-plaintext highlighter-rouge">d$</code> / <code class="language-plaintext highlighter-rouge">d0</code></td>
+      <td>Xóa một dòng / xóa đến đầu dòng / xóa đến cuối dòng / xóa đến đầu câu</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cc</code> / <code class="language-plaintext highlighter-rouge">c^</code> / <code class="language-plaintext highlighter-rouge">c$</code> / <code class="language-plaintext highlighter-rouge">c0</code></td>
+      <td>Tương tự như trên nhưng sau khi xóa sẽ tự động chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">di"</code> / <code class="language-plaintext highlighter-rouge">di'</code> / <code class="language-plaintext highlighter-rouge">di(</code> / <code class="language-plaintext highlighter-rouge">di{</code></td>
+      <td>Xóa nội dung trong dấu <code class="language-plaintext highlighter-rouge">""</code>/<code class="language-plaintext highlighter-rouge">''</code>/ <code class="language-plaintext highlighter-rouge">()</code> / <code class="language-plaintext highlighter-rouge">{}</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ci"</code> / <code class="language-plaintext highlighter-rouge">ci'</code> / <code class="language-plaintext highlighter-rouge">ci(</code> / <code class="language-plaintext highlighter-rouge">ci{</code></td>
+      <td>Xóa nội dung trong dấu <code class="language-plaintext highlighter-rouge">""</code>/<code class="language-plaintext highlighter-rouge">''</code>/ <code class="language-plaintext highlighter-rouge">()</code> / <code class="language-plaintext highlighter-rouge">{}</code> và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">g~</code> / <code class="language-plaintext highlighter-rouge">gUU</code> / <code class="language-plaintext highlighter-rouge">guu</code></td>
+      <td>Chuyển ký tự / dòng / nội dung bôi đen sang chữ hoa / thường</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">V</code></td>
+      <td>Bôi cả dòng</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vi(</code> / <code class="language-plaintext highlighter-rouge">vi{</code></td>
+      <td>Bôi nội dung trong scope <code class="language-plaintext highlighter-rouge">()</code> / hoặc <code class="language-plaintext highlighter-rouge">{}</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">4d</code> / <code class="language-plaintext highlighter-rouge">4yy</code> / <code class="language-plaintext highlighter-rouge">4p</code></td>
+      <td>Xóa 4 dòng phía dưới / copy 4 dòng phía dưới / paste 4 lần nội dung đã copy</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dis</code> / <code class="language-plaintext highlighter-rouge">dip</code></td>
+      <td>Xóa nội dung của scope và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">u</code> / <code class="language-plaintext highlighter-rouge">Ctrl+r</code></td>
+      <td>Undo / Redo</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+a/x</code></td>
+      <td>Tăng / Giảm số tại số con trỏ hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Esc</code> / <code class="language-plaintext highlighter-rouge">Ctrl+[</code></td>
+      <td>Thoát insert mode</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+hjkl</code></td>
+      <td>Mở rộng cửa sổ theo các chiều tương ứng</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-nvim-tree">Plugin <a href="https://github.com/nvim-tree/nvim-tree.lua">nvim-tree</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">leader+h</code></td>
+      <td>Di chuyển đến cửa sổ nvim-tree khi ở bất kỳ tab nào</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">f</code></td>
+      <td>Tìm kiếm file sử dụng regex</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code> / <code class="language-plaintext highlighter-rouge">Enter</code></td>
+      <td>Expand thư mục, mở file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">E</code> / <code class="language-plaintext highlighter-rouge">W</code></td>
+      <td>Expand tree / Collapse tree</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">I</code> / <code class="language-plaintext highlighter-rouge">H</code></td>
+      <td>Show các file/folder ẩn / show các file bắt đầu với .xxx</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+v</code> / <code class="language-plaintext highlighter-rouge">Ctrl+x</code> / <code class="language-plaintext highlighter-rouge">Ctrl+t</code></td>
+      <td>Mở file phía dưới / bên phải file hiện tại / tạo mở tab mới</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">a</code></td>
+      <td>Tạo file (thêm <code class="language-plaintext highlighter-rouge">/</code> ở cuối để tạo thư mục)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">y</code> / <code class="language-plaintext highlighter-rouge">Y</code> / <code class="language-plaintext highlighter-rouge">gy</code></td>
+      <td>Copy tên file / relative path / absolute path file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">r</code></td>
+      <td>Đổi tên file/folder</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">d</code></td>
+      <td>Xóa file/folder</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">s</code></td>
+      <td>Mở file sử dụng chương trình mặc định của hệ thống</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>Chuyển sang mode command và thêm đường dẫn file hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R</code></td>
+      <td>Refresh</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+k</code></td>
+      <td>Hiển thị thông tin cơ bản của fil</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-lspconfig">Plugin <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[r</code></td>
+      <td>Hiển thị các lỗi tại vị trí con trỏ hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[d</code> / <code class="language-plaintext highlighter-rouge">]d</code></td>
+      <td>Di chuyển tới lỗi tiếp theo / lỗi trước đó</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gd</code></td>
+      <td>Di chuyển đến từ khóa / hàm khai báo</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">K</code></td>
+      <td>Hiển thị thông tin về biến / hàm</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space+rn</code></td>
+      <td>Đổi tên biến / hàm trên toàn bộ source</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gr</code></td>
+      <td>Show tất cả các dòng chứa nội dung biến / hàm tại con trỏ hiện tại</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-comment">Plugin <a href="https://github.com/terrortylor/nvim-comment">comment</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gcc</code></td>
+      <td>Comment/Uncomment dòng hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gc4</code></td>
+      <td>Comment/Uncomment 4 dòng phía dưới</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gcip</code></td>
+      <td>Comment/Uncomment scope code</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-toggleterm-terminal">Plugin <a href="https://github.com/akinsho/toggleterm.nvim">toggleterm</a> (Terminal)</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+t</code></td>
+      <td>Mở terminal / đóng terminal (khi đã thoát khỏi mode terminal)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Esc</code></td>
+      <td>Thoát khỏi mode terminal</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+d</code></td>
+      <td>Thoát khỏi terminal (exit process)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">:ToggleTerm &lt;id&gt;</code></td>
+      <td>Mở thêm terminal thứ <id></id></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Sử dụng command sau để mở terminal bên phải :ToggleTerm size=40 direction=vertical</p>
+</blockquote>
+
+<h4 id="plugin-barbar">Plugin <a href="https://github.com/romgrk/barbar.nvim">barbar</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tab</code> / <code class="language-plaintext highlighter-rouge">Shift-tab</code></td>
+      <td>Di chuyển tới tab tiếp theo / lùi lại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+n</code> / <code class="language-plaintext highlighter-rouge">Shift+p</code></td>
+      <td>Move tab tới / lui</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+c</code></td>
+      <td>Đóng tab hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+f</code></td>
+      <td>Di chuyển nhanh đến tab bất kỳ</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-neoformat">Plugin <a href="https://github.com/sbdchd/neoformat">neoformat</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">:Neoformat</code></td>
+      <td>Format source code</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Lưu ý trên đây là một số vimkey cơ bản mà tôi hay dùng với mục đích giúp edit file nhanh hơn. Các vimkey/command nâng cao các bạn có thể tìm hiểu thêm tại trang chủ <a href="https://www.vim.org">vim</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tip-tricks" /><category term="vim" /><category term="linux command" /><summary type="html"><![CDATA[Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại đây.]]></summary></entry><entry><title type="html">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</title><link href="https://ctnguyenvn.me/2021/04/03/dig-command/" rel="alternate" type="text/html" title="Sử dụng Dig (Domain Information Groper) - truy vấn DNS" /><published>2021-04-03T00:00:00+07:00</published><updated>2021-04-03T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/04/03/dig-command</id><content type="html" xml:base="https://ctnguyenvn.me/2021/04/03/dig-command/"><![CDATA[<p><code class="language-plaintext highlighter-rouge">Dig</code> là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS.
+<code class="language-plaintext highlighter-rouge">Dig</code> thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn.
+Các truy vấn phổ biến gồm NS, CNAME, MX, TXT…</p>
+
+<h3 id="1-cài-đặt-dig">1. Cài đặt Dig</h3>
+
+<p>Đối với Ubuntu/Debian</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo apt install dnsutils
+</code></pre></div></div>
+
+<p>Đối với CentOS/Fedora</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo yum install bind-utils
+</code></pre></div></div>
+
+<p>Có thể kiểm tra kết quả cài đặt dig như sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig -v
+DiG 9.16.13
+</code></pre></div></div>
+
+<!--more-->
+
+<h3 id="2-sử-dụng-dig-cơ-bản">2. Sử dụng dig cơ bản</h3>
+
+<h4 id="21-cú-pháp-lệnh-dig">2.1 Cú pháp lệnh <code class="language-plaintext highlighter-rouge">dig</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig  [@server]  [option]  &lt;name&gt;  [type]  [queryopt]
+</code></pre></div></div>
+
+<p>Trong đó:</p>
+
+<ul>
+  <li>
+    <p><strong>@server</strong>: Tên máy chủ/IP server để truy vấn, IP có thể là IPv4/IPv6 và
+nếu là tên miền thì <code class="language-plaintext highlighter-rouge">dig</code> sẽ phân giải tên miền trước khi thực hiện truy
+vấn. Ngược lại nếu <strong>@server</strong> không được cung cấp thì <code class="language-plaintext highlighter-rouge">Dig</code> sẽ cố gắng tìm
+kiếm địa chỉ từ <code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code>.</p>
+  </li>
+  <li>
+    <p><strong>option</strong>: Cung cấp các tùy chọn truy vấn như <code class="language-plaintext highlighter-rouge">-4 (IPv4)</code>, <code class="language-plaintext highlighter-rouge">-6 (IPv6)</code>.</p>
+  </li>
+  <li>
+    <p><strong>name</strong>: Là địa chỉ cần truy vấn (domain/ip)</p>
+  </li>
+  <li>
+    <p><strong>type</strong>: Loại truy vấn mà người dùng yêu cầu, có thể là ANY, A, MX… Nếu
+không được chỉ định cụ thể <code class="language-plaintext highlighter-rouge">dig</code> sẽ mặc định sử dụng truy vấn cho A record.</p>
+  </li>
+  <li>
+    <p><strong>queryopt</strong>: Là một số tùy chọn hiển thị kết quả cũng như xử lý một số thao
+tác khác với <code class="language-plaintext highlighter-rouge">dig</code> như thời gian chờ. Cú pháp cụ thể là
+<code class="language-plaintext highlighter-rouge">+[no]keyword=value</code>, ví dụ <code class="language-plaintext highlighter-rouge">+[no]all</code>.</p>
+  </li>
+</ul>
+
+<h4 id="22-một-số-loại-dns-record">2.2 Một số loại DNS record</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Loại</th>
+      <th>Ý nghĩa</th>
+      <th>Ví dụ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>IP version 4</td>
+      <td>209.132.183.143</td>
+    </tr>
+    <tr>
+      <td>AAAA</td>
+      <td>Ip version 6</td>
+      <td>2404:6800:4005:804::200e</td>
+    </tr>
+    <tr>
+      <td>CNAME</td>
+      <td>Bí danh</td>
+      <td>d27136625.redhat.com</td>
+    </tr>
+    <tr>
+      <td>MX</td>
+      <td>Tên máy chủ MAIL</td>
+      <td>us-smtp-inbound-2.mimecast.com, us-smtp-inbound-1.mimecast.com</td>
+    </tr>
+    <tr>
+      <td>NS</td>
+      <td>Máy chủ tên miền</td>
+      <td>a1-68.akam.net, a9-65.akam.net</td>
+    </tr>
+    <tr>
+      <td>PTR</td>
+      <td>Phân giải ngược ip -&gt; domain</td>
+      <td>82.236.125.74.in-addr.arpa</td>
+    </tr>
+    <tr>
+      <td>SOA</td>
+      <td>Thông tin về DNS Zone</td>
+      <td>a1-68.akam.net. noc.redhat.com. (<br />     2021032600 ; serial<br />     300 ; refresh (5 minutes)<br />     180 ; retry (3 minutes)<br />     604800 ; expire (1 week)<br />     14400 ; minimum (4 hours)<br />)</td>
+    </tr>
+    <tr>
+      <td>TXT</td>
+      <td>Text record</td>
+      <td>google-site-verification=fkn6chapCdY NWIcpsgH0K6mkR0yo7ldeIRC7EH23yoo, amazonses:ablaZDaC37ye QUcZAZjbfqRELxucC+8pBdvhFEpTSlY=</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="23-hiểu-về-kết-quả-hiển-thị-với-dig">2.3 Hiểu về kết quả hiển thị với <code class="language-plaintext highlighter-rouge">Dig</code></h4>
+
+<p>Ở dạng đơn giản nhất, <code class="language-plaintext highlighter-rouge">dig</code> hiển thị tất cả thông tin như <code class="language-plaintext highlighter-rouge">HEADER</code>,
+<code class="language-plaintext highlighter-rouge">QUESTION SECTION</code>, <code class="language-plaintext highlighter-rouge">ANSWER SECTION</code>. Ví dụ khi thực hiện truy vấn đến
+<code class="language-plaintext highlighter-rouge">ctnguyenvn.me</code> sẽ được kết quả như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig ctnguyenvn.me
+
+; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; ctnguyenvn.me
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36324
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7a4965fc65f495d7eb1f1e31606861de717b28cb6a50c187 (good)
+;; QUESTION SECTION:
+;ctnguyenvn.me.     IN  A
+
+;; ANSWER SECTION:
+ctnguyenvn.me.    14400 IN  A 185.199.110.153
+ctnguyenvn.me.    14400 IN  A 185.199.108.153
+ctnguyenvn.me.    14400 IN  A 185.199.109.153
+ctnguyenvn.me.    14400 IN  A 185.199.111.153
+
+;; Query time: 340 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 19:38:54 +07 2021
+;; MSG SIZE  rcvd: 134
+</code></pre></div></div>
+
+<p>Trong đó</p>
+
+<p><em>01. Phần đầu tiên bao gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; ctnguyenvn.me
+;; global options: +cmd
+</code></pre></div></div>
+
+<p>Chỉ phiên bản <code class="language-plaintext highlighter-rouge">dig</code>, server name nếu không được cung cấp sẽ sử dụng server từ
+<code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code> như đã nói trên và hiển thị kết quả sẽ là <code class="language-plaintext highlighter-rouge">&lt;&lt;&gt;&gt;</code>. Cuối cùng
+là địa chỉ truy vấn.</p>
+
+<p>Dòng thứ hai là <code class="language-plaintext highlighter-rouge">global optiopns</code>, mặc định sẽ là <code class="language-plaintext highlighter-rouge">+cmd</code>.</p>
+
+<blockquote>
+  <p>Nếu muốn loại bỏ kết quả hiển thị phần này chỉ cần sử dụng <code class="language-plaintext highlighter-rouge">+nocmd</code> (trong mục
+<strong>queryopt</strong>)</p>
+</blockquote>
+
+<p><em>02. Phân tiếp theo bao gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36324
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+</code></pre></div></div>
+
+<p>Trong phần này, kết quả trả về như là HEADER bao gồm <code class="language-plaintext highlighter-rouge">opcode</code>, <code class="language-plaintext highlighter-rouge">status</code>, <code class="language-plaintext highlighter-rouge">flag</code>
+và số lượng kết quả của từng SECTION. Cụ thể ví dụ trên <code class="language-plaintext highlighter-rouge">opcode</code> là <code class="language-plaintext highlighter-rouge">QUERY</code> và
+trạng thái query là <code class="language-plaintext highlighter-rouge">NOERROR</code> (không lỗi). Cuối cùng nhận được 1 <code class="language-plaintext highlighter-rouge">QUERY</code>, 4
+<code class="language-plaintext highlighter-rouge">ANSWER</code>.</p>
+
+<blockquote>
+  <p>Nếu muốn loại bỏ kết quả hiển thị phần này chỉ cần sử dụng <code class="language-plaintext highlighter-rouge">+nocomments</code>
+(trong mục <strong>queryopt</strong>)</p>
+</blockquote>
+
+<p><em>03. Phần tiếp theo là :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7a4965fc65f495d7eb1f1e31606861de717b28cb6a50c187 (good)
+</code></pre></div></div>
+
+<p>Đây là phần thông tin mở rộng
+<a href="https://en.wikipedia.org/wiki/Extension_Mechanisms_for_DNS">EDNS</a> cho các truy
+vấn DNS. Hiển thị thông tin phiên bản, flag và kích thước UDP (byte).</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+noedns</code>.</p>
+</blockquote>
+
+<p><em>04. Phần tiếp theo bao gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; QUESTION SECTION:
+;ctnguyenvn.me.   IN  A
+</code></pre></div></div>
+
+<p>Trong phần <code class="language-plaintext highlighter-rouge">QUESTION</code> hiển thị thông tin truy vấn (với <code class="language-plaintext highlighter-rouge">type</code> cung cấp). Trong
+ví dụ này <code class="language-plaintext highlighter-rouge">option</code> và <code class="language-plaintext highlighter-rouge">type</code> không được cung cấp nên mặc định <code class="language-plaintext highlighter-rouge">dig</code> sẽ sử dụng
+<code class="language-plaintext highlighter-rouge">class IN </code>và <code class="language-plaintext highlighter-rouge">A record</code>.</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+noquestion</code>.</p>
+</blockquote>
+
+<p><em>05 Phần tiếp theo là :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; ANSWER SECTION:
+ctnguyenvn.me.    14400 IN  A 185.199.110.153
+ctnguyenvn.me.    14400 IN  A 185.199.108.153
+ctnguyenvn.me.    14400 IN  A 185.199.109.153
+ctnguyenvn.me.    14400 IN  A 185.199.111.153
+</code></pre></div></div>
+
+<p>Trong phần <code class="language-plaintext highlighter-rouge">ANSWER</code> này <code class="language-plaintext highlighter-rouge">dig</code> sẽ hiển thị kết quả sau khi thực hiện truy vấn.
+Trong ví dụ này tất cả các IP tương ứng với domain <code class="language-plaintext highlighter-rouge">ctnguyenvn.me</code> sẽ được hiển
+thị (do mặc định thì <code class="language-plaintext highlighter-rouge">dig</code> chỉ truy vấn với <code class="language-plaintext highlighter-rouge">A record</code>).</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+noanswer</code>.</p>
+</blockquote>
+
+<p><em>06 Phần tiếp theo gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Query time: 340 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 19:38:54 +07 2021
+;; MSG SIZE  rcvd: 134
+</code></pre></div></div>
+
+<p>Phần cuối cùng hiển thị tổng quan kết quả đã truy vấn, gồm thời gian thực hiện,
+máy chủ và thời điểm thực hiện truy vấn cũng như kích thước msg.</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+nostats</code>.</p>
+</blockquote>
+
+<p><strong>Lưu ý</strong>: Ngoài ra còn phần <code class="language-plaintext highlighter-rouge">AUTHORITY</code> hiển thị máy chủ authority và
+<code class="language-plaintext highlighter-rouge">ADDITIONAL</code> hiển hị thông tin bổ sung cho các máy chủ authority trong phần
+<code class="language-plaintext highlighter-rouge">AUTHORITY</code></p>
+
+<h3 id="3-một-số-command-hay-dùng">3. Một số command hay dùng</h3>
+
+<p>Truy vấn sử dụng server google</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig @8.8.8.8 redhat.vn +noall +answer
+redhat.vn.    21599 IN  A 209.132.183.143
+</code></pre></div></div>
+
+<p>Truy vấn tên miền với A record và +short</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.vn +short
+209.132.183.143
+</code></pre></div></div>
+
+<p>Truy vấn các record khác với MX (Mail), NS (Name server), CNAME, SOA hoặc sử
+dụng ANY để truy vấn tới tất cả</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.vn ANY
+
+; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; redhat.vn ANY
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36902
+;; flags: qr rd ra; QUERY: 1, ANSWER: 7, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7518ce04f46e36208773e08760689be7b39fe15838e9d666 (good)
+;; QUESTION SECTION:
+;redhat.vn.     IN  ANY
+
+;; ANSWER SECTION:
+redhat.vn.    86400 IN  SOA ns1.redhat.com. noc.redhat.com. 2021020900 3600 1800 604800 86400
+redhat.vn.    86400 IN  A 209.132.183.143
+redhat.vn.    86400 IN  TXT "v=spf1 -all"
+redhat.vn.    43199 IN  NS  ns3.redhat.com.
+redhat.vn.    43199 IN  NS  ns1.redhat.com.
+redhat.vn.    43199 IN  NS  ns2.redhat.com.
+redhat.vn.    43199 IN  NS  ns4.redhat.com.
+
+;; Query time: 366 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 23:46:03 +07 2021
+;; MSG SIZE  rcvd: 228
+</code></pre></div></div>
+
+<p>Tất nhiên có thể truy vấn với từng <code class="language-plaintext highlighter-rouge">type</code> cụ thể kết hợp với <code class="language-plaintext highlighter-rouge">queryopt</code> như MX</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com MX +noall +answer
+redhat.com.   600 IN  MX  10 us-smtp-inbound-2.mimecast.com.
+redhat.com.   600 IN  MX  10 us-smtp-inbound-1.mimecast.com.
+</code></pre></div></div>
+
+<p>Với TXT</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com TXT +noall +answer
+redhat.com.   3600  IN  TXT "status-page-domain-verification=dfx5rbys1ts5"
+redhat.com.   3600  IN  TXT "google-site-verification=TaSjV4JOe2XfmL_vHFKJHkPk8sjgoLkuuTTWezDO0Pw"
+redhat.com.   3600  IN  TXT "google-site-verification=rl_wq5rq_W7A7OSyK08d8Ta_Hf6AKP5tqtdlo4iGTvs"
+redhat.com.   3600  IN  TXT "miro-verification=0bc02d4257d450b9f9034363a58f88b4b904dc22
+...
+</code></pre></div></div>
+
+<p>Với Name Server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com NS +noall +answer
+redhat.com.   3600  IN  NS  a28-64.akam.net.
+redhat.com.   3600  IN  NS  a13-66.akam.net.
+redhat.com.   3600  IN  NS  a1-68.akam.net.
+redhat.com.   3600  IN  NS  a9-65.akam.net.
+...
+</code></pre></div></div>
+
+<p>Với SOA kết hợp <code class="language-plaintext highlighter-rouge">+multiline</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com SOA +multiline +noall +answer
+redhat.com.   3600 IN SOA a1-68.akam.net. noc.redhat.com. (
+        2021032600 ; serial
+        300        ; refresh (5 minutes)
+        180        ; retry (3 minutes)
+        604800     ; expire (1 week)
+        14400      ; minimum (4 hours)
+        )
+</code></pre></div></div>
+
+<p>Truy vấn yêu cầu phân giải ngược từ IP -&gt; domain</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig -x 209.132.183.143 +noall +answer
+143.183.132.209.in-addr.arpa. 600 IN  PTR intl-subdomains.redhat.com.
+</code></pre></div></div>
+
+<p>Việc sử dụng <code class="language-plaintext highlighter-rouge">dig</code> khá linh hoạt giữa các <code class="language-plaintext highlighter-rouge">option</code> và các <code class="language-plaintext highlighter-rouge">queryopt</code>. Ngoài ra
+còn rất nhiều tùy chọn hay ho khác có thể tìm kiếm tại
+<a href="https://linux.die.net/man/1/dig">đây</a>. Ví dụ như <code class="language-plaintext highlighter-rouge">dig</code> hỗ trợ cả việc output
+với <code class="language-plaintext highlighter-rouge">yaml</code> như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig ctnguyenvn.me +yaml
+-
+  type: MESSAGE
+  message:
+    type: RECURSIVE_RESPONSE
+    query_time: !!timestamp 2021-04-03T17:09:36.641Z
+    response_time: !!timestamp 2021-04-03T17:09:36.745Z
+    message_size: 134b
+    socket_family: INET
+    socket_protocol: UDP
+    response_address: 203.113.188.1
+    response_port: 53
+    query_address: 0.0.0.0
+    query_port: 44726
+    response_message_data:
+      opcode: QUERY
+      status: NOERROR
+      id: 31427
+      flags: qr rd ra
+      QUESTION: 1
+      ANSWER: 4
+      AUTHORITY: 0
+      ADDITIONAL: 1
+      OPT_PSEUDOSECTION:
+        EDNS:
+          version: 0
+          flags:
+          udp: 1232
+          COOKIE: 37a8b00427ec104a010000006068a150fa872d014dcd4fc3 (good)
+      QUESTION_SECTION:
+        - ctnguyenvn.me. IN A
+      ANSWER_SECTION:
+        - ctnguyenvn.me. 14400 IN A 185.199.111.153
+        - ctnguyenvn.me. 14400 IN A 185.199.110.153
+        - ctnguyenvn.me. 14400 IN A 185.199.108.153
+        - ctnguyenvn.me. 14400 IN A 185.199.109.153
+</code></pre></div></div>
+
+<p>Cuối cùng <code class="language-plaintext highlighter-rouge">dig</code> cũng hỗ trợ đầu vào là file chứa danh sách các domain/ip với tùy
+chọn -f (<code class="language-plaintext highlighter-rouge">dig -f &lt;file&gt;....</code>). <code class="language-plaintext highlighter-rouge">Dig</code> cũng hỗ trợ file <code class="language-plaintext highlighter-rouge">${HOME}/.digrc</code> để nhận
+các tham số mặc định trong mỗi lệnh người dùng sẽ thực hiện. Cụ thể <code class="language-plaintext highlighter-rouge">dig</code> sẽ tìm
+kiếm đọc nội dung từ file này lên trước và đưa vào command trước khi đọc tùy
+chọn người dùng cung cấp.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Notes" /><category term="linux command" /><summary type="html"><![CDATA[Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig Đối với Ubuntu/Debian ctnguyenvn[~]$ sudo apt install dnsutils Đối với CentOS/Fedora ctnguyenvn[~]$ sudo yum install bind-utils Có thể kiểm tra kết quả cài đặt dig như sau: ctnguyenvn[~]$ dig -v DiG 9.16.13]]></summary></entry><entry><title type="html">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</title><link href="https://ctnguyenvn.me/2021/02/13/git-command-basic/" rel="alternate" type="text/html" title="Tổng hợp một số lệnh cơ bản khi sử dụng git/github" /><published>2021-02-13T00:00:00+07:00</published><updated>2021-02-13T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/02/13/git-command-basic</id><content type="html" xml:base="https://ctnguyenvn.me/2021/02/13/git-command-basic/"><![CDATA[<p>Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv</p>
+
+<p>Một số cheat sheet &amp; tip link git</p>
+
+<ul>
+  <li><a href="https://quickref.me/git">https://quickref.me/git</a></li>
+  <li><a href="http://schubert.atmos.colostate.edu/~cslocum/cseg_git_cheat_sheet.pdf">http://schuber…/cseg_git_cheat_sheet.pdf</a></li>
+  <li><a href="https://github.com/git-tips/tips">https://github.com/git-tips/tips</a></li>
+</ul>
+
+<h3 id="một-số-lệnh-cơ-bản">Một số lệnh cơ bản</h3>
+<hr />
+
+<h5 id="cấu-hình-thông-tin-useremail">Cấu hình thông tin user/email</h5>
+
+<p>Cấu hình user/email</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;"
+ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;"
+</code></pre></div></div>
+
+<p>Xem cấu hình</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git config --list
+</code></pre></div></div>
+
+<!--more-->
+
+<h5 id="tạo-key--thêm-key">Tạo key &amp;&amp; thêm key</h5>
+
+<p>Tạo key</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ssh-keygen -t ed25519 -C "your_email@example.com" -f "$HOME/.ssh/&lt;file_key_name&gt;"
+hoặc
+ctnguyenvn[~]$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f "$HOME/.ssh/&lt;file_key_name&gt;"
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ssh-keygen -t ed25519 -C "ctnguyenvn.xxx@gmail.com" -f "$HOME/.ssh/ctnguyenvn-git"
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Enter…(nhập passphrase nếu muốn)</p>
+</blockquote>
+
+<p>Thêm key vào ssh-agent</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ssh-agent /bin/bash
+ctnguyenvn[~]$ ssh-add "$HOME/.ssh/&lt;file_key_name&gt;"
+ctnguyenvn[~]$ ssh-add -l"
+</code></pre></div></div>
+
+<blockquote>
+  <p>More:
+<a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account">Thêm key vào tài khoản github</a></p>
+</blockquote>
+
+<h5 id="clone-một-repository">Clone một repository</h5>
+
+<p>Clone tại local server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git clone &lt;/path/to/folder&gt;
+</code></pre></div></div>
+
+<p>Clone tại remote server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git clone https://github.com/&lt;username&gt;/&lt;repo&gt;.git
+hoặc
+ctnguyenvn[~]$ git clone git@github.com:&lt;username&gt;/&lt;repo&gt;.git
+</code></pre></div></div>
+
+<h5 id="khởi-tạo-git-cho-thư-mục-bất-kỳ">Khởi tạo .git cho thư mục bất kỳ</h5>
+
+<p>Để tạo control version cho bất kỳ thư mục nào với git có thể khởi tạo như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ cd &lt;/path/to/folder&gt;
+ctnguyenvn[~]$ git init
+</code></pre></div></div>
+
+<h5 id="thêm-file-vào-local-repository">Thêm file vào local repository</h5>
+
+<p>Thêm một file vào local repository</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git add &lt;file_name&gt;
+</code></pre></div></div>
+
+<p>Thêm tất cả file/folder</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git add .
+</code></pre></div></div>
+
+<h5 id="commit-file-vào-local-repository">Commit file vào local repository</h5>
+
+<p>Commit với thông điệp cho file cụ thể</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git commit -m "&lt;messenger commit&gt;" &lt;/path/to/file|folder&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu không chỉ định file cụ thể, thông điệp sẽ được thay đổi cho tất cả
+các file đã được add ở trên</p>
+</blockquote>
+
+<p>Thay đổi nội dung thông điệp commit gần nhất</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git commit --amend -m "&lt;messenger commit&gt;"
+</code></pre></div></div>
+
+<h5 id="cập-nhật-thay-đổi-lên-remote-repository">Cập nhật thay đổi lên remote repository</h5>
+
+<p>Cập nhật lên remote server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git push -u &lt;remote&gt; &lt;local branch&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: option <code class="language-plaintext highlighter-rouge">-u</code> chỉ up stream, <code class="language-plaintext highlighter-rouge">remote</code> có thể kiểm tra với <code class="language-plaintext highlighter-rouge">git remote -v</code></p>
+</blockquote>
+
+<h5 id="thêm-một-remote-repository">Thêm một remote repository</h5>
+
+<p>Để thêm một remote repository</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote add &lt;name&gt; &lt;url&gt;
+</code></pre></div></div>
+
+<p>Ví dụ</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote add upstream https://github.com/ctnguyenvn/mydemo.git
+</code></pre></div></div>
+
+<p>Xem danh sách các remote url đã thêm</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote -v
+</code></pre></div></div>
+
+<h5 id="thay-đổi-phương-thức-kết-nối-ssh---https">Thay đổi phương thức kết nối SSH &lt;-&gt; HTTPS</h5>
+
+<p>Chuyển từ phương thức SSH -&gt; HTTPS</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
+</code></pre></div></div>
+
+<p>Chuyển từ phương thức HTTPS -&gt; SSH</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: <code class="language-plaintext highlighter-rouge">origin</code> là <code class="language-plaintext highlighter-rouge">remote name</code>, nếu xuất hiện lỗi
+<code class="language-plaintext highlighter-rouge">fatal: No such remote 'xxx'</code> thì cần kiểm tra lại <code class="language-plaintext highlighter-rouge">remote name</code> trên remote
+server có tồn tại không.</p>
+</blockquote>
+
+<h5 id="tạoxóa-nhánh--di-chuyển-giữa-các-nhánh">Tạo/xóa nhánh &amp;&amp; di chuyển giữa các nhánh</h5>
+
+<p>Liệt kê danh sách nhánh và tạo nhánh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git branch
+ctnguyenvn[~]$ git branch &lt;new_branch_name&gt;
+</code></pre></div></div>
+
+<p>Xóa nhánh trên local server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git branch -d &lt;name-of-branch&gt;
+</code></pre></div></div>
+
+<p>Xóa nhánh trên remote server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git push &lt;remote-name&gt; --delete &lt;name-of-branch&gt;
+</code></pre></div></div>
+
+<p>Di chuyển nhánh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git checkout &lt;name-of-branch&gt;
+</code></pre></div></div>
+
+<h5 id="cập-nhật-từ-remote-repository">Cập nhật từ remote repository</h5>
+
+<p>Cập nhật dữ liệu (history và objects) từ remote</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git fetch
+</code></pre></div></div>
+
+<p>Cập nhật commit mới nhất từ remote repository</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git pull &lt;remote-name&gt; [name-of-branch]
+</code></pre></div></div>
+
+<h5 id="xem-trạng-thái--lịch-sử-các-git-command-đã-thực-hiện">Xem trạng thái &amp;&amp; lịch sử các git command đã thực hiện</h5>
+
+<p>Hiển thị trạng thái</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git status
+</code></pre></div></div>
+
+<p>Xem lịch sử log/commit</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git log
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Sử dụng <code class="language-plaintext highlighter-rouge">git help log</code> để xem một số option cụ thể như <code class="language-plaintext highlighter-rouge">--oneline</code>,
+<code class="language-plaintext highlighter-rouge">--stat</code>…</p>
+</blockquote>
+
+<p>Xem lịch sử thay đổi cụ thể từ ai</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ git blame &lt;/path/to/file&gt;
+</code></pre></div></div>
+
+<p>Bài viết chỉ mang tính chất ghi chép cơ bản trong quá trình thực hiện một số
+thao tác với git khi làm việc, không giải thích cụ thể hoạt động/chi tiết các
+lệnh. Cụ thể xem thêm tại <a href="https://git-scm.com/book/en/v2/">git book</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Git" /><category term="Notes" /><summary type="html"><![CDATA[Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv Một số cheat sheet &amp; tip link git https://quickref.me/git http://schuber…/cseg_git_cheat_sheet.pdf https://github.com/git-tips/tips Một số lệnh cơ bản Cấu hình thông tin user/email Cấu hình user/email ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;" ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;" Xem cấu hình ctnguyenvn[~]$ git config --list]]></summary></entry><entry><title type="html">Giám sát một số devices với zabbix agent, SNMP</title><link href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent/" rel="alternate" type="text/html" title="Giám sát một số devices với zabbix agent, SNMP" /><published>2021-02-01T00:00:00+07:00</published><updated>2021-02-01T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent</id><content type="html" xml:base="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent/"><![CDATA[<p>Trong
+<a href="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full">bài viết trước</a>
+tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này
+tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình
+thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau:</p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Thông tin</th>
+      <th> </th>
+      <th>Hostname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R1</td>
+      <td>Cisco 3640</td>
+      <td>R-C3640</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>CentOS 7</td>
+      <td>LinuxAgent</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>Ubuntu 18.04</td>
+      <td>Zabbix-Server</td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>Windows server 2012</td>
+      <td>WindowAgent</td>
+    </tr>
+    <tr>
+      <td>Soft</td>
+      <td>GNS3 2.2.17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>IP</td>
+      <td>Như mô hình</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--more-->
+
+<h3 id="1-thêm-linux-os-vào-zabbix-sử-dụng-zabbix-agent">1 Thêm Linux OS vào Zabbix (sử dụng zabbix agent)</h3>
+
+<h4 id="11-cài-đặt-zabbix-agent-centos-7">1.1 Cài đặt zabbix agent (CentOS 7)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+ctnguyenvn[~]$ yum install zabbix-agent -y
+</code></pre></div></div>
+
+<h4 id="12-cấu-hình-zabbix-agent">1.2 Cấu hình zabbix agent</h4>
+
+<p>Trên máy agent Linux, mở file cấu hình zabbix agent tại
+<code class="language-plaintext highlighter-rouge">/etc/zabbix_agentd.conf</code> và thay đổi như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ vim /etc/zabbix_agentd.conf
++++ snip some code +++
+Server=172.17.10.10     &lt;== domain hoặc IP zabbix server
++++ snip some code +++
+ServerActive=172.17.10.10   &lt;== domain hoặc IP zabbix server
++++ snip some code +++
+Hostname=LinuxAgent         &lt;==Hostname của máy Linux Agent hiện tại
++++ snip some code +++
+</code></pre></div></div>
+
+<p>Khởi động zabbix agent</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ systemctl start zabbix-agent
+ctnguyenvn[~]$ systemctl enable zabbix-agent
+</code></pre></div></div>
+
+<p>Và allow firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ firewall-cmd --zone=public --add-service=zabbix-agent --permanent
+ctnguyenvn[~]$ firewall-cmd --reload
+</code></pre></div></div>
+
+<h4 id="13-tạo-host-trên-zabbix-server">1.3 Tạo host trên zabbix server</h4>
+
+<p>Trên trình duyệt truy cập vào zabbix server</p>
+
+<p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/9.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host Name</code>, <code class="language-plaintext highlighter-rouge">IP</code> đúng với <code class="language-plaintext highlighter-rouge">hostname</code> và <code class="language-plaintext highlighter-rouge">ip</code> của máy
+Linux agent cần thêm vào zabbix.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/10.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> có thể chọn như hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/11.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Tiếp theo nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
+khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
+<code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>ZBX</strong> (chứng tỏ đã thêm host mới này sử dụng zabbix
+agent)</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/12.png" alt="zabbix" class="center-image" /></p>
+
+<h3 id="2-thêm-windows-os-vào-zabbix-sử-dụng-zabbix-agent">2. Thêm Windows OS vào Zabbix (sử dụng zabbix agent)</h3>
+
+<h4 id="21-cài-đặt-zabbix-agent">2.1 Cài đặt zabbix agent</h4>
+
+<p>Truy cập vào <a href="https://www.zabbix.com/download_agents">đây</a> và chọn phiên bản phù
+hợp với windows hiện tại. Ví dụ trong bài lab này tôi sử dụng zabbix agent 5.0
+trên windows server 2012 r2 tại
+<a href="https://www.zabbix.com/download_agents?version=5.0+LTS&amp;release=5.0.8&amp;os=Windows&amp;os_version=Any&amp;hardware=amd64&amp;encryption=OpenSSL&amp;packaging=MSI">đây</a></p>
+
+<p><strong><em>(i)</em></strong> <em>Sau khi tải về và run file cài đặt (file .MSI) ta sẽ được như sau,
+nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/13.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo chọn <code class="language-plaintext highlighter-rouge">I accept....</code> và nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/14.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host name</code>, <code class="language-plaintext highlighter-rouge">Zabbix Server IP/DNS</code> và nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/15.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Đặt đúng tên máy để cấu hình chính xác hơn khi thêm thiết bị vào máy
+chủ zabbix. Ở đây tôi cũng đã đặt hostname trên máy window server 2012r2 này
+là WINDOWSAGENT</p>
+</blockquote>
+
+<p><strong><em>(iv)</em></strong> <em>Nhấn <code class="language-plaintext highlighter-rouge">Next</code> ở cửa sổ tiếp theo</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/16.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(v)</em></strong> <em>Cuối cùng nhấn <code class="language-plaintext highlighter-rouge">Install</code> và đợi quá trình cài đặt zabbix agent hoàn
+tất.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/17.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(vi)</em></strong> <em>Nhấn <code class="language-plaintext highlighter-rouge">Finish</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/18.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Có thể cần phải mở firewall port 10050 trên máy window server này cho
+phép kết nối từ zabbix server</p>
+</blockquote>
+
+<h4 id="22-tạo-host-trên-zabbix-server">2.2 Tạo host trên zabbix server</h4>
+
+<p>Tương tự như thêm host mới với linux OS, trên trình duyệt truy cập vào zabbix
+server</p>
+
+<p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/19.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host Name</code>, <code class="language-plaintext highlighter-rouge">IP</code> đúng với <code class="language-plaintext highlighter-rouge">hostname</code> và <code class="language-plaintext highlighter-rouge">ip</code> của máy
+Windows agent cần thêm vào zabbix.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/20.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> có thể chọn như hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/21.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Tiếp theo nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
+khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
+<code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>ZBX</strong> (chứng tỏ đã thêm host mới này sử dụng zabbix
+agent)</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/22.png" alt="zabbix" class="center-image" /></p>
+
+<h3 id="3-thêm-router-cisco-vào-zabbix-sử-dụng-snmp">3. Thêm Router Cisco vào Zabbix (sử dụng SNMP)</h3>
+
+<h4 id="31-cấu-hình-cisco-device">3.1 Cấu hình Cisco device</h4>
+
+<p>Truy cập vào Cisco router và thực hiện enable SNMP, cấu hình <code class="language-plaintext highlighter-rouge">community</code>,
+<code class="language-plaintext highlighter-rouge">contact</code>, <code class="language-plaintext highlighter-rouge">zabbix server</code>… cơ bản như sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R-C3640# config terminal
+R-C3640(config)# snmp-server community zabbix-congtrulab ro
+R-C3640(config)# snmp-server contact admin admin@congtrulab.local
+R-C3640(config)# snmp-server location Sysad-Room
+R-C3640(config)# end
+R-C3640# wr
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Chuỗi community cần phải nhớ chính xác để thiết lập kết nối với zabbix
+server</p>
+</blockquote>
+
+<h4 id="32-tạo-host-trên-zabbix-server">3.2 Tạo host trên zabbix server</h4>
+
+<p>Trên trình duyệt truy cập vào zabbix server.</p>
+
+<p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới.
+Sau đó nhập thông tin như hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/23.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Ở bước 2 chỉ là xóa phương thức sử dụng agent, thay vào đó sẽ sử dụng
+<code class="language-plaintext highlighter-rouge">SNMP</code> bằng cách chọn số 3 -&gt; 4 (trong hình)</p>
+</blockquote>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập đúng IP của Cisco router, port và SNMP version như
+hình sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/24.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> chọn như hình</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/25.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Macros</code> cột <code class="language-plaintext highlighter-rouge">Macro</code> nhập <strong>{$SNMP_COMMUNITY}</strong> và
+<code class="language-plaintext highlighter-rouge">Value</code> nhập đúng <code class="language-plaintext highlighter-rouge">Community</code> <strong>zabbix-congtrulab</strong> đã cấu hình ở trên</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/26.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(v)</em></strong> <em>Cuối cùng nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
+khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
+<code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>SNMP</strong> (chứng tỏ đã thêm host mới này sử dụng SNMP)</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/27.png" alt="zabbix" class="center-image" /></p>
+
+<h3 id="4-cấu-hình-tạo-report-qua-email">4. Cấu hình tạo report qua email</h3>
+
+<p>Zabbix hỗ trợ rất nhiều phương thức report, trong bài biết này sẽ hướng dẫn cơ
+bản cấu hình report thông qua Email. Cụ thể như sau:</p>
+
+<p><strong><em>(i)</em></strong> <em>Trên trình duyệt truy cập vào zabbix server. Chọn <code class="language-plaintext highlighter-rouge">Administraion</code> -&gt;
+<code class="language-plaintext highlighter-rouge">Media types</code>, lúc này sẽ xuất hiện rất nhiều <code class="language-plaintext highlighter-rouge">media types</code> có sẵn, nhấp chọn
+<code class="language-plaintext highlighter-rouge">Email</code> hoặc chọn <code class="language-plaintext highlighter-rouge">create media types</code> để tạo mới.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/28.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(ii)</em></strong> <em>Tiếp theo tùy thuộc vào mail server mà cần nhập đúng thông tin mail
+server. Cụ thể trong bài này tôi sử dụng gmail, do đó sẽ nhập thông tin như hình
+sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/29.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Việc này cho phép zabbix server sử dụng email này để đăng nhập và gửi
+mail, do đó cần phải kích hoạt
+<a href="https://myaccount.google.com/lesssecureapps"><code class="language-plaintext highlighter-rouge">less secure app</code></a> trên tài
+khoản gmail</p>
+</blockquote>
+
+<p><strong><em>(iii)</em></strong> <em>Tiếp theo trước khi thử nghiệm kết quả ta cần kích hoạt 1 report
+bất kỳ cho việc test này bằng cách vào <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Actions</code> -&gt; nhấn vào
+<strong>disable</strong> tại một <code class="language-plaintext highlighter-rouge">trigger action</code> muốn test</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/30.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(iv)</em></strong> <em>Sau đó sẽ thấy trạng thái <strong>Enable</strong> tại report này</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/31.png" alt="zabbix" class="center-image" /></p>
+
+<p>Sau khi cấu hình gửi report qua email thành công, tiếp theo sẽ cấu hình người
+nhận report. Trong bài lab này tôi sẽ cấu hình gửi đến admin hiện tại.</p>
+
+<p>Truy cập vào trình duyệt zabbix server,</p>
+
+<p><strong><em>(v)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">User setting</code> -&gt; <code class="language-plaintext highlighter-rouge">Media</code> -&gt; chọn <code class="language-plaintext highlighter-rouge">Type</code> <strong>Email</strong> và Email
+người nhận report. Ngoài ra có thể chọn các mức cảnh báo như sau</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/32.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(vi)</em></strong> <em>Sau đó nhấn <code class="language-plaintext highlighter-rouge">Add</code> -&gt; <code class="language-plaintext highlighter-rouge">Update</code></em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/33.png" alt="zabbix" class="center-image" /></p>
+
+<p><strong><em>(vii)</em></strong> <em>Cuối cùng để kiểm tra quá trình gửi report đã thành công chưa, tôi
+thử thay đổi RAM/CPU trên VM Windows Server chạy Agent và reboot. Kết quả nhận
+được qua mail ví dụ như CPU như sau.</em></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/34.png" alt="zabbix" class="center-image" /></p>
+
+<p>Trong bài này tôi chỉ đơn giản thêm các thiết bị vào zabbix với mục đích lưu
+trữ. Tuy nhiên việc cấu hình để giám sát các hoạt động cụ thể khác trên router
+như CPU, Network Interface,… hay trên Linux, windows server cần nhiều hơn nữa.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tutorials" /><category term="Tools" /><category term="Monitoring" /><summary type="html"><![CDATA[Trong bài viết trước tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau: Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17   IP Như mô hình  ]]></summary></entry><entry><title type="html">Cài đặt và cấu hình Zabbix 5.0</title><link href="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full/" rel="alternate" type="text/html" title="Cài đặt và cấu hình Zabbix 5.0" /><published>2021-01-31T00:00:00+07:00</published><updated>2021-01-31T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full</id><content type="html" xml:base="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full/"><![CDATA[<p>Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device
+như hình sau</p>
+
+<h3 id="1-giới-thiệu-mô-hình-lab">1. Giới thiệu mô hình lab</h3>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Thông tin</th>
+      <th> </th>
+      <th>Hostname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R1</td>
+      <td>Cisco 3640</td>
+      <td>R-C3640</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>CentOS 7</td>
+      <td>LinuxAgent</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>Ubuntu 18.04</td>
+      <td>Zabbix-Server</td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>Windows server 2012</td>
+      <td>WindowAgent</td>
+    </tr>
+    <tr>
+      <td>Soft</td>
+      <td>GNS3 2.2.17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>IP</td>
+      <td>Như mô hình</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông
+qua R1.</p>
+</blockquote>
+
+<!--more-->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R1# config terminal
+R1(config)# hostname R-C3640
+R-C3640(config)# access-list 1 permit any
+R-C3640(config)# ip nat inside source list 1 interface e0/0 overload
+
+R-C3640(config)# interface e0/0
+R-C3640(config-if)# ip address dhcp
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat outside
+R-C3640(config-if)# exit
+
+R-C3640(config)# interface e0/1
+R-C3640(config-if)# ip address 172.16.10.5 255.255.255.0
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat inside
+R-C3640(config-if)# exit
+
+R-C3640(config)# interface e0/2
+R-C3640(config-if)# ip address 172.17.10.5 255.255.255.0
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat inside
+R-C3640(config-if)# exit
+
+R-C3640(config)# interface e0/3
+R-C3640(config-if)# ip address 192.168.10.5 255.255.255.0
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat inside
+R-C3640(config-if)# exit
+
+R-C3640(config)# end
+R-C3640# wr
+</code></pre></div></div>
+
+<h3 id="2-cài-đặt-các-chương-trình-cần-thiết-vm-zabbix-server">2. Cài đặt các chương trình cần thiết (VM: Zabbix-Server)</h3>
+
+<h4 id="21-cài-đặt-apache">2.1 Cài đặt Apache</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ apt install apache2 -y
+</code></pre></div></div>
+
+<h4 id="22-cấu-hình-apache">2.2 Cấu hình Apache</h4>
+
+<p>Copy tập tin cấu hình mới (VirtualHost)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ cd /etc/apache2/sites-available
+ctnguyenvn[~]$ cp 000-default.conf zabbix.congtrulab.local.conf
+</code></pre></div></div>
+
+<p>Sửa đổi nội dung file cấu hình mới với vim</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ vim /etc/apache2/sites-available/zabbix.congtrulab.local.conf
+&lt;VirtualHost *:80&gt;
+    ServerName zabbix.congtrulab.local
+
+    ServerAdmin admin@congtrulab.local
+    DocumentRoot /var/www/zabbix.congtrulab.local
+
+    ErrorLog ${APACHE_LOG_DIR}/zabbix.congtrulab.local-error.log
+    CustomLog ${APACHE_LOG_DIR}/zabbix.congtrulab.local-access.log combined
+
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Tạo thư mục root web</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ mkdir /var/www/zabbix.congtrulab.local
+</code></pre></div></div>
+
+<p>Kích hoạt file cấu hình và khởi động apache</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ a2ensite /etc/apache2/sites-available/zabbix.congtrulab.local.conf
+ctnguyenvn[~]$ systemctl start apache2
+ctnguyenvn[~]$ systemctl enable apache2
+</code></pre></div></div>
+
+<p>Thêm rule firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ufw allow http
+ctnguyenvn[~]$ ufw reload
+</code></pre></div></div>
+
+<h4 id="23-cài-đặt-php-72">2.3 Cài đặt PHP 7.2</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ apt install php7.2 php7.2-common php-mysql php-gd php-curl \
+php-bcmath php7.2-xml php-net-socket php-mbstring php-gettext
+</code></pre></div></div>
+
+<h4 id="24-cấu-hình-php">2.4 Cấu hình PHP</h4>
+
+<p>Mở file <code class="language-plaintext highlighter-rouge">/etc/php/7.2/apache2/php.ini</code> và thay đổi một số cấu hình cơ bản bao
+gồm</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>max_execution_time = 300
+max_input_time = 300
+memory_limit = 128M
+post_max_size = 32M
+upload_max_filesize = 16M
+date.timezone = Asia/Ho_Chi_Minh
+</code></pre></div></div>
+
+<h4 id="25-cài-đặt-mysql-server">2.5 Cài đặt mysql server</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ apt install mysql-server
+ctnguyenvn[~]$ systemctl start mysql
+ctnguyenvn[~]$ systemctl enable mysql
+</code></pre></div></div>
+
+<p>Thiết lập ban đầu với <code class="language-plaintext highlighter-rouge">mysql_secure_installation</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ mysql_secure_installation
++++ snip some code +++
+Set root password? [Y/n] Y  &lt;=== Chọn Y và bắt đầu đặt mật khẩu mới cho root db user
+New password:
+Re-enter new password:
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
++++ snip some code +++
+Remove anonymous users? [Y/n] n
+ ... skipping.
++++ snip some code +++
+Disallow root login remotely? [Y/n] y
+ ... Success!
++++ snip some code +++
+Remove test database and access to it? [Y/n] n
+ ... skipping.
++++ snip some code +++
+Reload privilege tables now? [Y/n] y
+ ... Success!
++++ snip some code +++
+</code></pre></div></div>
+
+<h4 id="26-cấu-hình-database-sử-dụng-cho-zabbix">2.6 Cấu hình database sử dụng cho zabbix</h4>
+
+<p>Tạo database cho zabbix (sử dụng cho phần sau). Sử dụng lệnh sau và bắt đầu tạo
+database</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ mysql -u root -p
+Enter password:: &lt;== nhập password vừa tạo phía trên
++++&lt;snip some code&gt;+++
+MariaDB [(none)]&gt;create database zabbix_db character set utf8 collate utf8_bin;
+MariaDB [(none)]&gt;create user zabbix_user@'localhost' identified by 'zabbix@pw123';
+MariaDB [(none)]&gt;grant all privileges on zabbix_db.* to zabbix_user@'localhost';
+MariaDB [(none)]&gt;flush privileges;
+MariaDB [(none)]&gt;quit
+</code></pre></div></div>
+
+<p>Thêm rule cho firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ufw allow mysql
+ctnguyenvn[~]$ ufw reload
+</code></pre></div></div>
+
+<h3 id="3-cài-đặt-zabbix-server-version-50">3. Cài đặt Zabbix Server (version 5.0)</h3>
+
+<p>Cài đặt</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+bionic_all.deb
+ctnguyenvn[~]$ dpkg -i zabbix-release_5.0-1+bionic_all.deb
+ctnguyenvn[~]$ apt update
+ctnguyenvn[~]$ apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent
+</code></pre></div></div>
+
+<blockquote>
+  <p>Xem thêm tại
+<a href="https://www.zabbix.com/documentation/5.0/manual/installation">official documents 5.0</a></p>
+</blockquote>
+
+<p>Khởi động zabbix</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ systemctl start zabbix-server
+ctnguyenvn[~]$ systemctl enable zabbix-server
+</code></pre></div></div>
+
+<p>Cấu hình cho phép các dịch vụ bởi firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ufw allow zabbix-agent
+ctnguyenvn[~]$ ufw allow zabbix-trapper
+ctnguyenvn[~]$ ufw reload
+</code></pre></div></div>
+
+<h3 id="4-cấu-hình-trên-zabbix-server">4. Cấu hình trên zabbix server</h3>
+
+<p>Sử dụng database của zabbix-mysql cung cấp để thêm vào db đã tạo</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ cd /usr/share/doc/zabbix-server-mysql*
+ctnguyenvn[~]$ gunzip create.sql.gz
+ctnguyenvn[~]$ mysql -u root -p zabbix_db &lt; create.sql
+Enter password: &lt;== Nhập mật khẩu của user root mysql
+</code></pre></div></div>
+
+<p>Cấu hình một số thông tin trong <code class="language-plaintext highlighter-rouge">zabbix_server.conf</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ vim /etc/zabbix/zabbix_server.conf
+
++++ snip some code +++
+
+DBName=zabbix_db
+DBUser=zabbix_user
+DBPassword=zabbix@pw123
+
++++ snip some code +++
+
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Cần tìm và thay đổi DB name, user, password đúng với Database đã tạo
+(phía trên)</p>
+</blockquote>
+
+<p>Khởi động lại apache và Zabbix server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ systemctl restart apache2
+ctnguyenvn[~]$ systemctl restart zabbix-server
+</code></pre></div></div>
+
+<p>Sử dụng trình duyệt truy cập vào địa chỉ <code class="language-plaintext highlighter-rouge">&lt;IP Zabbix Server&gt;/zabbix</code> và chọn lần
+lượt như hình sau</p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/1.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Tôi đã thay đổi file hosts để có thể sử dụng domain</p>
+</blockquote>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/2.png" alt="zabbix" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/3.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Nhập đúng tên database, user và password trong bước tạo database phía
+trên</p>
+</blockquote>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/4.png" alt="zabbix" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/5.png" alt="zabbix" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/6.png" alt="zabbix" class="center-image" /></p>
+
+<p>Sau khi nhận thông báo thành công, có thể login với tài khoản quản trị mặc định
+là</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User: Admin
+Pass: zabbix
+</code></pre></div></div>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/7.png" alt="zabbix" class="center-image" /></p>
+
+<p>Và giao diện đầu tiên của zabbix như sau</p>
+
+<p><img src="https://ctnguyenvn.me/images/zabbix/8.png" alt="zabbix" class="center-image" /></p>
+
+<p>Quá trình cài đặt cơ bản zabbix server 5.0 đã thành công. Cuối cùng có thể thêm
+một số thiết bị như Linux, windows, cisco router vào zabbix server như
+<a href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent">sau</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tutorials" /><category term="Tools" /><category term="Monitoring" /><summary type="html"><![CDATA[Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device như hình sau 1. Giới thiệu mô hình lab Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17   IP Như mô hình   Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông qua R1.]]></summary></entry><entry><title type="html">Cơ bản về LVM (logical Volume management)</title><link href="https://ctnguyenvn.me/2021/01/25/lvm/" rel="alternate" type="text/html" title="Cơ bản về LVM (logical Volume management)" /><published>2021-01-25T00:00:00+07:00</published><updated>2021-01-25T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/01/25/lvm</id><content type="html" xml:base="https://ctnguyenvn.me/2021/01/25/lvm/"><![CDATA[<p>Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
+lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung
+lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng
+Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group
+như <code class="language-plaintext highlighter-rouge">working</code>, <code class="language-plaintext highlighter-rouge">devops</code> thay vì các tên truyền thống mặc định như <code class="language-plaintext highlighter-rouge">sda</code>, <code class="language-plaintext highlighter-rouge">sdb</code>.</p>
+
+<h3 id="1-giới-thiệu">1. Giới thiệu</h3>
+
+<p><strong>Volume Group (VG)</strong> - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập
+hợp/ánh xạ các <code class="language-plaintext highlighter-rouge">Physical Volume</code> và <code class="language-plaintext highlighter-rouge">Logical Volume</code> thành một đơn vị chung về
+mặt khởi tạo. Cụ thể <code class="language-plaintext highlighter-rouge">Volume Group</code> tập hợp các ổ cứng vật lý
+(<code class="language-plaintext highlighter-rouge">Physical Volume</code>) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng
+khối có kích thước bằng nhau, sau đó sẽ tạo các <code class="language-plaintext highlighter-rouge">Logical Volume</code> từ chúng.</p>
+
+<p><strong>Physical Volume (PV)</strong> - là thành phần cơ bản được sử dụng trong LVM cho phép
+tạo các <code class="language-plaintext highlighter-rouge">Volume group</code>, chúng có thể là các ổ cứng HDD, SSD hay có thể là
+software raid.</p>
+
+<p><strong>Logical Volume (LV)</strong> - là phân vùng luận lý được tạo ra từ <code class="language-plaintext highlighter-rouge">Volume Group</code>, về
+mặt lý thuyết có thể xem <code class="language-plaintext highlighter-rouge">Logical Volume</code> giống như partition trên các hệ thống
+non-LVM, tuy nhiên <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể được thay đổi kích trước dễ dàng mà
+không làm gián đoạn hệ thống.</p>
+
+<p><strong>Physical Extent (PE)</strong> và <strong>Logical Extent (LE)</strong> - <code class="language-plaintext highlighter-rouge">Physical Volume</code> được
+chia thành các khối bằng nhau gọi là <code class="language-plaintext highlighter-rouge">Physical Extent</code>, tương tự đối với phân
+vùng <code class="language-plaintext highlighter-rouge">Logical Volume</code> được gọi là <code class="language-plaintext highlighter-rouge">Logical Extent</code>.</p>
+
+<p><strong>Extent</strong> - là đơn vị nhỏ nhất của <code class="language-plaintext highlighter-rouge">Volume Group</code>, cũng là kỹ thuật giúp LVM có
+thể thay đổi dung lượng các <code class="language-plaintext highlighter-rouge">Logical Volume</code> mà không làm gián đoạn hệ thống như
+đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng
+<code class="language-plaintext highlighter-rouge">Extent</code> tương ứng, nghĩa là ánh xạ số lượng <code class="language-plaintext highlighter-rouge">Physical Extent</code> trên
+<code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Extent</code> trên <code class="language-plaintext highlighter-rouge">Logical Volume</code>. Lưu ý rằng việc
+ánh xạ <code class="language-plaintext highlighter-rouge">Extent</code> từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể không cần phải
+là các khối <code class="language-plaintext highlighter-rouge">Extent</code> liên tục từ <code class="language-plaintext highlighter-rouge">Physical Volume</code></p>
+
+<!--more-->
+
+<p><img src="https://ctnguyenvn.me/images/lvm/Lvm.png" alt="LVM" class="center-image" /></p>
+
+<p>Trong hình trên (nguồn: wikimedia) có thể thấy rằng các <code class="language-plaintext highlighter-rouge">Logical Volume</code>
+<code class="language-plaintext highlighter-rouge">/dev/hlv</code> được tạo nên không chỉ riêng từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> <code class="language-plaintext highlighter-rouge">hdisk1</code> mà còn có
+các <code class="language-plaintext highlighter-rouge">Extent</code> trên <code class="language-plaintext highlighter-rouge">hdisk2</code> và các <code class="language-plaintext highlighter-rouge">Extent</code> ánh xạ nên <code class="language-plaintext highlighter-rouge">/dev/hlv</code> cũng không liên
+tục trên <code class="language-plaintext highlighter-rouge">Volume Group</code>.</p>
+
+<h3 id="2-cài-đặt-lvm">2. Cài đặt lvm</h3>
+
+<p>CentOS</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# yum install lvm2 -y
+</code></pre></div></div>
+
+<p>Ubuntu</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# apt-get install lvm2 -y
+</code></pre></div></div>
+
+<h3 id="3-tổng-hợp-một-số-comand-cơ-bản">3. Tổng hợp một số comand cơ bản</h3>
+
+<ul>
+  <li>Physical volumes:
+    <ul>
+      <li>Tạo Physical volume dùng lệnh <code class="language-plaintext highlighter-rouge">pvcreate</code>.</li>
+      <li>Xem Physical volume dùng lệnh <code class="language-plaintext highlighter-rouge">pvdisplay</code>.</li>
+      <li>Xoá Physical volume dùng lệnh <code class="language-plaintext highlighter-rouge">pvremove</code>.</li>
+    </ul>
+  </li>
+  <li>Volume groups:
+    <ul>
+      <li>Tạo Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgcreate</code>.</li>
+      <li>Xem Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgdisplay</code>.</li>
+      <li>Xoá Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgremove</code>.</li>
+      <li>Tăng dung lượng Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgextend</code>.</li>
+      <li>Giảm dung lượng Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgreduce</code>.</li>
+    </ul>
+  </li>
+  <li>Logical volumes:
+    <ul>
+      <li>Tạo Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvcreate</code>.</li>
+      <li>Xem Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvdisplay</code>.</li>
+      <li>Xoá Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvremove</code>.</li>
+      <li>Tăng dung lượng Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvextend</code>. (cần resize2fs)</li>
+      <li>Giảm dung lượng Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvreduce</code>. (cần resize2fs)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="4-một-số-ví-dụ">4. Một số ví dụ</h3>
+
+<h4 id="41-tạo-physical-volume-từ-đĩa-cứng-vật-lý">4.1 Tạo Physical Volume từ đĩa cứng vật lý</h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# pvcreate &lt;/path/to/device1&gt; &lt;/path/to/device2&gt; ...
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# pvcreate /dev/sdb /dev/sdc
+  Physical volume "/dev/sdb" successfully created.
+  Physical volume "/dev/sdc" successfully created.
+
+[root@Server ~]# pvs
+  PV         VG Fmt  Attr PSize PFree
+  /dev/sdb      lvm2 ---  5.00g 5.00g
+  /dev/sdc      lvm2 ---  5.00g 5.00g
+</code></pre></div></div>
+
+<h4 id="42-tạo-volume-group-từ-physical-volume">4.2 Tạo Volume Group từ Physical Volume</h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgcreate &lt;Volume Group name&gt; &lt;/path/to/device1&gt; &lt;/path/to/device2&gt; ...
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgcreate blogVG /dev/sdb /dev/sdc
+  Volume group "blogVG" successfully created
+
+[root@Server ~]# vgs
+  VG     ##PV #LV #SN Attr   VSize VFree
+  blogVG   2   0   0 wz--n- 9.99g 9.99g
+</code></pre></div></div>
+
+<h4 id="43-tạo-các-logical-volume-từ-volume-group">4.3 Tạo các Logical Volume từ Volume Group</h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lvcreate -L &lt;size&gt; -n &lt;Logical Volume name&gt; &lt;Volume Group name&gt;
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lvcreate -L 3G -n "working" blogVG
+  Logical volume "working" created.
+
+[root@Server ~]# lvcreate -L 5G -n "data" blogVG
+  Logical volume "data" created.
+
+[root@Server ~]# vgs -o +lv_size,lv_name
+  VG     ##PV #LV #SN Attr   VSize VFree LSize LV
+  blogVG   2   2   0 wz--n- 9.99g 1.99g 3.00g working
+  blogVG   2   2   0 wz--n- 9.99g 1.99g 5.00g data
+</code></pre></div></div>
+
+<h4 id="44-định-dạng-các-logical-volume-tạo-mount-point-và-cấu-hình-tự-động-mount-sau-khi-reboot">4.4 Định dạng các Logical Volume, tạo mount point và cấu hình tự động mount sau khi reboot</h4>
+
+<p>Định dạng filesystem:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# mkfs.ext4 /dev/blogVG/working
+...
+[root@Server ~]# mkfs.ext4 /dev/blogVG/data
+...
+</code></pre></div></div>
+
+<p>Tạo mount point:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# mkdir -p /mnt/working
+[root@Server ~]# mkdir -p /mnt/data
+</code></pre></div></div>
+
+<p>Mount các Logical volume vào thư mục vừa tạo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# mount /dev/blogVG/working /mnt/working
+[root@Server ~]# mount /dev/blogVG/data /mnt/data
+</code></pre></div></div>
+
+<p>Cấu hình tự động mount: Để cấu hình tự động mount sau khig reboot, ta cần sửa
+file cấu hình <code class="language-plaintext highlighter-rouge">/etc/fstab</code> bằng cách thêm nội dung sau vào cuối file
+<code class="language-plaintext highlighter-rouge">/etc/fstab</code> (sử dụng vi, nano hay bất kỳ editer nào)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vim /etc/fstab
+...
+## auto mount with lvm
+/dev/blogVG/working   /mnt/working  ext4 defaults,nofail 0 0
+/dev/blogVG/data  /mnt/data   ext4 defaults,nofail 0 0
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: có thể sử dụng UUID thay vì đường dẫn cụ thể Logical volume</p>
+
+  <ul>
+    <li>ví dụ: <code class="language-plaintext highlighter-rouge">UUID=a2cc3d6b-0a3.... /data ext4 defaults,nofail 0 0 </code></li>
+    <li>Có thể lấy UUID với lệnh <code class="language-plaintext highlighter-rouge">lsblk -f</code> hoặc <code class="language-plaintext highlighter-rouge">blkid</code></li>
+  </ul>
+</blockquote>
+
+<p>Sau khi reboot có thể kiểm tra lại kết quả</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lsblk -fs /dev/blogVG/working /dev/blogVG/data
+NAME           FSTYPE      LABEL UUID                                   MOUNTPOINT
+blogVG-working ext4              74e10bdb-b7c8-41dd-8b99-ff912f627b19   /mnt/working
+└─sdb          LVM2_member       ITGySo-PRNP-o2sX-wkff-MFCk-sxo6-u3Cfbe
+blogVG-data    ext4              bd2b5824-43fc-410b-b6f0-769f26939edf   /mnt/data
+├─sdb          LVM2_member       ITGySo-PRNP-o2sX-wkff-MFCk-sxo6-u3Cfbe
+└─sdc          LVM2_member       gwBfSr-EYau-zYUJ-K7jQ-FaIZ-U2m1-5MbYHg
+</code></pre></div></div>
+
+<h4 id="45-tăng-dung-lượng-các-logical-volume">4.5 Tăng dung lượng Các Logical Volume</h4>
+
+<p>Để tăng dung lượng lên 1G ta có thể sử dụng <code class="language-plaintext highlighter-rouge">lvextend</code>, ví dụ tăng 1G dung lượng
+cho <code class="language-plaintext highlighter-rouge">/dev/blogVG/working</code> như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lvextend -L+1G /dev/blogVG/working
+  Size of logical volume blogVG/working changed from 3.00 GiB (768 extents) to 4.00 GiB (1024 extents).
+  Logical volume blogVG/working successfully resized
+</code></pre></div></div>
+
+<p>Sau khi tăng kích thước của của <code class="language-plaintext highlighter-rouge">Logical Volume</code> ta cần resize kích thước
+filesystem</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# resize2fs /dev/blogVG/working
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/blogVG/working is mounted on /mnt/working; #on-line resizing required
+old_desc_blocks = 1, new_desc_blocks = 1
+The filesystem on /dev/blogVG/working is now 1048576 blocks long
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Cần resize filesystem đúng theo filesystem type, xem thêm tại
+<a href="https://tldp.org/HOWTO/LVM-HOWTO/extendlv.html">đây</a></p>
+</blockquote>
+
+<h4 id="46-giảm-dung-lượng-các-logical-volume">4.6 Giảm dung lượng Các Logical Volume</h4>
+
+<p>Để giảm dung lượng của một <code class="language-plaintext highlighter-rouge">Logical Volume</code> ta cần:</p>
+
+<ul>
+  <li>umount phân vùng</li>
+  <li>resize filesystem</li>
+  <li>kiểm tra phân vùng</li>
+  <li>giảm kích thước <code class="language-plaintext highlighter-rouge">Logical Volume</code></li>
+  <li>mount lại phân vùng</li>
+</ul>
+
+<p>Ví dụ (giảm 1G <code class="language-plaintext highlighter-rouge">/mnt/data</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# umount /mnt/data/
+
+[root@Server ~]# resize2fs /dev/blogVG/data 4G
+resize2fs 1.42.9 (28-Dec-2013)
+Please run 'e2fsck -f /dev/blogVG/data' first.
+
+[root@Server ~]# e2fsck -f /dev/blogVG/data
+e2fsck 1.42.9 (28-Dec-2013)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/blogVG/data: 11/262144 files (0.0% non-contiguous), 54350/1048576 blocks
+
+[root@Server ~]# lvreduce -L-1G /dev/blogVG/data
+  WARNING: Reducing active logical volume to 4.00 GiB.
+  THIS MAY DESTROY YOUR DATA (filesystem etc.)
+Do you really want to reduce blogVG/data? [y/n]: y
+  Size of logical volume blogVG/data changed from 5.00 GiB (1280 extents) to 4.00 GiB (1024 extents).
+  Logical volume blogVG/data successfully resized.
+
+[root@Server ~]# mount /mnt/data/
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: ở bước 2 <code class="language-plaintext highlighter-rouge">resize2fs</code> với <code class="language-plaintext highlighter-rouge">4G</code> là dung lượng sau khi giảm (tổng dung
+lượng 5G - kích thước muốn giảm 1G = 4G)</p>
+</blockquote>
+
+<h4 id="47-thêm-physical-volume-mới-vào-volume-group">4.7 Thêm <code class="language-plaintext highlighter-rouge">Physical Volume</code> mới vào <code class="language-plaintext highlighter-rouge">Volume Group</code></h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgextend &lt;Volume Group name&gt; &lt;/path/to/device1&gt;
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# pvcreate /dev/sdd
+  Physical volume "/dev/sdd" successfully created.
+
+[root@Server ~]# vgextend blogVG /dev/sdd
+  Volume group "blogVG" successfully extended
+</code></pre></div></div>
+
+<h4 id="48-xóa-physical-volume-khỏi-volume-group">4.8 Xóa <code class="language-plaintext highlighter-rouge">Physical Volume</code> khỏi <code class="language-plaintext highlighter-rouge">Volume Group</code></h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgreduce &lt;Volume Group name&gt; &lt;/path/to/device1&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Đảm bảo ổ <code class="language-plaintext highlighter-rouge">Physical Volume</code> này không được sử dụng bởi bất kỳ
+<code class="language-plaintext highlighter-rouge">Volume Group</code> nào (có thể sử dụng <code class="language-plaintext highlighter-rouge">pvdisplay</code> để xem trạng thái)</p>
+</blockquote>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgreduce blogVG /dev/sdd
+  Removed "/dev/sdd" from volume group "blogVG"
+</code></pre></div></div>
+
+<p>Nếu <code class="language-plaintext highlighter-rouge">Physical Volume</code> đang được sử dụng thì cần sử dụng <code class="language-plaintext highlighter-rouge">pvmove</code> để di chuyển dữ
+liệu sang ổ <code class="language-plaintext highlighter-rouge">Physical Volume</code> khác.</p>
+
+<p>Ví dụ: Sau khi thêm 1 ổ mới vào add vào <code class="language-plaintext highlighter-rouge">Volume Group</code> <code class="language-plaintext highlighter-rouge">blogVG</code>, sau đó muốn
+remove ổ <code class="language-plaintext highlighter-rouge">/dev/sdb</code> ra khỏi <code class="language-plaintext highlighter-rouge">Volume Group</code> <code class="language-plaintext highlighter-rouge">blogVG</code> (kết quả cần phải sử dụng
+<code class="language-plaintext highlighter-rouge">pvmove</code> trước khi <code class="language-plaintext highlighter-rouge">vgredure</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lsblk
+NAME             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+...
+sdb                8:16   0    5G  0 disk
+└─blogVG-working 253:0    0    5G  0 lvm  /mnt/working
+sdc                8:32   0    5G  0 disk
+└─blogVG-data    253:1    0    7G  0 lvm  /mnt/data
+sdd                8:48   0   10G  0 disk
+├─blogVG-working 253:0    0    5G  0 lvm  /mnt/working
+└─blogVG-data    253:1    0    7G  0 lvm  /mnt/data
+
+[root@Server ~]# vgreduce blogVG /dev/sdb
+  Physical volume "/dev/sdb" still in use
+
+[root@Server ~]# pvdisplay /dev/sdb
+  --- Physical volume ---
+  PV Name               /dev/sdb
+  VG Name               blogVG
+  PV Size               5.00 GiB / not usable 4.00 MiB
+  Allocatable           yes (but full)
+  PE Size               4.00 MiB
+  Total PE              1279
+  Free PE               0
+  Allocated PE          1279
+  PV UUID               ITGySo-PRNP-o2sX-wkff-MFCk-sxo6-u3Cfbe
+
+[root@Server ~]# pvmove /dev/sdb
+  /dev/sdb: Moved: 0.08%
+  /dev/sdb: Moved: 27.76%
+  /dev/sdb: Moved: 60.05%
+  /dev/sdb: Moved: 79.28%
+  /dev/sdb: Moved: 99.92%
+  /dev/sdb: Moved: 100.00%
+
+[root@Server ~]# vgreduce blogVG /dev/sdb
+  Removed "/dev/sdb" from volume group "blogVG"
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Khi sử dụng <code class="language-plaintext highlighter-rouge">pvmove</code> cần đảm bảo dung lượng trống trên các ổ khác vẫn
+đủ kích thước để lưu dữ liệu sau khi loại bỏ <code class="language-plaintext highlighter-rouge">Physical Volume</code> hiện tại.</p>
+</blockquote>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Linux system" /><category term="Notes" /><summary type="html"><![CDATA[Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group như working, devops thay vì các tên truyền thống mặc định như sda, sdb. 1. Giới thiệu Volume Group (VG) - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập hợp/ánh xạ các Physical Volume và Logical Volume thành một đơn vị chung về mặt khởi tạo. Cụ thể Volume Group tập hợp các ổ cứng vật lý (Physical Volume) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng khối có kích thước bằng nhau, sau đó sẽ tạo các Logical Volume từ chúng. Physical Volume (PV) - là thành phần cơ bản được sử dụng trong LVM cho phép tạo các Volume group, chúng có thể là các ổ cứng HDD, SSD hay có thể là software raid. Logical Volume (LV) - là phân vùng luận lý được tạo ra từ Volume Group, về mặt lý thuyết có thể xem Logical Volume giống như partition trên các hệ thống non-LVM, tuy nhiên Logical Volume có thể được thay đổi kích trước dễ dàng mà không làm gián đoạn hệ thống. Physical Extent (PE) và Logical Extent (LE) - Physical Volume được chia thành các khối bằng nhau gọi là Physical Extent, tương tự đối với phân vùng Logical Volume được gọi là Logical Extent. Extent - là đơn vị nhỏ nhất của Volume Group, cũng là kỹ thuật giúp LVM có thể thay đổi dung lượng các Logical Volume mà không làm gián đoạn hệ thống như đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng Extent tương ứng, nghĩa là ánh xạ số lượng Physical Extent trên Physical Volume sang Logical Extent trên Logical Volume. Lưu ý rằng việc ánh xạ Extent từ Physical Volume sang Logical Volume có thể không cần phải là các khối Extent liên tục từ Physical Volume]]></summary></entry><entry><title type="html">Cài đặt VPN Warp CloudFlare trên Linux</title><link href="https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux/" rel="alternate" type="text/html" title="Cài đặt VPN Warp CloudFlare trên Linux" /><published>2021-01-04T00:00:00+07:00</published><updated>2021-01-04T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux</id><content type="html" xml:base="https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux/"><![CDATA[<p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
+CloudFlare. Hiện tại <a href="https://1.1.1.1/">Warp client</a> chỉ hỗ trợ Anroid/IOS và
+windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta
+có thể sử dụng warp thông qua Wireguard.</p>
+
+<h4 id="cài-đặt-wireguard">Cài đặt Wireguard</h4>
+
+<p>Arch</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S wireguard-tools
+</code></pre></div></div>
+
+<p>Ubuntu</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo apt install wireguard
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu sử dụng Linux distro khác thì có thể xem cài đặt tại
+<a href="https://www.wireguard.com/install/">đây</a></p>
+</blockquote>
+
+<!--more-->
+
+<h4 id="cài-đặt-wgcf">Cài đặt wgcf</h4>
+
+<p>Đây là chương trình hỗ trợ đăng ký account và generate tập tin cấu hình cho
+<code class="language-plaintext highlighter-rouge">Wireguard</code>. Nếu không sử dụng <code class="language-plaintext highlighter-rouge">wgcf</code> bạn có thể truy cập vào
+<a href="https://1111.4it.top">đây</a> để đăng ký tài khoản và lưu tập tin cấu hình về máy.</p>
+
+<p>Để cài đặt bản mới nhất của <code class="language-plaintext highlighter-rouge">wgcf</code> bạn truy cập vào
+<a href="https://github.com/ViRb3/wgcf/releases">đây</a> để tải bản phù hợp với phiên bản
+linux đang sử dụng. Ngoài ra bạn có thể sử dụng lệnh sau để tự động tải phiên
+bản mới nhất về</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ curl -s "https://api.github.com/repos/ViRb3/wgcf/releases/latest" \
+        | grep "browser_download_url.*linux_amd64" \
+        | cut -d: -f 2,3 \
+        | tr -d \" \
+        | wget -i -
+</code></pre></div></div>
+
+<p>Tiếp theo thực hiện các lệnh sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo mkdir /opt/wgcf
+ctnguyenvn[~]$ sudo mv wgcf* /opt/wgcf/wgcf
+ctnguyenvn[~]$ sudo chmod +x /opt/wgcf/wgcf
+</code></pre></div></div>
+
+<h4 id="tạo-profile-warp">Tạo profile warp</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo /opt/wgcf/wgcf register --accept-tos --config /opt/wgcf/warp-account.toml
+ctnguyenvn[~]$ sudo /opt/wgcf/wgcf generate -p /opt/wgcf/warp.conf --config /opt/wgcf/warp-account.toml
+</code></pre></div></div>
+
+<p>Nếu muốn update key khi cần sử dụng warp+ thì bạn có thể mở file
+<code class="language-plaintext highlighter-rouge">/opt/wgcf/warp-account.toml</code> và sửa dòng <code class="language-plaintext highlighter-rouge">lincese_key</code> thành key mới</p>
+
+<p><img src="https://ctnguyenvn.me/images/install-warp/1.png" alt="wg show" class="center-image" /></p>
+
+<p>và thực hiện lệnh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo /opt/wgcf/wgcf update --config /opt/wgcf/warp-account.toml
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: có thể sử dụng env để update nhanh với lệnh sau</p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ WGCF_LICENSE_KEY="put_key_here" /opt/wgcf/wgcf update --config /opt/wgcf/warp-account.toml</code></p>
+</blockquote>
+
+<h4 id="copy-tập-tin-cấu-hình-sang-wireguard">Copy tập tin cấu hình sang Wireguard</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo cp -r /opt/wgcf/warp.conf /etc/wireguard/
+</code></pre></div></div>
+
+<h4 id="startstop-wireguard-sử-dụng-cấu-hình-warp-vpn">start/stop wireguard sử dụng cấu hình warp vpn</h4>
+
+<p>Để kích hoạt ta sử dụng lệnh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick up warp
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu gặp lỗi: <code class="language-plaintext highlighter-rouge">wg-quick: 'warp' already exists</code> thì tên device đã tồn
+tại, có thể xóa device này sử dụng lệnh sau:</p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo ip link delet dev warp</code></p>
+</blockquote>
+
+<p>Để dừng sử dụng vpn ta sử dụng</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick down warp
+</code></pre></div></div>
+
+<p>Kiểm tra kết quả</p>
+
+<p><img src="https://ctnguyenvn.me/images/install-warp/2.png" alt="wg show" class="center-image" /></p>
+
+<p>Ngoài ra có thể tự động kích hoạt vpn warp khi khởi động OS ta có thể sử dụng</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo systemctl enable wg-quick@warp
+</code></pre></div></div>
+
+<h4 id="một-số-lưu-ý">Một số lưu ý:</h4>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">wgcf</code> chỉ có nhiệm vụ khởi tạo tài khoản và generate tập tin cấu hình, việc
+này có thể thực hiện qua phiên bản web như đã nói ở trên.</p>
+  </li>
+  <li>
+    <p>Tên của device có thể thay đổi tùy ý, ví dụ thay đổi từ <code class="language-plaintext highlighter-rouge">warp</code> sang <code class="language-plaintext highlighter-rouge">xxx</code>,
+tuy nhiên nếu thực hiện thay đổi này thì cần thay đổi lệnh up/down và enable
+phù hợp với device name mới.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Ví dụ</p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo wg up xxx</code></p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo systemctl enable wg-quick@xxx</code></p>
+</blockquote>
+
+<h4 id="update">Update</h4>
+
+<p>Nếu sau khi start VPN thành công nhưng không thể truy cập internet thì có thể
+thay đổi Endpoint trong file <code class="language-plaintext highlighter-rouge">warp.conf</code> sang địa chỉ IP mới cụ thể
+<code class="language-plaintext highlighter-rouge">Endpoint = 162.159.192.4:2408</code></p>
+
+<blockquote>
+  <p>Lưu ý:</p>
+
+  <ul>
+    <li>Tên file <code class="language-plaintext highlighter-rouge">warp.conf</code> này phụ thuộc vào các bước tạo file cấu hình</li>
+    <li>Có thể thay đổi nội dung file này trực tiếp tại thư mục <code class="language-plaintext highlighter-rouge">/etc/wireguard/</code></li>
+  </ul>
+</blockquote>
+
+<p>Sau đó khởi động lại warp</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick down warp
+ctnguyenvn[~]$ sudo wg-quick up warp
+</code></pre></div></div>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="VPN" /><summary type="html"><![CDATA[Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi CloudFlare. Hiện tại Warp client chỉ hỗ trợ Anroid/IOS và windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta có thể sử dụng warp thông qua Wireguard. Cài đặt Wireguard Arch ctnguyenvn[~]$ sudo pacman -S wireguard-tools Ubuntu ctnguyenvn[~]$ sudo apt install wireguard Lưu ý: Nếu sử dụng Linux distro khác thì có thể xem cài đặt tại đây]]></summary></entry></feed>

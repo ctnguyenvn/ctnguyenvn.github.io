@@ -1,0 +1,1038 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Giao thức HTTP (Hyper Text Transfer Protocol) | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="HTTP (HyperText
+Transfer Protocol - Giao thức truyền tải siêu văn bản) là giao thức nằm ở tầng
+Application Layer, được sử dụng để liên hệ thông tin giữa các máy chủ dịch vụ và
+máy sử dụng dịch vụ.
+
+Giới thiệu
+
+Từ lúc ra đời đến nay HTTP trải qua nhiều phiên bản, tuy nhiên phiên bản hoàn
+chỉnh đầu tiên của HTTP là HTTP 0.9 (năm 1991), tiếp theo là HTTP 1.0
+(năm 1996), HTTP 1.1 (năm 1997) và sau đó gần đây nhất là 2x (HTTP 2.0).
+
+Tuy phiên bản 2.0 đã ra đời nhưng vì một số lý do mà nó hiện vẫn chưa được phổ
+biến. Phiên bản HTTP 1.1 hiện vẫn là phiên bản HTTP phổ biến nhất, có thể
+tham khảo thêm tại RFC 2616. Sự khác
+biệt lớn giữa HTTP/1.0 và HTTP/1.1 là HTTP/1.0 sử dụng một kết nối mới cho mỗi
+Yêu cầu/Phản hồi trao đổi, trong khi đó kết nối trong HTTP/1.1 có thể được sử
+dụng cho một hoặc nhiều Request/Response (Yêu cầu/Phản hồi).
+
+Mô hình hoạt động
+
+HTTP hoạt động dựa trên mô hình client-server, sử dụng kết nối TCP port 80.
+Trình duyệt client thực hiện yêu cầu, nhận và hiển thị đối tượng web (gồm dữ
+liệu HTML, hình ảnh JPEG, Java applet, video, âm thanh, …). Trong khi, web
+server sẽ gửi trả lời khi nhận được yêu cầu từ client.
+
+
+
+Có 2 loại kết nối HTTP là kết nối không bền vững và kết nối bền vững.
+
+Kết nối không bền vững: là sau khi server gửi đi một đối tượng thì kết nối
+TCP sẽ được đóng. Như vậy, mỗi kết nối TCP chỉ truyền được duy nhất một yêu
+cầu từ client và nhận lại một thông điệp trả lời từ server. Chúng ta có thể
+tóm tắt qua 1 bước sau:
+
+
+  
+    Bước 1: Client khởi tạo kết nối TCP bằng việc gửi yêu cầu đến server.
+Server nhận được yêu cầu và chấp nhận kết nối bằng việc gửi trả lời về
+cho client. Nếu sau khoảng thời gian RTT (Round Trip Time) mà không nhận
+được trả lời từ phía server thì client sẽ gửi lại yêu cầu.
+  
+  
+    Bước 2: Sau khi kết nối được thiết lập, client sẽ gửi thông điệp yêu cầu
+chứa tên đường dẫn của các đối tượng ( ví dụ:
+https://github.com/ctnguyenvn ) đến server. Server nhận được thông điệp
+yêu cầu và tiến hành lấy ra các đối tượng được yêu cầu. Sau đó, các đối
+tượng được đóng gói thành thông điệp trả lời và gửi đến client.
+  
+  
+    Bước 3: Server đóng kết nối TCP (Lưu ý: server chỉ đóng kết nối TCP khi
+chắc chắn rằng client nhận được thông điệp trả lời)
+  
+  
+    Bước 4: Client nhận thông điệp trả lời chứa tập tin HTML và hiển thị các
+đối tượng.
+  
+
+
+Kết nối bền vững: server sẽ duy trì kết nối TCP cho việc gửi nhiều đối
+tượng. Như vậy, sẽ có nhiều yêu cầu từ client được gửi đến server trên cùng
+một kết nối. Thông thường kết nối TCP này sẽ được đóng lại trong một khoảng
+thời gian định trước.
+
+
+  
+    Kết nối bền vững không có pipelining:
+
+    
+      
+        Client phát ra yêu cầu mới chỉ khi đáp ứng trước đó đã nhận xong.
+      
+      
+        RTT cho mỗi đối tượng tham chiếu.
+      
+    
+  
+  
+    Kết nối bền vững có pipelining:
+
+    
+      
+        Mặc định có trong HTTP/1.1.
+      
+      
+        Client gửi yêu cầu ngay sau khi gặp một đối tượng tham chiếu.
+      
+      
+        Ít nhất 1 RTT cho tất cả đối tượng tham chiếu.
+      
+    
+  
+
+
+Thông điệp HTTP
+
+Như chúng ta đã nói ở trên, HTTP là giao thức được thiết kế theo kiểu client –
+server, giao tiếp giữa client và server dựa vào request – response, client đưa
+ra các request và server trả lời các request này.
+
+HTTP Request
+
+Để bắt đầu trao đổi dữ liệu, phía client khởi tạo một HTTP session bằng cách mở
+một kết nối TCP đến HTTP server sau đó gửi request đến server này. Request có
+thể được tạo bằng nhiều cách
+
+Cấu trúc chung của một HTTP Resquest
+
+
+
+Ví dụ về một HTTP Resquest
+
+
+
+Bắt đầu của HTTP Request sẽ là Request-Line tương ứng với 3 dòng là:
+
+
+  
+    
+      key
+      Desc
+    
+  
+  
+    
+      Method
+      Là phương thức mà HTTP Request này sử dụng, thường là GET, POST, ngoài ra còn một số phương thức khác như HEAD, PUT, DELETE, OPTION, CONNECT. Trong ví dụ trên là GET
+    
+    
+      URI
+      Là địa chỉ định danh của tài nguyên. Trong tường hợp này URI là / (tức request cho tài nguyên gốc, nếu request không yêu cầu một tài nguyên cụ thể, URI có thể là dấu *)
+    
+    
+      HTTP version
+      Là phiên bản HTTP đang sử dụng, ở đây là HTTP 1.1
+    
+  
+
+
+Tiếp theo là các trường request-header, cho phép client gửi thêm các thông
+tin bổ sung về thông điệp HTTP request
+
+
+  
+    
+      key
+      Desc
+    
+  
+  
+    
+      Host
+      Chỉ định Server, nơi mà các đối tượng được lưu trữ. Trong ví dụ này host là www.archlinux.org
+    
+    
+      Connection
+      Tùy chọn điều khiển cho kết nối hiện thời. Ví dụ: keep-alive, close… Ở ví dụ này là keep-alive
+    
+    
+      Accept
+      Loại nội dung có thể nhận được từ thông điệp response. Vídụ: text/html, application/xml,…
+    
+    
+      User-Agent
+      Thông tin về user agent của người dùng, ví dụ như trình duyệt. Ở ví dụ này là Mozilla/5.0,…
+    
+    
+      Accept-Encoding
+      Các kiểu nén được chấp nhận. Trong ví dụ là gzip, deflate, sdch
+    
+    
+      Accept-Language
+      Các ngôn ngữ được chấp nhận
+    
+  
+
+
+Cuối cùng là Entity Body (nếu có) là phần thân của thông điệp HTTP Resquest
+
+HTTP Response
+
+Cấu trúc HTTP response gần giống với HTTP request, chỉ khác nhau là thay vì
+Request-Line, thì HTTP có response có Status-Line.
+
+Cấu trúc chung của một HTTP Response
+
+
+
+Ví dụ về một HTTP Response
+
+
+
+Bắt đầu thông điệp HTTP Response là Status-Line với 3 dòng đầu là:
+
+
+  
+    
+      key
+      Desc
+    
+  
+  
+    
+      version
+      Thể hiện phiên bản HTTP cao nhất mà server hỗ trợ. Trong ví dụ là HTTP 1.1
+    
+    
+      status code
+      mã kết quả trả về (sẽ được nói phía dưới). Trong ví dụ là 301
+    
+    
+      phrase
+      Mô tả về status-code
+    
+  
+
+
+Tiếp theo là header line gồm 1 số trường sau:
+
+
+  
+    
+      key
+      Desc
+    
+  
+  
+    
+      Date
+      Cho biết thời gian mà thông điệp HTTP trả lời được tạo và gửi bởi server. Trong ví dụ là sat, 17 Dec 2016 06:16:32 GMT
+    
+    
+      Server
+      Thể hiện dịch vụ mà Server đang sử dụng (ví dụ như apache, Nginx,…). Trong ví dụ này server đang chạy dịch vụ Apache
+    
+    
+      Content-Length
+      Cho biết số bytes của đối tượng được gửi. Trong ví dụ là 346
+    
+    
+      Connection
+      Tùy chọn điều khiển cho kết nối. Ở ví dụ này cũng là keep-Alive như lúc GET (HTTP resquest phía trên)
+    
+    
+      Content-Type
+      Cho biết đối tượng trong phần entity body. Ở ví dụ này là text/html
+    
+  
+
+
+Phương thức GET và POST
+
+Trong HTTP thì có 2 phương thức được sử dụng phổ biến nhất là GET và POST.
+
+GET thường được sử dụng để lấy thông tin từ Server (sử dụng bởi một
+URI đã cung cấp ). Các yêu cầu sử dụng GET nên chỉ nhận dữ liệu và đa phần không có ảnh
+hưởng gì tới dữ liệu.
+
+
+  
+    Một số đặc điểm của phương thức GET:
+
+    
+      
+        GET request có thể được cached, bookmark và lưu trong lịch sử của trình
+duyệt.
+      
+      
+        GET request bị giới hạn về chiều dài, do chiều dài của URL là có hạn.
+      
+      
+        GET request không nên dùng với dữ liệu quan trọng, chỉ dùng để nhận dữ
+liệu.
+      
+    
+  
+
+
+Với POST thì một yêu cầu POST được sử dụng để gửi dữ liệu tới Server, ví dụ
+như thông tin khách hàng, file tải lên, …
+
+
+  
+    Một số đặc điểm của phương thức
+
+    
+      
+        POST không thể cached, bookmark hay lưu trong lịch sử trình duyệt.
+      
+      
+        POST không bị giới hạn về độ dài.
+      
+    
+  
+
+
+Ngoài ra còn một số phương thức khác như
+
+
+  
+    
+      Method
+      Desc
+    
+  
+  
+    
+      HEAD
+      Tương tự như GET, nhưng nó truyền tải dòng trạng thái và khu vực Header
+    
+    
+      PUT
+      Thay đổi tất cả các đối tượng hiện tại của nguồn mục tiêu với nội dung được tải lên
+    
+    
+      DELETE
+      Gỡ bỏ tất cả các đối tượng hiện tại của nguồn mục tiêu bởi URI
+    
+    
+      CONNECT
+      Thiết lập một tunnel tới Server được xác định bởi URI đã cung cấp
+    
+    
+      OPTIONS
+      Miêu tả các chức năng giao tiếp cho nguồn mục tiêu
+    
+    
+      TRACE
+      Trình bày một vòng lặp kiểm tra thông báo song song với path tới nguồn mục tiêu
+    
+  
+
+
+HTTP Status Codes
+
+Status Codes là các mã trạng thái mà server trả về cho client. Một số loại
+Status-Code thông dụng như:
+
+
+  
+    1xx: information Message: các status code này chỉ có tính chất tạm thời,
+client có thể không quan tâm.
+
+    
+      
+        100 (Continue): Máy chủ trả về mã này để chỉ ra rằng nó đã nhận được
+một phần đầu tiên của một yêu cầu và được chờ đợi cho phần còn lại.
+      
+      
+        101 (Switching protocols): Bên yêu cầu đã yêu cầu các máy chủ để
+chuyển đổi và máy chủ được thừa nhận rằng nó sẽ làm như vậy
+      
+    
+  
+  
+    2xx Successful: khi đã xử lý thành công request của client, server trả
+về status dạng này:
+
+    
+      
+        200 OK: request thành công.
+      
+      
+        202 (Accepted): request đã được nhận, nhưng không có kết quả nào trả
+về, thông báo cho client tiếp tục chờ đợi.
+      
+      
+        204 (No Content): request đã được xử lý nhưng không có thành phần nào
+được trả về.
+      
+      
+        205 (Reset): Các máy chủ proccessed yêu cầu thành công, nhưng không
+trả lại bất kỳ nội dung. Không giống như một phản ứng 204, phản ứng này
+đòi hỏi người yêu cầu thiết lập lại xem tài liệu
+      
+      
+        206 (Partial Content): server chỉ gửi về một phần dữ liệu, phụ thuộc
+vào giá trị range header của client đã gửi.
+      
+    
+  
+  
+    3xx Redirection: server thông báo cho client phải thực hiện thêm thao
+tác để hoàn tất request:
+
+    
+      
+        301 (Moved Permanently): tài nguyên đã được chuyển hoàn toàn tới địa
+chỉ Location trong HTTP response.
+      
+      
+        303 (See other): Tài nguyên đã được chuyển tạm thời tới địa chỉ
+Location trong HTTP response.
+      
+      
+        304 (Not Modified): Tài nguyên không thay đổi từ lần cuối client
+request, nên client có thể sử dụng đã lưu trong cache.
+      
+    
+  
+  
+    4xx Client error: Lỗi của client:
+
+    
+      
+        400 (Bad Request): Request không đúng định dạng dạng, cú pháp.
+      
+      
+        401 (Unauthorized): Client chưa xác thực.
+      
+      
+        403 (Forbidden): Client không có quyền truy cập.
+      
+      
+        404 (Not Found): Không tìm thấy tài nguyên.
+      
+      
+        405 (Method Not Allowed): Phương thức không được server hỗ trợ.
+      
+    
+  
+  
+    5xx Server Error: Lỗi của server:
+
+    
+      
+        500 (Internal Server Error): Có lỗi trong quá trình xử lý của server.
+      
+      
+        501 (Not Implemented): Server không hỗ trợ chức năng client yêu cầu.
+      
+      
+        503: Service Unavailable: Server bị quá tải, hoặc bị lỗi xử lý.
+      
+    
+  
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Giao thức HTTP (Hyper Text Transfer Protocol) - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="Giao thức HTTP (Hyper Text Transfer Protocol) - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/2020/12/14/HTTP-Protocol/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <h1 class="mt-1">Giao thức HTTP (Hyper Text Transfer Protocol)</h1>
+                        <p>
+						<span class="button is-info is-light is-small mr-2">
+							 14-12-2020
+						</span>
+                                 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/protocols"
+                                    >Protocols</a
+                                > 
+                        </p>
+                        <p><p><a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> (HyperText
+Transfer Protocol - Giao thức truyền tải siêu văn bản) là giao thức nằm ở tầng
+Application Layer, được sử dụng để liên hệ thông tin giữa các máy chủ dịch vụ và
+máy sử dụng dịch vụ.</p>
+
+<h3 id="giới-thiệu">Giới thiệu</h3>
+
+<p>Từ lúc ra đời đến nay HTTP trải qua nhiều phiên bản, tuy nhiên phiên bản hoàn
+chỉnh đầu tiên của HTTP là <strong>HTTP 0.9</strong> (năm 1991), tiếp theo là <strong>HTTP 1.0</strong>
+(năm 1996), <strong>HTTP 1.1</strong> (năm 1997) và sau đó gần đây nhất là 2x (<strong>HTTP 2.0</strong>).</p>
+
+<p>Tuy phiên bản 2.0 đã ra đời nhưng vì một số lý do mà nó hiện vẫn chưa được phổ
+biến. Phiên bản <strong>HTTP 1.1</strong> hiện vẫn là phiên bản HTTP phổ biến nhất, có thể
+tham khảo thêm tại <a href="https://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a>. Sự khác
+biệt lớn giữa HTTP/1.0 và HTTP/1.1 là HTTP/1.0 sử dụng một kết nối mới cho mỗi
+Yêu cầu/Phản hồi trao đổi, trong khi đó kết nối trong HTTP/1.1 có thể được sử
+dụng cho một hoặc nhiều Request/Response (Yêu cầu/Phản hồi).</p>
+
+<h3 id="mô-hình-hoạt-động">Mô hình hoạt động</h3>
+
+<p>HTTP hoạt động dựa trên mô hình client-server, sử dụng kết nối TCP port 80.
+Trình duyệt client thực hiện yêu cầu, nhận và hiển thị đối tượng web (gồm dữ
+liệu HTML, hình ảnh JPEG, Java applet, video, âm thanh, …). Trong khi, web
+server sẽ gửi trả lời khi nhận được yêu cầu từ client.</p>
+
+<p><img src="https://ctnguyenvn.me/images/HTTP-Protocol/1.jpg" alt="Mô hình hoạt động HTTP" class="center-image" /></p>
+
+<p>Có 2 loại kết nối HTTP là kết nối không bền vững và kết nối bền vững.</p>
+
+<p><strong>Kết nối không bền vững</strong>: là sau khi server gửi đi một đối tượng thì kết nối
+TCP sẽ được đóng. Như vậy, mỗi kết nối TCP chỉ truyền được duy nhất một yêu
+cầu từ client và nhận lại một thông điệp trả lời từ server. Chúng ta có thể
+tóm tắt qua 1 bước sau:</p>
+
+<ul>
+  <li>
+    <p>Bước 1: Client khởi tạo kết nối TCP bằng việc gửi yêu cầu đến server.
+Server nhận được yêu cầu và chấp nhận kết nối bằng việc gửi trả lời về
+cho client. Nếu sau khoảng thời gian RTT (Round Trip Time) mà không nhận
+được trả lời từ phía server thì client sẽ gửi lại yêu cầu.</p>
+  </li>
+  <li>
+    <p>Bước 2: Sau khi kết nối được thiết lập, client sẽ gửi thông điệp yêu cầu
+chứa tên đường dẫn của các đối tượng ( ví dụ:
+https://github.com/ctnguyenvn ) đến server. Server nhận được thông điệp
+yêu cầu và tiến hành lấy ra các đối tượng được yêu cầu. Sau đó, các đối
+tượng được đóng gói thành thông điệp trả lời và gửi đến client.</p>
+  </li>
+  <li>
+    <p>Bước 3: Server đóng kết nối TCP (Lưu ý: server chỉ đóng kết nối TCP khi
+chắc chắn rằng client nhận được thông điệp trả lời)</p>
+  </li>
+  <li>
+    <p>Bước 4: Client nhận thông điệp trả lời chứa tập tin HTML và hiển thị các
+đối tượng.</p>
+  </li>
+</ul>
+
+<p><strong>Kết nối bền vững</strong>: server sẽ duy trì kết nối TCP cho việc gửi nhiều đối
+tượng. Như vậy, sẽ có nhiều yêu cầu từ client được gửi đến server trên cùng
+một kết nối. Thông thường kết nối TCP này sẽ được đóng lại trong một khoảng
+thời gian định trước.</p>
+
+<ul>
+  <li>
+    <p>Kết nối bền vững không có pipelining:</p>
+
+    <ul>
+      <li>
+        <p>Client phát ra yêu cầu mới chỉ khi đáp ứng trước đó đã nhận xong.</p>
+      </li>
+      <li>
+        <p>RTT cho mỗi đối tượng tham chiếu.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Kết nối bền vững có pipelining:</p>
+
+    <ul>
+      <li>
+        <p>Mặc định có trong HTTP/1.1.</p>
+      </li>
+      <li>
+        <p>Client gửi yêu cầu ngay sau khi gặp một đối tượng tham chiếu.</p>
+      </li>
+      <li>
+        <p>Ít nhất 1 RTT cho tất cả đối tượng tham chiếu.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="thông-điệp-http">Thông điệp HTTP</h3>
+
+<p>Như chúng ta đã nói ở trên, HTTP là giao thức được thiết kế theo kiểu client –
+server, giao tiếp giữa client và server dựa vào request – response, client đưa
+ra các request và server trả lời các request này.</p>
+
+<p><em><strong>HTTP Request</strong></em></p>
+
+<p>Để bắt đầu trao đổi dữ liệu, phía client khởi tạo một HTTP session bằng cách mở
+một kết nối TCP đến HTTP server sau đó gửi request đến server này. Request có
+thể được tạo bằng nhiều cách</p>
+
+<p>Cấu trúc chung của một HTTP Resquest</p>
+
+<p><img src="https://ctnguyenvn.me/images/HTTP-Protocol/2.jpg" alt="Cấu trúc HTTP request" class="center-image" /></p>
+
+<p>Ví dụ về một HTTP Resquest</p>
+
+<p><img src="https://ctnguyenvn.me/images/HTTP-Protocol/3.jpg" alt="Ví dụ HTTP request" class="center-image" /></p>
+
+<p>Bắt đầu của HTTP Request sẽ là Request-Line tương ứng với 3 dòng là:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Method</td>
+      <td>Là phương thức mà HTTP Request này sử dụng, thường là GET, POST, ngoài ra còn một số phương thức khác như HEAD, PUT, DELETE, OPTION, CONNECT. Trong ví dụ trên là GET</td>
+    </tr>
+    <tr>
+      <td>URI</td>
+      <td>Là địa chỉ định danh của tài nguyên. Trong tường hợp này URI là / (tức request cho tài nguyên gốc, nếu request không yêu cầu một tài nguyên cụ thể, URI có thể là dấu *)</td>
+    </tr>
+    <tr>
+      <td>HTTP version</td>
+      <td>Là phiên bản HTTP đang sử dụng, ở đây là HTTP 1.1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Tiếp theo là các trường request-header, cho phép client gửi thêm các thông
+tin bổ sung về thông điệp HTTP request</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Host</td>
+      <td>Chỉ định Server, nơi mà các đối tượng được lưu trữ. Trong ví dụ này host là www.archlinux.org</td>
+    </tr>
+    <tr>
+      <td>Connection</td>
+      <td>Tùy chọn điều khiển cho kết nối hiện thời. Ví dụ: keep-alive, close… Ở ví dụ này là keep-alive</td>
+    </tr>
+    <tr>
+      <td>Accept</td>
+      <td>Loại nội dung có thể nhận được từ thông điệp response. Vídụ: text/html, application/xml,…</td>
+    </tr>
+    <tr>
+      <td>User-Agent</td>
+      <td>Thông tin về user agent của người dùng, ví dụ như trình duyệt. Ở ví dụ này là Mozilla/5.0,…</td>
+    </tr>
+    <tr>
+      <td>Accept-Encoding</td>
+      <td>Các kiểu nén được chấp nhận. Trong ví dụ là gzip, deflate, sdch</td>
+    </tr>
+    <tr>
+      <td>Accept-Language</td>
+      <td>Các ngôn ngữ được chấp nhận</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Cuối cùng là Entity Body (nếu có) là phần thân của thông điệp HTTP Resquest</p>
+
+<p><em><strong>HTTP Response</strong></em></p>
+
+<p>Cấu trúc HTTP response gần giống với HTTP request, chỉ khác nhau là thay vì
+Request-Line, thì HTTP có response có Status-Line.</p>
+
+<p>Cấu trúc chung của một HTTP Response</p>
+
+<p><img src="https://ctnguyenvn.me/images/HTTP-Protocol/4.jpg" alt="Cấu trúc HTTP Response" class="center-image" /></p>
+
+<p>Ví dụ về một HTTP Response</p>
+
+<p><img src="https://ctnguyenvn.me/images/HTTP-Protocol/5.jpg" alt="Ví dụ HTTP Response" class="center-image" /></p>
+
+<p>Bắt đầu thông điệp HTTP Response là Status-Line với 3 dòng đầu là:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>version</td>
+      <td>Thể hiện phiên bản HTTP cao nhất mà server hỗ trợ. Trong ví dụ là HTTP 1.1</td>
+    </tr>
+    <tr>
+      <td>status code</td>
+      <td>mã kết quả trả về (sẽ được nói phía dưới). Trong ví dụ là 301</td>
+    </tr>
+    <tr>
+      <td>phrase</td>
+      <td>Mô tả về status-code</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Tiếp theo là header line gồm 1 số trường sau:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Date</td>
+      <td>Cho biết thời gian mà thông điệp HTTP trả lời được tạo và gửi bởi server. Trong ví dụ là <code class="language-plaintext highlighter-rouge">sat, 17 Dec 2016 06:16:32 GMT</code></td>
+    </tr>
+    <tr>
+      <td>Server</td>
+      <td>Thể hiện dịch vụ mà Server đang sử dụng (ví dụ như apache, Nginx,…). Trong ví dụ này server đang chạy dịch vụ Apache</td>
+    </tr>
+    <tr>
+      <td>Content-Length</td>
+      <td>Cho biết số bytes của đối tượng được gửi. Trong ví dụ là 346</td>
+    </tr>
+    <tr>
+      <td>Connection</td>
+      <td>Tùy chọn điều khiển cho kết nối. Ở ví dụ này cũng là keep-Alive như lúc GET (HTTP resquest phía trên)</td>
+    </tr>
+    <tr>
+      <td>Content-Type</td>
+      <td>Cho biết đối tượng trong phần entity body. Ở ví dụ này là text/html</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="phương-thức-get-và-post">Phương thức GET và POST</h3>
+
+<p>Trong HTTP thì có 2 phương thức được sử dụng phổ biến nhất là GET và POST.</p>
+
+<p><strong>GET</strong> thường được sử dụng để lấy thông tin từ Server (sử dụng bởi một
+URI đã cung cấp ). Các yêu cầu sử dụng GET nên chỉ nhận dữ liệu và đa phần không có ảnh
+hưởng gì tới dữ liệu.</p>
+
+<ul>
+  <li>
+    <p>Một số đặc điểm của phương thức GET:</p>
+
+    <ul>
+      <li>
+        <p>GET request có thể được cached, bookmark và lưu trong lịch sử của trình
+duyệt.</p>
+      </li>
+      <li>
+        <p>GET request bị giới hạn về chiều dài, do chiều dài của URL là có hạn.</p>
+      </li>
+      <li>
+        <p>GET request không nên dùng với dữ liệu quan trọng, chỉ dùng để nhận dữ
+liệu.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Với <strong>POST</strong> thì một yêu cầu POST được sử dụng để gửi dữ liệu tới Server, ví dụ
+như thông tin khách hàng, file tải lên, …</p>
+
+<ul>
+  <li>
+    <p>Một số đặc điểm của phương thức</p>
+
+    <ul>
+      <li>
+        <p>POST không thể cached, bookmark hay lưu trong lịch sử trình duyệt.</p>
+      </li>
+      <li>
+        <p>POST không bị giới hạn về độ dài.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Ngoài ra còn một số phương thức khác như</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HEAD</td>
+      <td>Tương tự như GET, nhưng nó truyền tải dòng trạng thái và khu vực Header</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>Thay đổi tất cả các đối tượng hiện tại của nguồn mục tiêu với nội dung được tải lên</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Gỡ bỏ tất cả các đối tượng hiện tại của nguồn mục tiêu bởi URI</td>
+    </tr>
+    <tr>
+      <td>CONNECT</td>
+      <td>Thiết lập một tunnel tới Server được xác định bởi URI đã cung cấp</td>
+    </tr>
+    <tr>
+      <td>OPTIONS</td>
+      <td>Miêu tả các chức năng giao tiếp cho nguồn mục tiêu</td>
+    </tr>
+    <tr>
+      <td>TRACE</td>
+      <td>Trình bày một vòng lặp kiểm tra thông báo song song với path tới nguồn mục tiêu</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="http-status-codes">HTTP Status Codes</h3>
+
+<p>Status Codes là các mã trạng thái mà server trả về cho client. Một số loại
+Status-Code thông dụng như:</p>
+
+<ul>
+  <li>
+    <p><strong>1xx</strong>: information Message: các status code này chỉ có tính chất tạm thời,
+client có thể không quan tâm.</p>
+
+    <ul>
+      <li>
+        <p><em>100 (Continue)</em>: Máy chủ trả về mã này để chỉ ra rằng nó đã nhận được
+một phần đầu tiên của một yêu cầu và được chờ đợi cho phần còn lại.</p>
+      </li>
+      <li>
+        <p><em>101 (Switching protocols)</em>: Bên yêu cầu đã yêu cầu các máy chủ để
+chuyển đổi và máy chủ được thừa nhận rằng nó sẽ làm như vậy</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>2xx</strong> Successful: khi đã xử lý thành công request của client, server trả
+về status dạng này:</p>
+
+    <ul>
+      <li>
+        <p><em>200 OK</em>: request thành công.</p>
+      </li>
+      <li>
+        <p><em>202 (Accepted)</em>: request đã được nhận, nhưng không có kết quả nào trả
+về, thông báo cho client tiếp tục chờ đợi.</p>
+      </li>
+      <li>
+        <p><em>204 (No Content)</em>: request đã được xử lý nhưng không có thành phần nào
+được trả về.</p>
+      </li>
+      <li>
+        <p><em>205 (Reset)</em>: Các máy chủ proccessed yêu cầu thành công, nhưng không
+trả lại bất kỳ nội dung. Không giống như một phản ứng 204, phản ứng này
+đòi hỏi người yêu cầu thiết lập lại xem tài liệu</p>
+      </li>
+      <li>
+        <p><em>206 (Partial Content)</em>: server chỉ gửi về một phần dữ liệu, phụ thuộc
+vào giá trị range header của client đã gửi.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>3xx</strong> Redirection: server thông báo cho client phải thực hiện thêm thao
+tác để hoàn tất request:</p>
+
+    <ul>
+      <li>
+        <p><em>301 (Moved Permanently)</em>: tài nguyên đã được chuyển hoàn toàn tới địa
+chỉ Location trong HTTP response.</p>
+      </li>
+      <li>
+        <p><em>303 (See other)</em>: Tài nguyên đã được chuyển tạm thời tới địa chỉ
+Location trong HTTP response.</p>
+      </li>
+      <li>
+        <p><em>304 (Not Modified)</em>: Tài nguyên không thay đổi từ lần cuối client
+request, nên client có thể sử dụng đã lưu trong cache.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>4xx</strong> Client error: Lỗi của client:</p>
+
+    <ul>
+      <li>
+        <p><em>400 (Bad Request)</em>: Request không đúng định dạng dạng, cú pháp.</p>
+      </li>
+      <li>
+        <p><em>401 (Unauthorized)</em>: Client chưa xác thực.</p>
+      </li>
+      <li>
+        <p><em>403 (Forbidden)</em>: Client không có quyền truy cập.</p>
+      </li>
+      <li>
+        <p><em>404 (Not Found)</em>: Không tìm thấy tài nguyên.</p>
+      </li>
+      <li>
+        <p><em>405 (Method Not Allowed)</em>: Phương thức không được server hỗ trợ.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>5xx</strong> Server Error: Lỗi của server:</p>
+
+    <ul>
+      <li>
+        <p><em>500 (Internal Server Error)</em>: Có lỗi trong quá trình xử lý của server.</p>
+      </li>
+      <li>
+        <p><em>501 (Not Implemented)</em>: Server không hỗ trợ chức năng client yêu cầu.</p>
+      </li>
+      <li>
+        <p><em>503: Service Unavailable</em>: Server bị quá tải, hoặc bị lỗi xử lý.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+</p>
+                    </div>
+					<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://ctnguyenvn.me/2020/12/14/HTTP-Protocol/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>

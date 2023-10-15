@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Cơ bản về LVM (logical Volume management) | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
+lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung
+lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng
+Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group
+như working, devops thay vì các tên truyền thống mặc định như sda, sdb.
+
+1. Giới thiệu
+
+Volume Group (VG) - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập
+hợp/ánh xạ các Physical Volume và Logical Volume thành một đơn vị chung về
+mặt khởi tạo. Cụ thể Volume Group tập hợp các ổ cứng vật lý
+(Physical Volume) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng
+khối có kích thước bằng nhau, sau đó sẽ tạo các Logical Volume từ chúng.
+
+Physical Volume (PV) - là thành phần cơ bản được sử dụng trong LVM cho phép
+tạo các Volume group, chúng có thể là các ổ cứng HDD, SSD hay có thể là
+software raid.
+
+Logical Volume (LV) - là phân vùng luận lý được tạo ra từ Volume Group, về
+mặt lý thuyết có thể xem Logical Volume giống như partition trên các hệ thống
+non-LVM, tuy nhiên Logical Volume có thể được thay đổi kích trước dễ dàng mà
+không làm gián đoạn hệ thống.
+
+Physical Extent (PE) và Logical Extent (LE) - Physical Volume được
+chia thành các khối bằng nhau gọi là Physical Extent, tương tự đối với phân
+vùng Logical Volume được gọi là Logical Extent.
+
+Extent - là đơn vị nhỏ nhất của Volume Group, cũng là kỹ thuật giúp LVM có
+thể thay đổi dung lượng các Logical Volume mà không làm gián đoạn hệ thống như
+đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng
+Extent tương ứng, nghĩa là ánh xạ số lượng Physical Extent trên
+Physical Volume sang Logical Extent trên Logical Volume. Lưu ý rằng việc
+ánh xạ Extent từ Physical Volume sang Logical Volume có thể không cần phải
+là các khối Extent liên tục từ Physical Volume
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Cơ bản về LVM (logical Volume management) - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="Cơ bản về LVM (logical Volume management) - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/2021/01/25/lvm/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <h1 class="mt-1">Cơ bản về LVM (logical Volume management)</h1>
+                        <p>
+						<span class="button is-info is-light is-small mr-2">
+							 25-01-2021
+						</span>
+                                 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/linux-system"
+                                    >Linux system</a
+                                > 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/notes"
+                                    >Notes</a
+                                > 
+                        </p>
+                        <p><p>Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
+lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung
+lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng
+Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group
+như <code class="language-plaintext highlighter-rouge">working</code>, <code class="language-plaintext highlighter-rouge">devops</code> thay vì các tên truyền thống mặc định như <code class="language-plaintext highlighter-rouge">sda</code>, <code class="language-plaintext highlighter-rouge">sdb</code>.</p>
+
+<h3 id="1-giới-thiệu">1. Giới thiệu</h3>
+
+<p><strong>Volume Group (VG)</strong> - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập
+hợp/ánh xạ các <code class="language-plaintext highlighter-rouge">Physical Volume</code> và <code class="language-plaintext highlighter-rouge">Logical Volume</code> thành một đơn vị chung về
+mặt khởi tạo. Cụ thể <code class="language-plaintext highlighter-rouge">Volume Group</code> tập hợp các ổ cứng vật lý
+(<code class="language-plaintext highlighter-rouge">Physical Volume</code>) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng
+khối có kích thước bằng nhau, sau đó sẽ tạo các <code class="language-plaintext highlighter-rouge">Logical Volume</code> từ chúng.</p>
+
+<p><strong>Physical Volume (PV)</strong> - là thành phần cơ bản được sử dụng trong LVM cho phép
+tạo các <code class="language-plaintext highlighter-rouge">Volume group</code>, chúng có thể là các ổ cứng HDD, SSD hay có thể là
+software raid.</p>
+
+<p><strong>Logical Volume (LV)</strong> - là phân vùng luận lý được tạo ra từ <code class="language-plaintext highlighter-rouge">Volume Group</code>, về
+mặt lý thuyết có thể xem <code class="language-plaintext highlighter-rouge">Logical Volume</code> giống như partition trên các hệ thống
+non-LVM, tuy nhiên <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể được thay đổi kích trước dễ dàng mà
+không làm gián đoạn hệ thống.</p>
+
+<p><strong>Physical Extent (PE)</strong> và <strong>Logical Extent (LE)</strong> - <code class="language-plaintext highlighter-rouge">Physical Volume</code> được
+chia thành các khối bằng nhau gọi là <code class="language-plaintext highlighter-rouge">Physical Extent</code>, tương tự đối với phân
+vùng <code class="language-plaintext highlighter-rouge">Logical Volume</code> được gọi là <code class="language-plaintext highlighter-rouge">Logical Extent</code>.</p>
+
+<p><strong>Extent</strong> - là đơn vị nhỏ nhất của <code class="language-plaintext highlighter-rouge">Volume Group</code>, cũng là kỹ thuật giúp LVM có
+thể thay đổi dung lượng các <code class="language-plaintext highlighter-rouge">Logical Volume</code> mà không làm gián đoạn hệ thống như
+đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng
+<code class="language-plaintext highlighter-rouge">Extent</code> tương ứng, nghĩa là ánh xạ số lượng <code class="language-plaintext highlighter-rouge">Physical Extent</code> trên
+<code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Extent</code> trên <code class="language-plaintext highlighter-rouge">Logical Volume</code>. Lưu ý rằng việc
+ánh xạ <code class="language-plaintext highlighter-rouge">Extent</code> từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> sang <code class="language-plaintext highlighter-rouge">Logical Volume</code> có thể không cần phải
+là các khối <code class="language-plaintext highlighter-rouge">Extent</code> liên tục từ <code class="language-plaintext highlighter-rouge">Physical Volume</code></p>
+
+<!--more-->
+
+<p><img src="https://ctnguyenvn.me/images/lvm/Lvm.png" alt="LVM" class="center-image" /></p>
+
+<p>Trong hình trên (nguồn: wikimedia) có thể thấy rằng các <code class="language-plaintext highlighter-rouge">Logical Volume</code>
+<code class="language-plaintext highlighter-rouge">/dev/hlv</code> được tạo nên không chỉ riêng từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> <code class="language-plaintext highlighter-rouge">hdisk1</code> mà còn có
+các <code class="language-plaintext highlighter-rouge">Extent</code> trên <code class="language-plaintext highlighter-rouge">hdisk2</code> và các <code class="language-plaintext highlighter-rouge">Extent</code> ánh xạ nên <code class="language-plaintext highlighter-rouge">/dev/hlv</code> cũng không liên
+tục trên <code class="language-plaintext highlighter-rouge">Volume Group</code>.</p>
+
+<h3 id="2-cài-đặt-lvm">2. Cài đặt lvm</h3>
+
+<p>CentOS</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# yum install lvm2 -y
+</code></pre></div></div>
+
+<p>Ubuntu</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# apt-get install lvm2 -y
+</code></pre></div></div>
+
+<h3 id="3-tổng-hợp-một-số-comand-cơ-bản">3. Tổng hợp một số comand cơ bản</h3>
+
+<ul>
+  <li>Physical volumes:
+    <ul>
+      <li>Tạo Physical volume dùng lệnh <code class="language-plaintext highlighter-rouge">pvcreate</code>.</li>
+      <li>Xem Physical volume dùng lệnh <code class="language-plaintext highlighter-rouge">pvdisplay</code>.</li>
+      <li>Xoá Physical volume dùng lệnh <code class="language-plaintext highlighter-rouge">pvremove</code>.</li>
+    </ul>
+  </li>
+  <li>Volume groups:
+    <ul>
+      <li>Tạo Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgcreate</code>.</li>
+      <li>Xem Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgdisplay</code>.</li>
+      <li>Xoá Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgremove</code>.</li>
+      <li>Tăng dung lượng Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgextend</code>.</li>
+      <li>Giảm dung lượng Volume groups dùng lệnh <code class="language-plaintext highlighter-rouge">vgreduce</code>.</li>
+    </ul>
+  </li>
+  <li>Logical volumes:
+    <ul>
+      <li>Tạo Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvcreate</code>.</li>
+      <li>Xem Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvdisplay</code>.</li>
+      <li>Xoá Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvremove</code>.</li>
+      <li>Tăng dung lượng Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvextend</code>. (cần resize2fs)</li>
+      <li>Giảm dung lượng Logical volumes dùng lệnh <code class="language-plaintext highlighter-rouge">lvreduce</code>. (cần resize2fs)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="4-một-số-ví-dụ">4. Một số ví dụ</h3>
+
+<h4 id="41-tạo-physical-volume-từ-đĩa-cứng-vật-lý">4.1 Tạo Physical Volume từ đĩa cứng vật lý</h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# pvcreate &lt;/path/to/device1&gt; &lt;/path/to/device2&gt; ...
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# pvcreate /dev/sdb /dev/sdc
+  Physical volume "/dev/sdb" successfully created.
+  Physical volume "/dev/sdc" successfully created.
+
+[root@Server ~]# pvs
+  PV         VG Fmt  Attr PSize PFree
+  /dev/sdb      lvm2 ---  5.00g 5.00g
+  /dev/sdc      lvm2 ---  5.00g 5.00g
+</code></pre></div></div>
+
+<h4 id="42-tạo-volume-group-từ-physical-volume">4.2 Tạo Volume Group từ Physical Volume</h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgcreate &lt;Volume Group name&gt; &lt;/path/to/device1&gt; &lt;/path/to/device2&gt; ...
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgcreate blogVG /dev/sdb /dev/sdc
+  Volume group "blogVG" successfully created
+
+[root@Server ~]# vgs
+  VG     ##PV #LV #SN Attr   VSize VFree
+  blogVG   2   0   0 wz--n- 9.99g 9.99g
+</code></pre></div></div>
+
+<h4 id="43-tạo-các-logical-volume-từ-volume-group">4.3 Tạo các Logical Volume từ Volume Group</h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lvcreate -L &lt;size&gt; -n &lt;Logical Volume name&gt; &lt;Volume Group name&gt;
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lvcreate -L 3G -n "working" blogVG
+  Logical volume "working" created.
+
+[root@Server ~]# lvcreate -L 5G -n "data" blogVG
+  Logical volume "data" created.
+
+[root@Server ~]# vgs -o +lv_size,lv_name
+  VG     ##PV #LV #SN Attr   VSize VFree LSize LV
+  blogVG   2   2   0 wz--n- 9.99g 1.99g 3.00g working
+  blogVG   2   2   0 wz--n- 9.99g 1.99g 5.00g data
+</code></pre></div></div>
+
+<h4 id="44-định-dạng-các-logical-volume-tạo-mount-point-và-cấu-hình-tự-động-mount-sau-khi-reboot">4.4 Định dạng các Logical Volume, tạo mount point và cấu hình tự động mount sau khi reboot</h4>
+
+<p>Định dạng filesystem:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# mkfs.ext4 /dev/blogVG/working
+...
+[root@Server ~]# mkfs.ext4 /dev/blogVG/data
+...
+</code></pre></div></div>
+
+<p>Tạo mount point:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# mkdir -p /mnt/working
+[root@Server ~]# mkdir -p /mnt/data
+</code></pre></div></div>
+
+<p>Mount các Logical volume vào thư mục vừa tạo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# mount /dev/blogVG/working /mnt/working
+[root@Server ~]# mount /dev/blogVG/data /mnt/data
+</code></pre></div></div>
+
+<p>Cấu hình tự động mount: Để cấu hình tự động mount sau khig reboot, ta cần sửa
+file cấu hình <code class="language-plaintext highlighter-rouge">/etc/fstab</code> bằng cách thêm nội dung sau vào cuối file
+<code class="language-plaintext highlighter-rouge">/etc/fstab</code> (sử dụng vi, nano hay bất kỳ editer nào)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vim /etc/fstab
+...
+## auto mount with lvm
+/dev/blogVG/working   /mnt/working  ext4 defaults,nofail 0 0
+/dev/blogVG/data  /mnt/data   ext4 defaults,nofail 0 0
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: có thể sử dụng UUID thay vì đường dẫn cụ thể Logical volume</p>
+
+  <ul>
+    <li>ví dụ: <code class="language-plaintext highlighter-rouge">UUID=a2cc3d6b-0a3.... /data ext4 defaults,nofail 0 0 </code></li>
+    <li>Có thể lấy UUID với lệnh <code class="language-plaintext highlighter-rouge">lsblk -f</code> hoặc <code class="language-plaintext highlighter-rouge">blkid</code></li>
+  </ul>
+</blockquote>
+
+<p>Sau khi reboot có thể kiểm tra lại kết quả</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lsblk -fs /dev/blogVG/working /dev/blogVG/data
+NAME           FSTYPE      LABEL UUID                                   MOUNTPOINT
+blogVG-working ext4              74e10bdb-b7c8-41dd-8b99-ff912f627b19   /mnt/working
+└─sdb          LVM2_member       ITGySo-PRNP-o2sX-wkff-MFCk-sxo6-u3Cfbe
+blogVG-data    ext4              bd2b5824-43fc-410b-b6f0-769f26939edf   /mnt/data
+├─sdb          LVM2_member       ITGySo-PRNP-o2sX-wkff-MFCk-sxo6-u3Cfbe
+└─sdc          LVM2_member       gwBfSr-EYau-zYUJ-K7jQ-FaIZ-U2m1-5MbYHg
+</code></pre></div></div>
+
+<h4 id="45-tăng-dung-lượng-các-logical-volume">4.5 Tăng dung lượng Các Logical Volume</h4>
+
+<p>Để tăng dung lượng lên 1G ta có thể sử dụng <code class="language-plaintext highlighter-rouge">lvextend</code>, ví dụ tăng 1G dung lượng
+cho <code class="language-plaintext highlighter-rouge">/dev/blogVG/working</code> như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lvextend -L+1G /dev/blogVG/working
+  Size of logical volume blogVG/working changed from 3.00 GiB (768 extents) to 4.00 GiB (1024 extents).
+  Logical volume blogVG/working successfully resized
+</code></pre></div></div>
+
+<p>Sau khi tăng kích thước của của <code class="language-plaintext highlighter-rouge">Logical Volume</code> ta cần resize kích thước
+filesystem</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# resize2fs /dev/blogVG/working
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/blogVG/working is mounted on /mnt/working; #on-line resizing required
+old_desc_blocks = 1, new_desc_blocks = 1
+The filesystem on /dev/blogVG/working is now 1048576 blocks long
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Cần resize filesystem đúng theo filesystem type, xem thêm tại
+<a href="https://tldp.org/HOWTO/LVM-HOWTO/extendlv.html">đây</a></p>
+</blockquote>
+
+<h4 id="46-giảm-dung-lượng-các-logical-volume">4.6 Giảm dung lượng Các Logical Volume</h4>
+
+<p>Để giảm dung lượng của một <code class="language-plaintext highlighter-rouge">Logical Volume</code> ta cần:</p>
+
+<ul>
+  <li>umount phân vùng</li>
+  <li>resize filesystem</li>
+  <li>kiểm tra phân vùng</li>
+  <li>giảm kích thước <code class="language-plaintext highlighter-rouge">Logical Volume</code></li>
+  <li>mount lại phân vùng</li>
+</ul>
+
+<p>Ví dụ (giảm 1G <code class="language-plaintext highlighter-rouge">/mnt/data</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# umount /mnt/data/
+
+[root@Server ~]# resize2fs /dev/blogVG/data 4G
+resize2fs 1.42.9 (28-Dec-2013)
+Please run 'e2fsck -f /dev/blogVG/data' first.
+
+[root@Server ~]# e2fsck -f /dev/blogVG/data
+e2fsck 1.42.9 (28-Dec-2013)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/blogVG/data: 11/262144 files (0.0% non-contiguous), 54350/1048576 blocks
+
+[root@Server ~]# lvreduce -L-1G /dev/blogVG/data
+  WARNING: Reducing active logical volume to 4.00 GiB.
+  THIS MAY DESTROY YOUR DATA (filesystem etc.)
+Do you really want to reduce blogVG/data? [y/n]: y
+  Size of logical volume blogVG/data changed from 5.00 GiB (1280 extents) to 4.00 GiB (1024 extents).
+  Logical volume blogVG/data successfully resized.
+
+[root@Server ~]# mount /mnt/data/
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: ở bước 2 <code class="language-plaintext highlighter-rouge">resize2fs</code> với <code class="language-plaintext highlighter-rouge">4G</code> là dung lượng sau khi giảm (tổng dung
+lượng 5G - kích thước muốn giảm 1G = 4G)</p>
+</blockquote>
+
+<h4 id="47-thêm-physical-volume-mới-vào-volume-group">4.7 Thêm <code class="language-plaintext highlighter-rouge">Physical Volume</code> mới vào <code class="language-plaintext highlighter-rouge">Volume Group</code></h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgextend &lt;Volume Group name&gt; &lt;/path/to/device1&gt;
+</code></pre></div></div>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# pvcreate /dev/sdd
+  Physical volume "/dev/sdd" successfully created.
+
+[root@Server ~]# vgextend blogVG /dev/sdd
+  Volume group "blogVG" successfully extended
+</code></pre></div></div>
+
+<h4 id="48-xóa-physical-volume-khỏi-volume-group">4.8 Xóa <code class="language-plaintext highlighter-rouge">Physical Volume</code> khỏi <code class="language-plaintext highlighter-rouge">Volume Group</code></h4>
+
+<p>Cú pháp:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgreduce &lt;Volume Group name&gt; &lt;/path/to/device1&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Đảm bảo ổ <code class="language-plaintext highlighter-rouge">Physical Volume</code> này không được sử dụng bởi bất kỳ
+<code class="language-plaintext highlighter-rouge">Volume Group</code> nào (có thể sử dụng <code class="language-plaintext highlighter-rouge">pvdisplay</code> để xem trạng thái)</p>
+</blockquote>
+
+<p>Ví dụ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# vgreduce blogVG /dev/sdd
+  Removed "/dev/sdd" from volume group "blogVG"
+</code></pre></div></div>
+
+<p>Nếu <code class="language-plaintext highlighter-rouge">Physical Volume</code> đang được sử dụng thì cần sử dụng <code class="language-plaintext highlighter-rouge">pvmove</code> để di chuyển dữ
+liệu sang ổ <code class="language-plaintext highlighter-rouge">Physical Volume</code> khác.</p>
+
+<p>Ví dụ: Sau khi thêm 1 ổ mới vào add vào <code class="language-plaintext highlighter-rouge">Volume Group</code> <code class="language-plaintext highlighter-rouge">blogVG</code>, sau đó muốn
+remove ổ <code class="language-plaintext highlighter-rouge">/dev/sdb</code> ra khỏi <code class="language-plaintext highlighter-rouge">Volume Group</code> <code class="language-plaintext highlighter-rouge">blogVG</code> (kết quả cần phải sử dụng
+<code class="language-plaintext highlighter-rouge">pvmove</code> trước khi <code class="language-plaintext highlighter-rouge">vgredure</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@Server ~]# lsblk
+NAME             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+...
+sdb                8:16   0    5G  0 disk
+└─blogVG-working 253:0    0    5G  0 lvm  /mnt/working
+sdc                8:32   0    5G  0 disk
+└─blogVG-data    253:1    0    7G  0 lvm  /mnt/data
+sdd                8:48   0   10G  0 disk
+├─blogVG-working 253:0    0    5G  0 lvm  /mnt/working
+└─blogVG-data    253:1    0    7G  0 lvm  /mnt/data
+
+[root@Server ~]# vgreduce blogVG /dev/sdb
+  Physical volume "/dev/sdb" still in use
+
+[root@Server ~]# pvdisplay /dev/sdb
+  --- Physical volume ---
+  PV Name               /dev/sdb
+  VG Name               blogVG
+  PV Size               5.00 GiB / not usable 4.00 MiB
+  Allocatable           yes (but full)
+  PE Size               4.00 MiB
+  Total PE              1279
+  Free PE               0
+  Allocated PE          1279
+  PV UUID               ITGySo-PRNP-o2sX-wkff-MFCk-sxo6-u3Cfbe
+
+[root@Server ~]# pvmove /dev/sdb
+  /dev/sdb: Moved: 0.08%
+  /dev/sdb: Moved: 27.76%
+  /dev/sdb: Moved: 60.05%
+  /dev/sdb: Moved: 79.28%
+  /dev/sdb: Moved: 99.92%
+  /dev/sdb: Moved: 100.00%
+
+[root@Server ~]# vgreduce blogVG /dev/sdb
+  Removed "/dev/sdb" from volume group "blogVG"
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Khi sử dụng <code class="language-plaintext highlighter-rouge">pvmove</code> cần đảm bảo dung lượng trống trên các ổ khác vẫn
+đủ kích thước để lưu dữ liệu sau khi loại bỏ <code class="language-plaintext highlighter-rouge">Physical Volume</code> hiện tại.</p>
+</blockquote>
+</p>
+                    </div>
+					<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://ctnguyenvn.me/2021/01/25/lvm/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>

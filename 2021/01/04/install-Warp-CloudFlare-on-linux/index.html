@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Cài đặt VPN Warp CloudFlare trên Linux | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
+CloudFlare. Hiện tại Warp client chỉ hỗ trợ Anroid/IOS và
+windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta
+có thể sử dụng warp thông qua Wireguard.
+
+Cài đặt Wireguard
+
+Arch
+
+ctnguyenvn[~]$ sudo pacman -S wireguard-tools
+
+
+Ubuntu
+
+ctnguyenvn[~]$ sudo apt install wireguard
+
+
+
+  Lưu ý: Nếu sử dụng Linux distro khác thì có thể xem cài đặt tại
+đây
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Cài đặt VPN Warp CloudFlare trên Linux - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="Cài đặt VPN Warp CloudFlare trên Linux - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <h1 class="mt-1">Cài đặt VPN Warp CloudFlare trên Linux</h1>
+                        <p>
+						<span class="button is-info is-light is-small mr-2">
+							 04-01-2021
+						</span>
+                                 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/vpn"
+                                    >VPN</a
+                                > 
+                        </p>
+                        <p><p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
+CloudFlare. Hiện tại <a href="https://1.1.1.1/">Warp client</a> chỉ hỗ trợ Anroid/IOS và
+windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta
+có thể sử dụng warp thông qua Wireguard.</p>
+
+<h4 id="cài-đặt-wireguard">Cài đặt Wireguard</h4>
+
+<p>Arch</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S wireguard-tools
+</code></pre></div></div>
+
+<p>Ubuntu</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo apt install wireguard
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu sử dụng Linux distro khác thì có thể xem cài đặt tại
+<a href="https://www.wireguard.com/install/">đây</a></p>
+</blockquote>
+
+<!--more-->
+
+<h4 id="cài-đặt-wgcf">Cài đặt wgcf</h4>
+
+<p>Đây là chương trình hỗ trợ đăng ký account và generate tập tin cấu hình cho
+<code class="language-plaintext highlighter-rouge">Wireguard</code>. Nếu không sử dụng <code class="language-plaintext highlighter-rouge">wgcf</code> bạn có thể truy cập vào
+<a href="https://1111.4it.top">đây</a> để đăng ký tài khoản và lưu tập tin cấu hình về máy.</p>
+
+<p>Để cài đặt bản mới nhất của <code class="language-plaintext highlighter-rouge">wgcf</code> bạn truy cập vào
+<a href="https://github.com/ViRb3/wgcf/releases">đây</a> để tải bản phù hợp với phiên bản
+linux đang sử dụng. Ngoài ra bạn có thể sử dụng lệnh sau để tự động tải phiên
+bản mới nhất về</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ curl -s "https://api.github.com/repos/ViRb3/wgcf/releases/latest" \
+        | grep "browser_download_url.*linux_amd64" \
+        | cut -d: -f 2,3 \
+        | tr -d \" \
+        | wget -i -
+</code></pre></div></div>
+
+<p>Tiếp theo thực hiện các lệnh sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo mkdir /opt/wgcf
+ctnguyenvn[~]$ sudo mv wgcf* /opt/wgcf/wgcf
+ctnguyenvn[~]$ sudo chmod +x /opt/wgcf/wgcf
+</code></pre></div></div>
+
+<h4 id="tạo-profile-warp">Tạo profile warp</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo /opt/wgcf/wgcf register --accept-tos --config /opt/wgcf/warp-account.toml
+ctnguyenvn[~]$ sudo /opt/wgcf/wgcf generate -p /opt/wgcf/warp.conf --config /opt/wgcf/warp-account.toml
+</code></pre></div></div>
+
+<p>Nếu muốn update key khi cần sử dụng warp+ thì bạn có thể mở file
+<code class="language-plaintext highlighter-rouge">/opt/wgcf/warp-account.toml</code> và sửa dòng <code class="language-plaintext highlighter-rouge">lincese_key</code> thành key mới</p>
+
+<p><img src="https://ctnguyenvn.me/images/install-warp/1.png" alt="wg show" class="center-image" /></p>
+
+<p>và thực hiện lệnh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo /opt/wgcf/wgcf update --config /opt/wgcf/warp-account.toml
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: có thể sử dụng env để update nhanh với lệnh sau</p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ WGCF_LICENSE_KEY="put_key_here" /opt/wgcf/wgcf update --config /opt/wgcf/warp-account.toml</code></p>
+</blockquote>
+
+<h4 id="copy-tập-tin-cấu-hình-sang-wireguard">Copy tập tin cấu hình sang Wireguard</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo cp -r /opt/wgcf/warp.conf /etc/wireguard/
+</code></pre></div></div>
+
+<h4 id="startstop-wireguard-sử-dụng-cấu-hình-warp-vpn">start/stop wireguard sử dụng cấu hình warp vpn</h4>
+
+<p>Để kích hoạt ta sử dụng lệnh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick up warp
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Nếu gặp lỗi: <code class="language-plaintext highlighter-rouge">wg-quick: 'warp' already exists</code> thì tên device đã tồn
+tại, có thể xóa device này sử dụng lệnh sau:</p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo ip link delet dev warp</code></p>
+</blockquote>
+
+<p>Để dừng sử dụng vpn ta sử dụng</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick down warp
+</code></pre></div></div>
+
+<p>Kiểm tra kết quả</p>
+
+<p><img src="https://ctnguyenvn.me/images/install-warp/2.png" alt="wg show" class="center-image" /></p>
+
+<p>Ngoài ra có thể tự động kích hoạt vpn warp khi khởi động OS ta có thể sử dụng</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo systemctl enable wg-quick@warp
+</code></pre></div></div>
+
+<h4 id="một-số-lưu-ý">Một số lưu ý:</h4>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">wgcf</code> chỉ có nhiệm vụ khởi tạo tài khoản và generate tập tin cấu hình, việc
+này có thể thực hiện qua phiên bản web như đã nói ở trên.</p>
+  </li>
+  <li>
+    <p>Tên của device có thể thay đổi tùy ý, ví dụ thay đổi từ <code class="language-plaintext highlighter-rouge">warp</code> sang <code class="language-plaintext highlighter-rouge">xxx</code>,
+tuy nhiên nếu thực hiện thay đổi này thì cần thay đổi lệnh up/down và enable
+phù hợp với device name mới.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Ví dụ</p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo wg up xxx</code></p>
+
+  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo systemctl enable wg-quick@xxx</code></p>
+</blockquote>
+
+<h4 id="update">Update</h4>
+
+<p>Nếu sau khi start VPN thành công nhưng không thể truy cập internet thì có thể
+thay đổi Endpoint trong file <code class="language-plaintext highlighter-rouge">warp.conf</code> sang địa chỉ IP mới cụ thể
+<code class="language-plaintext highlighter-rouge">Endpoint = 162.159.192.4:2408</code></p>
+
+<blockquote>
+  <p>Lưu ý:</p>
+
+  <ul>
+    <li>Tên file <code class="language-plaintext highlighter-rouge">warp.conf</code> này phụ thuộc vào các bước tạo file cấu hình</li>
+    <li>Có thể thay đổi nội dung file này trực tiếp tại thư mục <code class="language-plaintext highlighter-rouge">/etc/wireguard/</code></li>
+  </ul>
+</blockquote>
+
+<p>Sau đó khởi động lại warp</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick down warp
+ctnguyenvn[~]$ sudo wg-quick up warp
+</code></pre></div></div>
+</p>
+                    </div>
+					<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>

@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Cài đặt Arch Linux trên Virtualbox [Notes] | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Arch Linux là một hệ điều hành họ Linux. Đây không phải là một hệ điều hành cho
+người mới bắt đầu. Bạn sẽ phải định dạng, install tất cả bằng tay khi cài đặt.
+Trong hướng dẫn này chúng ta sẽ xem cách cài đặt. Có thể nó sẽ không khó như bạn
+đã nghĩ.
+
+1. Giới thiệu
+
+Chúng ta sẽ xét qua một vài điểm xem như là ưu điểm của distro này sau đây.
+
+
+  
+    Đối với Ubuntu, Fedora, Linux mint,… sau khi cài đặt chúng ta sẽ được tự
+động cài đặt một số phần mềm đi kèm như LibreOffice, GIMP,… Tuy nhiên với
+Arch, bạn sẽ không có gì và tất nhiên bạn phải tự tìm và cài đặt những thứ
+mình cần. Có lẽ bạn nghĩ sẽ thật phức tạp, tuy nhiên chúng ta cũng xét qua
+một khía cạnh khác rằng nó sẽ nhẹ hơn, nhanh hơn, tùy chỉnh hơn với người
+dùng.
+  
+  
+    Với Arch bạn sẽ có AUR (Arch user repository) - đây là kho dự trữ của Arch,
+nó tuyệt vời hơn bạn nghĩ. Nó cung cấp cho bạn rất nhiều các gói phần mềm
+không có sẵn trong kho chính thức.
+  
+  
+    Trình quản lý pacman tự động biên dịch các gói cho bạn.
+  
+  
+    Rolling release: Điều này có nghĩa là bạn sẽ luôn có những bản mới nhất, các
+gói, kenel, tất cả chỉ đợi bạn trải nghiệm
+  
+  
+    Cuối cùng giờ đây Arch cũng dần có lượng cộng đồng người dùng đông đảo, và
+Wiki Arch cũng hỗ trợ đầy đủ và hiện thời rất tốt.
+  
+
+
+Với Arch việc cài đặt như đã nói sẽ có chút phức tạp hơn các distro khác. Tuy
+nhiên cũng có những dự án nhằm đơn giản hóa cài đặt Arch như Manjaro, Antergos,
+Ninja và nhiều thứ khác. Bạn có thể tải và cài đặt.
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Cài đặt Arch Linux trên Virtualbox [Notes] - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="Cài đặt Arch Linux trên Virtualbox [Notes] - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/2019/03/02/install-ArchLinux/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <h1 class="mt-1">Cài đặt Arch Linux trên Virtualbox [Notes]</h1>
+                        <p>
+						<span class="button is-info is-light is-small mr-2">
+							 02-03-2019
+						</span>
+                                 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/arch-linux"
+                                    >Arch Linux</a
+                                > 
+                        </p>
+                        <p><p>Arch Linux là một hệ điều hành họ Linux. Đây không phải là một hệ điều hành cho
+người mới bắt đầu. Bạn sẽ phải định dạng, install tất cả bằng tay khi cài đặt.
+Trong hướng dẫn này chúng ta sẽ xem cách cài đặt. Có thể nó sẽ không khó như bạn
+đã nghĩ.</p>
+
+<h3 id="1-giới-thiệu">1. Giới thiệu</h3>
+
+<p>Chúng ta sẽ xét qua một vài điểm xem như là ưu điểm của distro này sau đây.</p>
+
+<ul>
+  <li>
+    <p>Đối với Ubuntu, Fedora, Linux mint,… sau khi cài đặt chúng ta sẽ được tự
+động cài đặt một số phần mềm đi kèm như LibreOffice, GIMP,… Tuy nhiên với
+Arch, bạn sẽ không có gì và tất nhiên bạn phải tự tìm và cài đặt những thứ
+mình cần. Có lẽ bạn nghĩ sẽ thật phức tạp, tuy nhiên chúng ta cũng xét qua
+một khía cạnh khác rằng nó sẽ nhẹ hơn, nhanh hơn, tùy chỉnh hơn với người
+dùng.</p>
+  </li>
+  <li>
+    <p>Với Arch bạn sẽ có AUR (Arch user repository) - đây là kho dự trữ của Arch,
+nó tuyệt vời hơn bạn nghĩ. Nó cung cấp cho bạn rất nhiều các gói phần mềm
+không có sẵn trong kho chính thức.</p>
+  </li>
+  <li>
+    <p>Trình quản lý pacman tự động biên dịch các gói cho bạn.</p>
+  </li>
+  <li>
+    <p>Rolling release: Điều này có nghĩa là bạn sẽ luôn có những bản mới nhất, các
+gói, kenel, tất cả chỉ đợi bạn trải nghiệm</p>
+  </li>
+  <li>
+    <p>Cuối cùng giờ đây Arch cũng dần có lượng cộng đồng người dùng đông đảo, và
+Wiki Arch cũng hỗ trợ đầy đủ và hiện thời rất tốt.</p>
+  </li>
+</ul>
+
+<p>Với Arch việc cài đặt như đã nói sẽ có chút phức tạp hơn các distro khác. Tuy
+nhiên cũng có những dự án nhằm đơn giản hóa cài đặt Arch như Manjaro, Antergos,
+Ninja và nhiều thứ khác. Bạn có thể tải và cài đặt.
+<!--more--></p>
+<h3 id="2-cài-đặt">2. Cài đặt</h3>
+
+<p>Và hướng dẫn sau sẽ hướng dẫn bạn cài đặt qua mạng (sẽ lấy các gói từ lưu trữ từ
+xa). Bạn sẽ tải file ISO từ trang chủ về và tạo 1 máy ảo trên Virtualbox và bắt
+đầu như sau.</p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/1.png" alt="cài đặt arch linux" class="center-image" /></p>
+
+<h4 id="21-tạo-và-phân-vùng-ổ-đĩa">2.1 Tạo và phân vùng ổ đĩa</h4>
+
+<p>Bạn có thể tạo và phân vùng theo nhiều cách, tuy nhiên ở đây tôi dùng cfdisk để
+phân vùng như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# cfdisk
+</code></pre></div></div>
+
+<p>Sau đó chọn type <strong>dos</strong> và tiếp tục bạn thực hiện chọn như hình sau</p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/2.png" alt="" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/3.png" alt="" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/4.png" alt="" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/5.png" alt="" class="center-image" /></p>
+
+<p>Các bạn cứ tiếp tục thực hiện việc chia tuỳ theo ý thích của bạn. Ở đây tôi chia
+thành 3 vùng như hình (boot ở /dev/sda1)</p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/6.png" alt="" class="center-image" /></p>
+
+<p>Lưu ý bạn cần chọn phân vùng cho swap với kiểu Linux swap như hình</p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/7.png" alt="" class="center-image" /></p>
+
+<p>Sau khi chia và chọn kiểu phân vùng thì với mỗi phân vùng t chọn <strong>write</strong> và
+nhấn <strong>yes</strong> để ghi lên các vùng đã tạo.</p>
+
+<p>Sau khi xong chọn quit và ta có thể kiểm tra lại như sau</p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/8.png" alt="" class="center-image" /></p>
+
+<h4 id="22-định-dạng-phân-vùng">2.2 Định dạng phân vùng</h4>
+
+<p>Tiếp theo ta định dạng các phân vùng vừa tạo</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# mkfs.ext4 /dev/sda1
+root[~]# mkfs.ext4 /dev/sda3
+root[~]# mkswap /dev/sda2
+</code></pre></div></div>
+
+<blockquote>
+  <p>Phân vùng <code class="language-plaintext highlighter-rouge">/dev/sda1</code> và <code class="language-plaintext highlighter-rouge">/dev/sda3</code> chung định dạng - bạn nhớ định dạng cho
+tất cả các phân vùng vừa tạo</p>
+</blockquote>
+
+<h4 id="23-mount-ổ-đĩa">2.3 Mount ổ đĩa</h4>
+
+<p>Để mount các phân vùng trên ta tạo ra một thư mục boot tại <code class="language-plaintext highlighter-rouge">/mnt/</code> và mount tất
+cả như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# mkdir /mnt/boot
+root[~]# mount /dev/sda1 /mnt/boot
+root[~]# mount /dev/sda3 /mnt
+root[~]# swapon /dev/sda2
+</code></pre></div></div>
+
+<h4 id="24-mirror">2.4 Mirror</h4>
+
+<p>Trước khi cài đặt các gói phần mềm bạn nên thêm mirror vào thư mục
+<code class="language-plaintext highlighter-rouge">/etc/pacman.d/mirorlist</code> như sau.</p>
+
+<p>Bạn dùng:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# nano /etc/pacman.d/mirrorlist
+</code></pre></div></div>
+
+<p>và thêm mirror vào cuối file nội dung sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## vietnam
+Server = http://f.archlinuxvn.org/archlinux/$repo/os/$arch
+Server = http://mirror-fpt-telecom.fpt.net/archlinux/$repo/os/$arch
+</code></pre></div></div>
+
+<p>Nhấn <em>Ctrl + X</em> và chọn <strong>yes</strong> để lưu thay đổi. Tôi dùng mirror của fpt.</p>
+
+<blockquote>
+  <p>Update (2020): có thể bỏ qua bước 2.4 này</p>
+</blockquote>
+
+<h4 id="25-cấu-hình-mạng">2.5 Cấu hình mạng</h4>
+
+<p>Đối với Virtualbox bạn có thể bỏ qua bước này. Tuy nhiên việc cấu hình sẽ được
+thực hiện như sau. Đầu tiên bạn dùng ifconfig để kiểm tra địa chỉ mạng nếu không
+có mạng bạn có thể dùng</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# dhclient &lt;card mạng&gt;
+
+root[~]# ifconfig &lt;card mạng&gt;
+</code></pre></div></div>
+
+<p>Nếu bạn sử dụng wifi thì có thể dùng lệnh <code class="language-plaintext highlighter-rouge">wi-menu</code> để thêm mạng</p>
+
+<blockquote>
+  <p>Update: 2020 (lỗi <code class="language-plaintext highlighter-rouge">zsh: command not found: wifi-menu</code>)</p>
+</blockquote>
+
+<p>Arch linux đã chuyển <code class="language-plaintext highlighter-rouge">wifi-menu</code> sang sử dụng <code class="language-plaintext highlighter-rouge">iwd</code> và bạn có thể kết nối wifi
+bằng cách thực hiện lệnh sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# iwctl --passphrase [passphrase] station [device] connect [SSID]
+</code></pre></div></div>
+
+<p>trong đó:</p>
+
+<ul>
+  <li><em>passphrase</em> : là mật khẩu của wifi nếu wifi kết nối có sử dụng mật khẩu</li>
+  <li><em>device</em>: là card mạng (có thể sử dụng lệnh <code class="language-plaintext highlighter-rouge">device list</code> sau khi vào mode
+<code class="language-plaintext highlighter-rouge">iwctl</code>)</li>
+  <li><em>SSID</em>: là tên wifi muốn connect (có thể sử dụng lệnh
+<code class="language-plaintext highlighter-rouge">station [decive] scan</code> sau khi vào mode <code class="language-plaintext highlighter-rouge">iwctl</code> để scan danh sách wifi)</li>
+</ul>
+
+<blockquote>
+  <p>xem thêm tại
+<a href="https://wiki.archlinux.org/index.php/Iwd#Connect_to_a_network">đây</a></p>
+</blockquote>
+
+<p>Kiểm tra lại với lệnh <code class="language-plaintext highlighter-rouge">ping 8.8.8.8</code> để xem nối mạng được chưa</p>
+
+<h4 id="26-cài-đặt-sử-dụng-pacstrap">2.6 Cài đặt sử dụng Pacstrap</h4>
+
+<p>Cài đặt gói vào thư mục gốc</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacstrap -i /mnt base base-devel      &lt;- enter
+        ...     &lt;- enter sau đó chọn yes
+</code></pre></div></div>
+
+<blockquote>
+  <p>Tùy chọn <code class="language-plaintext highlighter-rouge">-i</code> là tránh auto chọn gói.</p>
+</blockquote>
+
+<h4 id="27-cấu-hình-hệ-thống">2.7 Cấu hình hệ thống</h4>
+
+<p>Tạo tập tin fstab để tự động mount phân vùng</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</code></pre></div></div>
+
+<blockquote>
+  <p>Tùy chọn -U là sử dụng UUISs để định danh nguồn</p>
+</blockquote>
+
+<h4 id="28-cấu-hình-timezone">2.8 Cấu hình timezone</h4>
+
+<p>Để bắt đầu các bước tiếp theo bạn vào chế độ tương tác với thư mục gốc đặc biệt
+của /mnt với các lệnh như hình sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# arch-chroot /mnt
+root[~]# ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
+</code></pre></div></div>
+
+<h4 id="29-chọn-ngôn-ngữ">2.9 Chọn ngôn ngữ</h4>
+
+<p>Bạn dùng nano và vào thư mục /etc/locale.gen chỉnh sửa sau đó bỏ dấu <code class="language-plaintext highlighter-rouge">#</code> phía
+trước ngôn ngữ muốn chọn hoặc sử dụng lệnh sau (chọn <em>en_US.UTF-8</em>)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# sed -i s/\#en\_US\.UTF\-8/en\_UTF\-8/g /etc/locale.gen
+</code></pre></div></div>
+
+<p>Sau đó Set như sau để kích hoạt thay đổi</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# echo LANG="en_US.UTF-8" &gt; /etc/locale.conf
+root[~]# locale-gen
+Generating locales...
+    en_US.UTF-8... done
+Generating complete.
+</code></pre></div></div>
+
+<h4 id="210-tạo-hostname">2.10 Tạo hostname</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# echo "Arch" &gt;&gt; /etc/hostname
+</code></pre></div></div>
+
+<h4 id="211-kích-hoạt-kho-multilib">2.11 kích hoạt kho multilib</h4>
+
+<p>Bạn dùng nano tìm và thay đổi ở vị trí sau của file <code class="language-plaintext highlighter-rouge">/etc/pacman.conf</code></p>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/9.png" alt="" class="center-image" /></p>
+
+<h4 id="211x-cài-đặt-kernel-firmware">2.11.x Cài đặt kernel, firmware</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -Syu
+root[~]# pacman -S linux linux-firmware
+root[~]# mkinitcpio -p linux
+</code></pre></div></div>
+
+<h4 id="212-cài-đặt-boot-loader">2.12 Cài đặt boot loader</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -S grub-bios
+</code></pre></div></div>
+
+<h4 id="213-tạo-grub-và-configure-grub">2.13 Tạo Grub và configure Grub</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# grub-install –force /dev/sda
+</code></pre></div></div>
+
+<p>Nếu không thành công, bạn có thể cài đặt với</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# grub-install --target=i386-pc --force /dev/sda
+</code></pre></div></div>
+
+<p>Sau đó</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></div></div>
+
+<h4 id="214-cài-đặt-các-gói-phần-mềm-quan-trọng">2.14 Cài đặt các gói phần mềm quan trọng</h4>
+
+<p>Đầu tiên bạn nên update hệ thống với lệnh</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman –Syu
+</code></pre></div></div>
+
+<p>Cài đặt xorg</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -S xorg xorg-server xorg-xinit xorg-server-utils
+</code></pre></div></div>
+
+<p>Cài đặt net-tools</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -S net-tools
+</code></pre></div></div>
+
+<p>Cài đặt gvfs. Arch không nhận các thiết bị ngoài như USB, vì vậy cần cài các
+package này như sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -S gvfs-mtp gvfs-gphoto2
+</code></pre></div></div>
+
+<p>Cài đặt wicd (sử dụng wireless)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -S wicd-gtk
+</code></pre></div></div>
+
+<blockquote>
+  <p>hoặc có thể sử dụng NetworkManager (gnome application)</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# pacman -S networkmanager network-manager-apple
+</code></pre></div></div>
+
+<h4 id="215-thêm-tài-khoản-người-dùng">2.15 Thêm tài khoản người dùng</h4>
+
+<p>Bạn có thể thêm user và đổi mật khẩu user như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# useradd -m -g users -G wheel -s /bin/bash ctnguyenvn
+root[~]# passwd ctnguyenvn
+New password:           &lt;- enter password
+Retype new password:    &lt;- enter retype password
+passwd: password updated sucessfully
+</code></pre></div></div>
+
+<h4 id="216-thay-đổi-password-root">2.16 Thay đổi password root</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# passwd root
+New password:           &lt;- enter password
+Retype new password:    &lt;- enter retype password
+passwd: password updated sucessfully
+</code></pre></div></div>
+
+<h4 id="217-start-và-enable-network">2.17 Start và enable network</h4>
+
+<p>Sau đó dùng lệnh sau để bắt đầu và enable mạng khi khởi động</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# systemctl enable dhcpcd
+</code></pre></div></div>
+
+<blockquote>
+  <p>Nếu dùng NetworkManager ở bước 2.14 thì sẽ dùng lệnh</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# systemctl enable NetworkManager
+</code></pre></div></div>
+
+<p>Sau khi xong bạn exit ra ngoài và</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root[~]# umount /mnt
+root[~]# reboot
+</code></pre></div></div>
+
+<p>reboot lại hệ thống (có thể remove file iso hoặc chọn exiting boot OS)</p>
+
+<h4 id="218-cài-đặt-môi-trường-desktop-environment-dynamic-tiling-window-manager">2.18 Cài đặt môi trường Desktop Environment, Dynamic tiling window manager</h4>
+
+<p>Bạn có thể cài đặt DE tùy thích với các lệnh như sau.</p>
+
+<p>Cài đặt xfce</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S xfce4 xfce4-goodies
+</code></pre></div></div>
+
+<p>Cài đặt gnome</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S gnome gnome-extra
+</code></pre></div></div>
+
+<p>Cài đặt Cinnamon</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S cinnamon nemo-fileroller
+</code></pre></div></div>
+
+<p>Cài đặt KDE</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S plasma
+</code></pre></div></div>
+
+<p>Cài đặt MATE</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S mate mate-extra
+</code></pre></div></div>
+
+<p>Cài đặt deepin</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S deepin deepin-extra
+</code></pre></div></div>
+
+<p>Cài đặt LXDE</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S lxde
+</code></pre></div></div>
+
+<p>Cài đặt i3</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S i3-wm i3-status dmenu noto-fonts ttf-dejavu ttf-freefont ttf-liberation ttf-droid ttf-inconsolata ttf-roboto
+</code></pre></div></div>
+
+<blockquote>
+  <p>i3 config của tôi tại <a href="https://github.com/ctnguyenvn/dotfiles">đây</a></p>
+</blockquote>
+
+<p>=&gt; đây tôi cài xfce</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S xfce4 xfce4-goodies
+    ... &lt;- enter
+</code></pre></div></div>
+
+<p>Sau khi cài xong bạn copy file tại <code class="language-plaintext highlighter-rouge">/etc/X11/xinit/xinitrc</code> vào thư mục
+<code class="language-plaintext highlighter-rouge">/home/$USER</code> và thêm dòng “exec startxfce4”</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo cp /etc/X11/xinit/xinitrc /home/$USER/.xinitrc
+</code></pre></div></div>
+
+<p>vào cuối file và xóa command các dòng có exec ở phía trên như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ nano ~/.xinitrc
+</code></pre></div></div>
+
+<p><img src="https://ctnguyenvn.me/images/installArch/10.png" alt="" class="center-image" /></p>
+
+<p>hoặc bạn tạo 1 file <code class="language-plaintext highlighter-rouge">~/.xinitrc</code> vào thêm vào file dòng lệnh <strong>exec startxfce4</strong>
+vào và lưu lại</p>
+
+<p>Cuối cũng gõ startx để khởi động lại hệ thống.</p>
+
+<p>Bạn có thể cài đặt slim để khởi động vào màn hình desktop mà không cần đăng nhập
+vào và gõ startx</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo pacman -S slim
+</code></pre></div></div>
+
+<p>Sau đó enable slim service</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo systemctl enable slim
+</code></pre></div></div>
+
+<p>Kết thúc</p>
+
+<p>Trên đây là những điều cơ bản trong quá trình cài đặt Arch linux. Tất nhiên còn
+nhiều cách khác cũng như không cần phải cài tất cả những bước trên ta vẫn hoàn
+thành việc cài đặt distro này. Tuy nhiên tôi nghĩ ta nên cài đầy đủ để trải
+nghiệm tốt nhất HĐH này. Tôi cũng là một người mới, tôi tự tìm hiểu trên mạng và
+tự tổng hợp, điều này cũng có nghĩa là sự thiếu xót hoặc sai lầm là điều không
+thể tránh. Tôi sẽ cập nhật sau.</p>
+</p>
+                    </div>
+					<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://ctnguyenvn.me/2019/03/02/install-ArchLinux/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>

@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Một số key trong vim giúp edit nhanh hơn | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng.
+
+
+
+Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại đây.
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta
+        property="og:title"
+        content="Một số key trong vim giúp edit nhanh hơn - Happy Investigating"
+    />
+    <meta
+        property="twitter:title"
+        content="Một số key trong vim giúp edit nhanh hơn - Happy Investigating"
+    />
+     
+    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/styles.css"
+    />
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://ctnguyenvn.me/assets/css/highlight.css"
+    />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.me/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban/" />
+    <meta name="theme-color" content="#000000" />
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+    />
+        
+</head>
+
+    <body>
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://ctnguyenvn.me">
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item">
+                    <input class="input is-rounded" type="text" placeholder="search">
+                </a>
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Blog
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+        <div><section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2 mb-4">
+                    <div class="content">
+                        <h1 class="mt-1">Một số key trong vim giúp edit nhanh hơn</h1>
+                        <p>
+						<span class="button is-info is-light is-small mr-2">
+							 06-11-2022
+						</span>
+                                 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/vim"
+                                    >vim</a
+                                > 
+                                <a
+                                    class="button is-info is-light is-small mr-1 mb-3"
+                                    href="/tag/linux-command"
+                                    >linux command</a
+                                > 
+                        </p>
+                        <p><p>Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại <a href="https://github.com/ctnguyenvn/vimrc/tree/neovim">vim repo</a> trong một số plugin mà tôi hay dùng.</p>
+
+<p><img src="https://ctnguyenvn.me/images/nvim/neovim-avt.webp" alt="neovim" class="center-image" /></p>
+
+<p>Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại <a href="https://devhints.io/vim">đây</a>.</p>
+
+<!--more-->
+
+<h4 id="một-số-vim-key-hay-dùng">Một số vim key hay dùng</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0</code> / <code class="language-plaintext highlighter-rouge">$</code> / <code class="language-plaintext highlighter-rouge">^</code></td>
+      <td>Di chuyển con trỏ đến đầu dòng / cuối dòng / đầu câu (không tính khoảng trống đầu dòng)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">A</code> / <code class="language-plaintext highlighter-rouge">I</code></td>
+      <td>Di chuyển đến cuối dòng / đầu dòng và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code> / <code class="language-plaintext highlighter-rouge">O</code></td>
+      <td>Thêm dòng phía dưới / phía trên dòng hiện tại và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">H</code> / <code class="language-plaintext highlighter-rouge">M</code> / <code class="language-plaintext highlighter-rouge">L</code></td>
+      <td>Di chuyển dòng đầu tiên / dòng giữa và dòng cuối của screen hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">e</code> / <code class="language-plaintext highlighter-rouge">b</code></td>
+      <td>Di chuyển đến cuối word / đầu word</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gg</code> / <code class="language-plaintext highlighter-rouge">G</code></td>
+      <td>Di chuyển đến dòng đầu tiên / cuối cùng của file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;</code> / <code class="language-plaintext highlighter-rouge">&gt;</code></td>
+      <td>Indent / unIndent</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[{</code> / <code class="language-plaintext highlighter-rouge">]}</code> / <code class="language-plaintext highlighter-rouge">[(</code> / <code class="language-plaintext highlighter-rouge">])</code></td>
+      <td>Di chuyển đến <code class="language-plaintext highlighter-rouge">{</code>/<code class="language-plaintext highlighter-rouge">}</code> hoặc <code class="language-plaintext highlighter-rouge">(</code>/<code class="language-plaintext highlighter-rouge">)</code> của scope hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dd</code> / <code class="language-plaintext highlighter-rouge">d^</code> / <code class="language-plaintext highlighter-rouge">d$</code> / <code class="language-plaintext highlighter-rouge">d0</code></td>
+      <td>Xóa một dòng / xóa đến đầu dòng / xóa đến cuối dòng / xóa đến đầu câu</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cc</code> / <code class="language-plaintext highlighter-rouge">c^</code> / <code class="language-plaintext highlighter-rouge">c$</code> / <code class="language-plaintext highlighter-rouge">c0</code></td>
+      <td>Tương tự như trên nhưng sau khi xóa sẽ tự động chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">di"</code> / <code class="language-plaintext highlighter-rouge">di'</code> / <code class="language-plaintext highlighter-rouge">di(</code> / <code class="language-plaintext highlighter-rouge">di{</code></td>
+      <td>Xóa nội dung trong dấu <code class="language-plaintext highlighter-rouge">""</code>/<code class="language-plaintext highlighter-rouge">''</code>/ <code class="language-plaintext highlighter-rouge">()</code> / <code class="language-plaintext highlighter-rouge">{}</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ci"</code> / <code class="language-plaintext highlighter-rouge">ci'</code> / <code class="language-plaintext highlighter-rouge">ci(</code> / <code class="language-plaintext highlighter-rouge">ci{</code></td>
+      <td>Xóa nội dung trong dấu <code class="language-plaintext highlighter-rouge">""</code>/<code class="language-plaintext highlighter-rouge">''</code>/ <code class="language-plaintext highlighter-rouge">()</code> / <code class="language-plaintext highlighter-rouge">{}</code> và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">g~</code> / <code class="language-plaintext highlighter-rouge">gUU</code> / <code class="language-plaintext highlighter-rouge">guu</code></td>
+      <td>Chuyển ký tự / dòng / nội dung bôi đen sang chữ hoa / thường</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">V</code></td>
+      <td>Bôi cả dòng</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">vi(</code> / <code class="language-plaintext highlighter-rouge">vi{</code></td>
+      <td>Bôi nội dung trong scope <code class="language-plaintext highlighter-rouge">()</code> / hoặc <code class="language-plaintext highlighter-rouge">{}</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">4d</code> / <code class="language-plaintext highlighter-rouge">4yy</code> / <code class="language-plaintext highlighter-rouge">4p</code></td>
+      <td>Xóa 4 dòng phía dưới / copy 4 dòng phía dưới / paste 4 lần nội dung đã copy</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">dis</code> / <code class="language-plaintext highlighter-rouge">dip</code></td>
+      <td>Xóa nội dung của scope và chuyển sang mode insert</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">u</code> / <code class="language-plaintext highlighter-rouge">Ctrl+r</code></td>
+      <td>Undo / Redo</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+a/x</code></td>
+      <td>Tăng / Giảm số tại số con trỏ hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Esc</code> / <code class="language-plaintext highlighter-rouge">Ctrl+[</code></td>
+      <td>Thoát insert mode</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+hjkl</code></td>
+      <td>Mở rộng cửa sổ theo các chiều tương ứng</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-nvim-tree">Plugin <a href="https://github.com/nvim-tree/nvim-tree.lua">nvim-tree</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">leader+h</code></td>
+      <td>Di chuyển đến cửa sổ nvim-tree khi ở bất kỳ tab nào</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">f</code></td>
+      <td>Tìm kiếm file sử dụng regex</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code> / <code class="language-plaintext highlighter-rouge">Enter</code></td>
+      <td>Expand thư mục, mở file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">E</code> / <code class="language-plaintext highlighter-rouge">W</code></td>
+      <td>Expand tree / Collapse tree</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">I</code> / <code class="language-plaintext highlighter-rouge">H</code></td>
+      <td>Show các file/folder ẩn / show các file bắt đầu với .xxx</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+v</code> / <code class="language-plaintext highlighter-rouge">Ctrl+x</code> / <code class="language-plaintext highlighter-rouge">Ctrl+t</code></td>
+      <td>Mở file phía dưới / bên phải file hiện tại / tạo mở tab mới</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">a</code></td>
+      <td>Tạo file (thêm <code class="language-plaintext highlighter-rouge">/</code> ở cuối để tạo thư mục)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">y</code> / <code class="language-plaintext highlighter-rouge">Y</code> / <code class="language-plaintext highlighter-rouge">gy</code></td>
+      <td>Copy tên file / relative path / absolute path file</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">r</code></td>
+      <td>Đổi tên file/folder</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">d</code></td>
+      <td>Xóa file/folder</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">s</code></td>
+      <td>Mở file sử dụng chương trình mặc định của hệ thống</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>Chuyển sang mode command và thêm đường dẫn file hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R</code></td>
+      <td>Refresh</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+k</code></td>
+      <td>Hiển thị thông tin cơ bản của fil</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-lspconfig">Plugin <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[r</code></td>
+      <td>Hiển thị các lỗi tại vị trí con trỏ hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[d</code> / <code class="language-plaintext highlighter-rouge">]d</code></td>
+      <td>Di chuyển tới lỗi tiếp theo / lỗi trước đó</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gd</code></td>
+      <td>Di chuyển đến từ khóa / hàm khai báo</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">K</code></td>
+      <td>Hiển thị thông tin về biến / hàm</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space+rn</code></td>
+      <td>Đổi tên biến / hàm trên toàn bộ source</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gr</code></td>
+      <td>Show tất cả các dòng chứa nội dung biến / hàm tại con trỏ hiện tại</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-comment">Plugin <a href="https://github.com/terrortylor/nvim-comment">comment</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gcc</code></td>
+      <td>Comment/Uncomment dòng hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gc4</code></td>
+      <td>Comment/Uncomment 4 dòng phía dưới</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gcip</code></td>
+      <td>Comment/Uncomment scope code</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-toggleterm-terminal">Plugin <a href="https://github.com/akinsho/toggleterm.nvim">toggleterm</a> (Terminal)</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+t</code></td>
+      <td>Mở terminal / đóng terminal (khi đã thoát khỏi mode terminal)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Esc</code></td>
+      <td>Thoát khỏi mode terminal</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+d</code></td>
+      <td>Thoát khỏi terminal (exit process)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">:ToggleTerm &lt;id&gt;</code></td>
+      <td>Mở thêm terminal thứ <id></id></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Sử dụng command sau để mở terminal bên phải :ToggleTerm size=40 direction=vertical</p>
+</blockquote>
+
+<h4 id="plugin-barbar">Plugin <a href="https://github.com/romgrk/barbar.nvim">barbar</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tab</code> / <code class="language-plaintext highlighter-rouge">Shift-tab</code></td>
+      <td>Di chuyển tới tab tiếp theo / lùi lại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+n</code> / <code class="language-plaintext highlighter-rouge">Shift+p</code></td>
+      <td>Move tab tới / lui</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+c</code></td>
+      <td>Đóng tab hiện tại</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+f</code></td>
+      <td>Di chuyển nhanh đến tab bất kỳ</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="plugin-neoformat">Plugin <a href="https://github.com/sbdchd/neoformat">neoformat</a></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>key</th>
+      <th>Desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">:Neoformat</code></td>
+      <td>Format source code</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Lưu ý trên đây là một số vimkey cơ bản mà tôi hay dùng với mục đích giúp edit file nhanh hơn. Các vimkey/command nâng cao các bạn có thể tìm hiểu thêm tại trang chủ <a href="https://www.vim.org">vim</a></p>
+</p>
+                    </div>
+					<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban/";
+        this.page.identifier = "ctnguyenvn";
+    };
+    (function () {
+        var d = document,
+            s = d.createElement("script");
+        s.src = "https://ctnguyenvn.disqus.com/embed.js";
+        s.setAttribute("data-timestamp", +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript
+    >Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow"
+        >comments powered by Disqus.</a
+    ></noscript
+>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+        <div><footer class="footer py-6">
+    <div class="content has-text-centered">
+		<div class="mb-2">
+			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-telegram is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-twitter is-size-4 mx-1"></i></a>
+			<a href="#"><i class="bi bi-github is-size-4 mx-1"></i></a>
+		</div>
+        <p>
+            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
+            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+        </p>
+    </div>
+</footer>
+</div>
+    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+    </body>
+</html>
