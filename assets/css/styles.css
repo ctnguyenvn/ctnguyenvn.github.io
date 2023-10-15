@@ -10,3 +10,12 @@ body {
 .content {
     font-size: 1.15em;
 }
+
+.navbar-item, .navbar-link {
+    padding: 0.5rem;
+}
+.navbar-item:hover,
+.navbar-link:hover {
+    background: none !important;
+    border-bottom: none !important;
+}

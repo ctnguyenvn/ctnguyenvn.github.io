@@ -38,31 +38,31 @@ f.addEventListener('submit', submitted);
 
 
 // dark theme
-let darkMode = localStorage.getItem("darkMode");
+// let darkMode = localStorage.getItem("darkMode");
 
-const darkModeToggle = document.querySelector("#dark-theme-toggle");
+// const darkModeToggle = document.querySelector("#dark-theme-toggle");
 
-const enableDarkMode = () => {
-    document.body.classList.add("dark-theme");
-    localStorage.setItem("darkMode", "enabled");
-};
+// const enableDarkMode = () => {
+//     document.body.classList.add("dark-theme");
+//     localStorage.setItem("darkMode", "enabled");
+// };
 
-const disableDarkMode = () => {
-    document.body.classList.remove("dark-theme");
-    localStorage.setItem("darkMode", null);
-};
+// const disableDarkMode = () => {
+//     document.body.classList.remove("dark-theme");
+//     localStorage.setItem("darkMode", null);
+// };
 
-if (darkMode === "enabled") {
-    enableDarkMode();
-}
+// if (darkMode === "enabled") {
+//     enableDarkMode();
+// }
 
-darkModeToggle.addEventListener("click", () => {
-    darkMode = localStorage.getItem("darkMode");
+// darkModeToggle.addEventListener("click", () => {
+//     darkMode = localStorage.getItem("darkMode");
 
-    if (darkMode !== "enabled") {
-        enableDarkMode();
-    } else {
-        disableDarkMode();
-    }
-});
+//     if (darkMode !== "enabled") {
+//         enableDarkMode();
+//     } else {
+//         disableDarkMode();
+//     }
+// });
 
