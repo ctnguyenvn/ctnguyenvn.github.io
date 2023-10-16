@@ -3,17 +3,17 @@
 
 body {
     font-family: "Nunito Sans", sans-serif;
-    /* background-color: #F3F4F6; */
     color: #1f2937;
 }
 
 .content {
-    font-size: 1.15em;
+    font-size: 1.1em;
 }
 
 .navbar-item, .navbar-link {
     padding: 0.5rem;
 }
+
 .navbar-item:hover,
 .navbar-link:hover {
     background: none !important;
