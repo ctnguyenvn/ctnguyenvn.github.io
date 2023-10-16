@@ -498,7 +498,7 @@ request, nên client có thể sử dụng đã lưu trong cache.
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://ctnguyenvn.me">
-                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo"/>
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo" />
                 <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
@@ -510,16 +510,12 @@ request, nên client có thể sử dụng đã lưu trong cache.
 
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-end">
-                <a class="navbar-item mx-3">
-                    <input class="input is-rounded" type="text" placeholder="search">
-                </a>
-                <a class="navbar-item" href="/">
-                    Home
-                </a>
+                <form class="navbar-item mx-3" id="searchForm" role="search">
+                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded" />
+                </form>
+                <a class="navbar-item" href="/"> Home </a>
                 <div class="navbar-item is-hoverable">
-                    <a class="navbar-item">
-                        Blog
-                    </a>
+                    <a class="navbar-item"> Blog </a>
                     <div class="navbar-dropdown">
                         <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
                         <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
@@ -527,14 +523,11 @@ request, nên client có thể sử dụng đã lưu trong cache.
                         <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
                     </div>
                 </div>
-                <a class="navbar-item" href="/about">
-                    About
-                </a>
+                <a class="navbar-item" href="/about"> About </a>
             </div>
         </div>
     </div>
-</nav>
-</div>
+</nav></div>
         <div><section class="hero">
     <div class="hero-body">
         <div class="container">

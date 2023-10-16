@@ -33,8 +33,9 @@ function submitted(event) {
     const win = window.open(url, '_blank');
     win.focus();
 }
-
-f.addEventListener('submit', submitted);
+if (f) {
+    f.addEventListener('submit', submitted);
+}
 
 
 // dark theme
