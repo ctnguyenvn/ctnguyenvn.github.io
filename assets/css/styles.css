@@ -27,6 +27,10 @@ body {
     font-size: 1.3em;
 }
 
+.icon-size-normal:hover {
+    color: #101010;
+}
+
 .content a:hover {
     text-decoration: underline;
 }
