@@ -4,10 +4,10 @@
 }
 
 code {
-    color: #252525;
-    padding: 0.2em 0.4em;
+    color: #e74141;
     border-radius: 6px;
     font-size: 87%;
+    background-color: #fcf1ed;
 }
 
 pre {

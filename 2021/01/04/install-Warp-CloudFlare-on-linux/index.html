@@ -80,12 +80,12 @@ ctnguyenvn[~]$ sudo apt install wireguard
 </head>
 
     <body>
-        <div><nav class="navbar px-2 py-4 mx-2" role="navigation" aria-label="main navigation">
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://ctnguyenvn.me">
                 <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo" />
-                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+                <span class="pl-2 is-size-5 has-text-weight-bold has-text-dark">ctnguyenvn</span>
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
                 <span aria-hidden="true"></span>
@@ -97,42 +97,46 @@ ctnguyenvn[~]$ sudo apt install wireguard
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-end">
                 <form class="navbar-item mx-3" id="searchForm" role="search">
-                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded" />
+                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded is-small" autocomplete="off" />
                 </form>
-                <a class="navbar-item" href="/"> Home </a>
+                <a class="navbar-item has-text-grey-dark" href="/"> Home </a>
                 <div class="navbar-item is-hoverable">
-                    <a class="navbar-item"> Blog </a>
+                    <a href="#" class="navbar-item has-text-grey-dark"> Blog </a>
                     <div class="navbar-dropdown">
-                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
-                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
-                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
-                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                        <a href="/category/linux-sysad/" class="navbar-item has-text-grey-dark">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item has-text-grey-dark">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item has-text-grey-dark">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item has-text-grey-dark">Tip & trick</a>
                     </div>
                 </div>
-                <a class="navbar-item" href="/about"> About </a>
+                <a class="navbar-item has-text-grey-dark" href="/about"> About </a>
             </div>
         </div>
     </div>
 </nav></div>
         <div><section class="hero">
-    <div class="hero-body">
+    <div class="hero-body py-1">
         <div class="container">
             <div class="columns">
                 <div class="column is-8 is-offset-2 mb-4">
-                    <div class="content">
-                        <h1 class="mt-1">Cài đặt VPN Warp CloudFlare trên Linux</h1>
-                        <p>
-						<span class="button is-info is-light is-small mr-2">
-							 04-01-2021
-						</span>
-                                 
-                                <a
-                                    class="button is-info is-light is-small mr-1 mb-3"
-                                    href="/tag/vpn"
-                                    >VPN</a
-                                > 
-                        </p>
-                        <p><p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
+                    <div class="content py-4">
+                        <a href="/2021/01/04/install-Warp-CloudFlare-on-linux/" class="is-size-4 has-text-black-ter has-text-weight-semibold">Cài đặt VPN Warp CloudFlare trên Linux</a>
+                        <div class="has-text-grey is-size-6 py-1">
+                            <a href="https:///about" class="">ctnguyenvn</a>
+                            <span">published on <span><i class="bi bi-calendar-event"></i></span> 04-01-2021<span><br>
+                            <span>included in</span>
+                                <span class="">
+                                    
+                                    
+                                    <a class="has-text-home"
+                                        href="/tag/vpn"><i
+                                            class="bi bi-folder mx-1"></i>VPN</a>
+                                     
+                                </span>
+                        </div>
+                        <hr class="my-3">
+                        <div class="py-2 has-text-grey-dark">
+                            <p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
 CloudFlare. Hiện tại <a href="https://1.1.1.1/">Warp client</a> chỉ hỗ trợ Anroid/IOS và
 windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta
 có thể sử dụng warp thông qua Wireguard.</p>
@@ -200,7 +204,7 @@ ctnguyenvn[~]$ sudo /opt/wgcf/wgcf generate -p /opt/wgcf/warp.conf --config /opt
 <blockquote>
   <p>Lưu ý: có thể sử dụng env để update nhanh với lệnh sau</p>
 
-  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ WGCF_LICENSE_KEY="put_key_here" /opt/wgcf/wgcf update --config /opt/wgcf/warp-account.toml</code></p>
+  <p>ctnguyenvn[~]$ WGCF_LICENSE_KEY=”put_key_here” /opt/wgcf/wgcf update –config /opt/wgcf/warp-account.toml</p>
 </blockquote>
 
 <h4 id="copy-tập-tin-cấu-hình-sang-wireguard">Copy tập tin cấu hình sang Wireguard</h4>
@@ -219,7 +223,7 @@ ctnguyenvn[~]$ sudo /opt/wgcf/wgcf generate -p /opt/wgcf/warp.conf --config /opt
   <p>Lưu ý: Nếu gặp lỗi: <code class="language-plaintext highlighter-rouge">wg-quick: 'warp' already exists</code> thì tên device đã tồn
 tại, có thể xóa device này sử dụng lệnh sau:</p>
 
-  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo ip link delet dev warp</code></p>
+  <p>ctnguyenvn[~]$ sudo ip link delet dev warp</p>
 </blockquote>
 
 <p>Để dừng sử dụng vpn ta sử dụng</p>
@@ -253,9 +257,9 @@ phù hợp với device name mới.</p>
 <blockquote>
   <p>Ví dụ</p>
 
-  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo wg up xxx</code></p>
+  <p>ctnguyenvn[~]$ sudo wg up xxx</p>
 
-  <p><code class="language-plaintext highlighter-rouge">ctnguyenvn[~]$ sudo systemctl enable wg-quick@xxx</code></p>
+  <p>ctnguyenvn[~]$ sudo systemctl enable wg-quick@xxx</p>
 </blockquote>
 
 <h4 id="update">Update</h4>
@@ -278,8 +282,8 @@ thay đổi Endpoint trong file <code class="language-plaintext highlighter-roug
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo wg-quick down warp
 ctnguyenvn[~]$ sudo wg-quick up warp
 </code></pre></div></div>
-</p>
-                    </div>
+
+                        </div>
 					<div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
@@ -301,12 +305,12 @@ ctnguyenvn[~]$ sudo wg-quick up warp
     ></noscript
 >
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
-</div>
+</section></div>
         <div><footer class="footer py-6">
     <div class="content has-text-centered">
 		<div class="mb-2">

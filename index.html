@@ -58,12 +58,12 @@
 </head>
 
     <body>
-        <div><nav class="navbar px-2 py-4 mx-2" role="navigation" aria-label="main navigation">
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://ctnguyenvn.me">
                 <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo" />
-                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+                <span class="pl-2 is-size-5 has-text-weight-bold has-text-dark">ctnguyenvn</span>
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
                 <span aria-hidden="true"></span>
@@ -75,30 +75,53 @@
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-end">
                 <form class="navbar-item mx-3" id="searchForm" role="search">
-                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded" />
+                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded is-small" autocomplete="off" />
                 </form>
-                <a class="navbar-item" href="/"> Home </a>
+                <a class="navbar-item has-text-grey-dark" href="/"> Home </a>
                 <div class="navbar-item is-hoverable">
-                    <a class="navbar-item"> Blog </a>
+                    <a href="#" class="navbar-item has-text-grey-dark"> Blog </a>
                     <div class="navbar-dropdown">
-                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
-                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
-                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
-                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                        <a href="/category/linux-sysad/" class="navbar-item has-text-grey-dark">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item has-text-grey-dark">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item has-text-grey-dark">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item has-text-grey-dark">Tip & trick</a>
                     </div>
                 </div>
-                <a class="navbar-item" href="/about"> About </a>
+                <a class="navbar-item has-text-grey-dark" href="/about"> About </a>
             </div>
         </div>
     </div>
 </nav></div>
-        <div><section class="section">
+        <div><section class="section py-2">
     <div class="container">
         <div class="columns">
             <div class="column is-8 is-offset-2">
-                <figure class="image is-16by9">
-                    <img src="https://ctnguyenvn.me/assets/img/home-head.png" alt="" />
-                </figure>
+                <div class="py-1 has-text-centered">
+                    <h3 class="py-1 is-size-4 has-text-weight-semibold">Happy Investigating</h3>
+                    <p class="py-2">Không có ai muốn khổ đau cho chính mình</p>
+                    <div class="py-1 topbar-icon">
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-github icon-size-normal"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-telegram icon-size-normal"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-twitter icon-size-normal"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-discord icon-size-normal"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -108,155 +131,223 @@
         <div class="container">
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            01-07-2023
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2023/07/01/subdomain-enumeration-without-bruteforce/">Tìm kiếm subdomain không sử dụng brute-force</a>
-                        </h1>
-                        <p>
-                            Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này...
-                        </p>
-                        <p>
-                             
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/enumeration">enumeration</a> 
-                        </p>
-                    </div>
-                    <div class="has-background-link">
-                        <hr />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            22-02-2023
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/">Thu thập log từ Cisco IOS về SIEM (ELK)</a>
-                        </h1>
-                        <p>
-                            Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command…...
-                        </p>
-                        <p>
-                             
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/collect-log">collect-log</a> 
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/elk">ELK</a> 
-                        </p>
-                    </div>
-                    <div class="has-background-link">
-                        <hr />
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        
+                        <a href="/2023/07/01/subdomain-enumeration-without-bruteforce/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Tìm kiếm subdomain không sử dụng brute-force</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i
+                                        class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color"
+                                    href="/tag/enumeration"><i
+                                        class="bi bi-folder mx-1"></i>enumeration</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
                 </div>
             </div>
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            25-12-2022
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2022/12/25/investigate-printNightmare/">PrintNightmare của letsdefend challenge</a>
-                        </h1>
-                        <p>
-                            Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case. pcap/memory file: download / pass: infected Công cụ sử dụng: Brim / Wireshark / Redline Trước khi đi...
-                        </p>
-                        <p>
-                             
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/games">Games</a> 
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/forensic">Forensic</a> 
-                        </p>
-                    </div>
-                    <div class="has-background-link">
-                        <hr />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            06-11-2022
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2022/11/06/mot-so-vim-key-co-ban/">Một số key trong vim giúp edit nhanh hơn</a>
-                        </h1>
-                        <p>
-                            Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau...
-                        </p>
-                        <p>
-                             
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/vim">vim</a> 
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/linux-command">linux command</a> 
-                        </p>
-                    </div>
-                    <div class="has-background-link">
-                        <hr />
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        
+                        <div class="py-1"><a href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/"><img style="width: 100%; height: 300px;" class="post-img" src="/images/ELK/cisco/1.png" /></a></div>
+                        
+                        <a href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Thu thập log từ Cisco IOS về SIEM (ELK)</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i
+                                        class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color"
+                                    href="/tag/collect-log"><i
+                                        class="bi bi-folder mx-1"></i>collect-log</a>
+                                 
+                                <a class="tag-color"
+                                    href="/tag/elk"><i
+                                        class="bi bi-folder mx-1"></i>ELK</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
                 </div>
             </div>
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            03-04-2021
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2021/04/03/dig-command/">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a>
-                        </h1>
-                        <p>
-                            Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig...
-                        </p>
-                        <p>
-                             
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/notes">Notes</a> 
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/linux-command">linux command</a> 
-                        </p>
-                    </div>
-                    <div class="has-background-link">
-                        <hr />
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        
+                        <div class="py-1"><a href="/2022/12/25/investigate-printNightmare/"><img style="width: 100%; height: 300px;" class="post-img" src="/images/PrintNightmare/1.png" /></a></div>
+                        
+                        <a href="/2022/12/25/investigate-printNightmare/" class="is-size-5 has-text-black-ter has-text-weight-semibold">PrintNightmare của letsdefend challenge</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i
+                                        class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color"
+                                    href="/tag/games"><i
+                                        class="bi bi-folder mx-1"></i>Games</a>
+                                 
+                                <a class="tag-color"
+                                    href="/tag/forensic"><i
+                                        class="bi bi-folder mx-1"></i>Forensic</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case. pcap/memory file: download / pass: infected Công cụ sử dụng: Brim / Wireshark / Redline Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
                 </div>
             </div>
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            13-02-2021
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2021/02/13/git-command-basic/">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a>
-                        </h1>
-                        <p>
-                            Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn...
-                        </p>
-                        <p>
-                             
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/git">Git</a> 
-                            <a class="button is-info is-light mr-2"
-                                href="/tag/notes">Notes</a> 
-                        </p>
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        
+                        <div class="py-1"><a href="/2022/11/06/mot-so-vim-key-co-ban/"><img style="width: 100%; height: 300px;" class="post-img" src="/images/nvim/neovim-avt.webp" /></a></div>
+                        
+                        <a href="/2022/11/06/mot-so-vim-key-co-ban/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Một số key trong vim giúp edit nhanh hơn</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i
+                                        class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color"
+                                    href="/tag/vim"><i
+                                        class="bi bi-folder mx-1"></i>vim</a>
+                                 
+                                <a class="tag-color"
+                                    href="/tag/linux-command"><i
+                                        class="bi bi-folder mx-1"></i>linux command</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
-                    <div class="has-background-link">
-                        <hr />
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        
+                        <div class="py-1"><a href="/2021/04/03/dig-command/"><img style="width: 100%; height: 300px;" class="post-img" src="/images/dig/post-avt.webp" /></a></div>
+                        
+                        <a href="/2021/04/03/dig-command/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i
+                                        class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color"
+                                    href="/tag/notes"><i
+                                        class="bi bi-folder mx-1"></i>Notes</a>
+                                 
+                                <a class="tag-color"
+                                    href="/tag/linux-command"><i
+                                        class="bi bi-folder mx-1"></i>linux command</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig Đối với Ubuntu/Debian ctnguyenvn[~]$ sudo apt install dnsutils Đối với CentOS/Fedora ctnguyenvn[~]$ sudo yum...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        
+                        <div class="py-1"><a href="/2021/02/13/git-command-basic/"><img style="width: 100%; height: 300px;" class="post-img" src="/images/git/post-avt.webp" /></a></div>
+                        
+                        <a href="/2021/02/13/git-command-basic/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i
+                                        class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color"
+                                    href="/tag/git"><i
+                                        class="bi bi-folder mx-1"></i>Git</a>
+                                 
+                                <a class="tag-color"
+                                    href="/tag/notes"><i
+                                        class="bi bi-folder mx-1"></i>Notes</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
                 </div>
             </div>
@@ -264,8 +355,8 @@
         </div>
     </div>
 </section>
-<!-- pagination -->
 
+<!-- pagination -->
 <section class="section pt-0"><!-- Pagination links -->
 
 <div class="container">

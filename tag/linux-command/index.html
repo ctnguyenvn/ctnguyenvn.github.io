@@ -58,12 +58,12 @@
 </head>
 
     <body>
-        <div><nav class="navbar px-2 py-4 mx-2" role="navigation" aria-label="main navigation">
+        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://ctnguyenvn.me">
-                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo" />
-                <span class="pl-2 is-size-5 has-text-weight-bold">ctnguyenvn</span>
+                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo">
+                <span class="pl-2 is-size-5 has-text-weight-bold has-text-dark">ctnguyenvn</span>
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
                 <span aria-hidden="true"></span>
@@ -75,30 +75,54 @@
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-end">
                 <form class="navbar-item mx-3" id="searchForm" role="search">
-                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded" />
+                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded is-small" autocomplete="off">
                 </form>
-                <a class="navbar-item" href="/"> Home </a>
+                <a class="navbar-item has-text-grey-dark" href="/"> Home </a>
                 <div class="navbar-item is-hoverable">
-                    <a class="navbar-item"> Blog </a>
+                    <a href="#" class="navbar-item has-text-grey-dark"> Blog </a>
                     <div class="navbar-dropdown">
-                        <a href="/category/linux-sysad/" class="navbar-item">Linux sysadmin</a>
-                        <a href="/category/dfir/" class="navbar-item">Digital forensic</a>
-                        <a href="/category/tutorials/" class="navbar-item">Some tutorials</a>
-                        <a href="/category/tip-tricks/" class="navbar-item">Tip & trick</a>
+                        <a href="/category/linux-sysad/" class="navbar-item has-text-grey-dark">Linux sysadmin</a>
+                        <a href="/category/dfir/" class="navbar-item has-text-grey-dark">Digital forensic</a>
+                        <a href="/category/tutorials/" class="navbar-item has-text-grey-dark">Some tutorials</a>
+                        <a href="/category/tip-tricks/" class="navbar-item has-text-grey-dark">Tip &amp; trick</a>
                     </div>
                 </div>
-                <a class="navbar-item" href="/about"> About </a>
+                <a class="navbar-item has-text-grey-dark" href="/about"> About </a>
             </div>
         </div>
     </div>
 </nav></div>
-        <div><section class="section">
+        <div>
+<section class="section py-2">
     <div class="container">
         <div class="columns">
             <div class="column is-8 is-offset-2">
-                <figure class="image is-16by9">
-                    <img src="https://ctnguyenvn.me/assets/img/home-head.png" alt="" />
-                </figure>
+                <div class="py-1 has-text-centered">
+                    <h3 class="py-1 is-size-4 has-text-weight-semibold">Happy Investigating</h3>
+                    <p class="py-1">Không có ai muốn khổ đau cho chính mình</p>
+                    <div class="py-1">
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-github icon-size-normal"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-telegram icon-size-normal"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-twitter icon-size-normal"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="mx-1">
+                            <span class="icon has-text-dark">
+                                <i class="bi bi-discord icon-size-normal"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -108,99 +132,97 @@
         <div class="container">
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            06-11-2022
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2022/11/06/mot-so-vim-key-co-ban/"
-                                >Một số key trong vim giúp edit nhanh hơn</a
-                            >
-                        </h1>
-                        <p>
-                            Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau...
-                        </p>
-                        <p>
-                             
-                            <a
-                                class="button is-info is-light mr-2"
-                                href="/tag/vim"
-                                >vim</a
-                            > 
-                            <a
-                                class="button is-info is-light mr-2"
-                                href="/tag/linux-command"
-                                >linux command</a
-                            > 
-                        </p>
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        <a href="/2022/11/06/mot-so-vim-key-co-ban/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Một số key trong vim giúp edit nhanh hơn</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color" href="/tag/vim"><i class="bi bi-folder mx-1"></i>vim</a>
+                                 
+                                <a class="tag-color" href="/tag/linux-command"><i class="bi bi-folder mx-1"></i>linux command</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
-                    <div class="has-background-link"><hr /></div>
                 </div>
             </div>
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            03-04-2021
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2021/04/03/dig-command/"
-                                >Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a
-                            >
-                        </h1>
-                        <p>
-                            Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig...
-                        </p>
-                        <p>
-                             
-                            <a
-                                class="button is-info is-light mr-2"
-                                href="/tag/notes"
-                                >Notes</a
-                            > 
-                            <a
-                                class="button is-info is-light mr-2"
-                                href="/tag/linux-command"
-                                >linux command</a
-                            > 
-                        </p>
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        <a href="/2021/04/03/dig-command/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color" href="/tag/notes"><i class="bi bi-folder mx-1"></i>Notes</a>
+                                 
+                                <a class="tag-color" href="/tag/linux-command"><i class="bi bi-folder mx-1"></i>linux command</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig Đối với Ubuntu/Debian ctnguyenvn[~]$ sudo apt install dnsutils Đối với CentOS/Fedora ctnguyenvn[~]$ sudo yum...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
-                    <div class="has-background-link"><hr /></div>
                 </div>
             </div>
             
             <div class="columns">
-                <div class="column is-8 is-offset-2 pb-2">
-                    <div class="content pb-3">
-                        <p class="pb-1 mb-0">
-                            22-05-2019
-                        </p>
-                        <h1 class="has-text-weight-semibold mt-1">
-                            <a class="has-text-dark" href="/2019/05/22/qick-arguments/"
-                                >Một số cái beep trong shell</a
-                            >
-                        </h1>
-                        <p>
-                            Hôm nay tôi lang thang và thấy mấy cái này và tôi biết tôi cần note lại cho mình. Tôi cũng xin nói luôn tôi cũng chưa biết gọi chúng là cái gì nên tạm thời gọi là cái beep vậy. Khi làm việc với shell trên linux và… có...
-                        </p>
-                        <p>
-                             
-                            <a
-                                class="button is-info is-light mr-2"
-                                href="/tag/linux-command"
-                                >linux command</a
-                            > 
-                        </p>
+                <div class="column is-8 is-offset-2">
+                    <div class="content">
+                        <a href="/2019/05/22/qick-arguments/" class="is-size-5 has-text-black-ter has-text-weight-semibold">Một số cái beep trong shell</a>
+                        <div class="has-text-grey is-size-6">
+                            <span class="">
+                                <a class="tag-color"><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a>
+                            </span>
+                            <span>published on <span class="ml-2"><i class="bi bi-calendar-event"></i></span> 2023-10-13</span>
+                            <br>
+                            <span class="">
+                                included in
+                                
+                                
+                                <a class="tag-color" href="/tag/linux-command"><i class="bi bi-folder mx-1"></i>linux command</a>
+                                 
+
+                            </span>
+                        </div>
+                        <div class="py-1 has-text-home">
+                            Hôm nay tôi lang thang và thấy mấy cái này và tôi biết tôi cần note lại cho mình. Tôi cũng xin nói luôn tôi cũng chưa biết gọi chúng là cái gì nên tạm thời gọi là cái beep vậy. Khi làm việc với shell trên linux và… có đôi chút về bash thì nó thật sự hữu ích <img class="emoji" title=":smiley:" alt=":smiley:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f603.png" height="20" width="20"> Command Description Example...
+                        </div>
+                        <a class="tag-color is-size-6">Read more</a>
+                        <hr class="slash mt-4 mb-1">
                     </div>
-                    <div class="has-background-link"><hr /></div>
                 </div>
             </div>
             
         </div>
     </div>
 </section>
+
 <!-- pagination -->
 <section class="section pt-0"><!-- Pagination links -->
 
@@ -222,8 +244,10 @@
     </div>
 </div>
 </section>
+
 </div>
-        <div><footer class="footer py-6">
+        <div>
+<footer class="footer py-6">
     <div class="content has-text-centered">
 		<div class="mb-2">
 			<a href="#"><i class="bi bi-youtube is-size-4 mx-1"></i></a>
