@@ -110,12 +110,12 @@ Mô hình cơ bản như sau
     <div class="hero-body py-1">
         <div class="container">
             <div class="columns">
-                <div class="column is-8 is-offset-2 mb-4">
+                <div class="column is-8 is-offset-2 my-4">
                     <div class="content py-4">
                         <a href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/" class="is-size-4 has-text-black-ter has-text-weight-semibold">Thu thập log từ Cisco IOS về SIEM (ELK)</a>
-                        <div class="has-text-grey is-size-6 py-1">
+                        <div class="is-size-6 py-1">
                             <a href="https:///about" class="">ctnguyenvn</a>
-                            <span">published on <span><i class="bi bi-calendar-event"></i></span> 22-02-2023<span><br>
+                            <span>published on <span><i class="bi bi-calendar-event"></i></span> 22-02-2023<span><br>
                             <span>included in</span>
                                 <span class="">
                                     
@@ -131,7 +131,7 @@ Mô hình cơ bản như sau
                                 </span>
                         </div>
                         <hr class="my-3">
-                        <div class="py-2 has-text-grey-dark">
+                        <div class="py-2">
                             <p>Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này.</p>
 
 <h3 id="sơ-lược-mô-hình">Sơ lược mô hình</h3>
@@ -349,7 +349,8 @@ output <span class="o">{</span>
             </div>
         </div>
     </div>
-</section></div>
+</section>
+</div>
         <div><footer class="footer py-6">
     <div class="content has-text-centered">
 		<div class="mb-2">
