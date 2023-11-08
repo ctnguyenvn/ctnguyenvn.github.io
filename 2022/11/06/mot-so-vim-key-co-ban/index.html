@@ -64,14 +64,29 @@ Một số vimkey sau đây không được sắp xếp theo các group mà ch�
 </head>
 
     <body>
-        <div><nav class="navbar p-2 mx-2" role="navigation" aria-label="main navigation">
+        <div><nav
+    class="navbar px-2 py-4 mx-2"
+    role="navigation"
+    aria-label="main navigation"
+>
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="https://ctnguyenvn.me">
-                <img src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png" alt="Logo" />
-                <span class="pl-2 is-size-5 has-text-weight-bold has-text-dark">ctnguyenvn</span>
+                <img
+                    src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
+                    alt="Logo"
+                />
+                <span class="pl-2 is-size-4 has-text-weight-bold has-text-dark"
+                    >ctnguyenvn</span
+                >
             </a>
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+            <a
+                role="button"
+                class="navbar-burger"
+                aria-label="menu"
+                aria-expanded="false"
+                data-target="navbarMenu"
+            >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -81,48 +96,78 @@ Một số vimkey sau đây không được sắp xếp theo các group mà ch�
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-end">
                 <form class="navbar-item mx-3" id="searchForm" role="search">
-                    <input type="input" id="query" name="q" placeholder="Search..." class="input is-rounded is-small" autocomplete="off" />
+                    <input
+                        type="input"
+                        id="query"
+                        name="q"
+                        placeholder="Search..."
+                        class="input is-rounded is-small"
+                        autocomplete="off"
+                    />
                 </form>
                 <a class="navbar-item has-text-grey-dark" href="/"> Home </a>
                 <div class="navbar-item is-hoverable">
-                    <a href="#" class="navbar-item has-text-grey-dark"> Blog </a>
+                    <a href="#" class="navbar-item has-text-grey-dark">
+                        Blog
+                    </a>
                     <div class="navbar-dropdown">
-                        <a href="/category/linux-sysad/" class="navbar-item has-text-grey-dark">Linux sysadmin</a>
-                        <a href="/category/dfir/" class="navbar-item has-text-grey-dark">Digital forensic</a>
-                        <a href="/category/tutorials/" class="navbar-item has-text-grey-dark">Some tutorials</a>
-                        <a href="/category/tip-tricks/" class="navbar-item has-text-grey-dark">Tip & trick</a>
+                        <a
+                            href="/category/linux-sysad/"
+                            class="navbar-item has-text-grey-dark"
+                            >Linux sysadmin</a
+                        >
+                        <a
+                            href="/category/dfir/"
+                            class="navbar-item has-text-grey-dark"
+                            >Digital forensic</a
+                        >
+                        <a
+                            href="/category/tutorials/"
+                            class="navbar-item has-text-grey-dark"
+                            >Some tutorials</a
+                        >
+                        <a
+                            href="/category/tip-tricks/"
+                            class="navbar-item has-text-grey-dark"
+                            >Tip & trick</a
+                        >
                     </div>
                 </div>
-                <a class="navbar-item has-text-grey-dark" href="/about"> About </a>
+                <a class="navbar-item has-text-grey-dark" href="/about">
+                    About
+                </a>
             </div>
         </div>
     </div>
-</nav></div>
+</nav>
+</div>
         <div><section class="hero">
-    <div class="hero-body py-1">
+    <div class="hero-body px-4 py-0">
         <div class="container">
             <div class="columns">
-                <div class="column is-8 is-offset-2 my-4">
+                <div class="column is-10 is-offset-1 my-4">
                     <div class="content py-4">
-                        <a href="/2022/11/06/mot-so-vim-key-co-ban/" class="is-size-4 has-text-black-ter has-text-weight-semibold">Một số key trong vim giúp edit nhanh hơn</a>
-                        <div class="is-size-6 py-1">
-                            <a href="https:///about" class="">ctnguyenvn</a>
-                            <span>published on <span><i class="bi bi-calendar-event"></i></span> 06-11-2022<span><br>
-                            <span>included in</span>
-                                <span class="">
-                                    
-                                    
-                                    <a class="has-text-home"
-                                        href="/tag/vim"><i
-                                            class="bi bi-folder mx-1"></i>vim</a>
-                                     
-                                    <a class="has-text-home"
-                                        href="/tag/linux-command"><i
-                                            class="bi bi-folder mx-1"></i>linux command</a>
-                                     
-                                </span>
-                        </div>
-                        <hr class="my-3">
+						<div class="has-text-centered">
+							<a href="/2022/11/06/mot-so-vim-key-co-ban/" class="is-size-3 has-text-black-ter has-text-weight-semibold">Một số key trong vim giúp edit nhanh hơn</a>
+							<div class="is-size-5 py-1">
+								<i class="bi bi-person-circle mx-1"></i><a href="https:///about" class="">ctnguyenvn</a>
+								<span>published on <span><i class="bi bi-calendar-event"></i></span> 06-11-2022<span><br>
+								<span>included in</span>
+									<span class="">
+										
+										
+										<a class="has-text-home"
+											href="/tag/vim"><i
+												class="bi bi-folder mx-1"></i>vim</a>
+										 
+										<a class="has-text-home"
+											href="/tag/linux-command"><i
+												class="bi bi-folder mx-1"></i>linux command</a>
+										 
+									</span>
+							</div>
+						</div>
+                        <hr class="my-5">
                         <div class="py-2">
                             <p>Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại <a href="https://github.com/ctnguyenvn/vimrc/tree/neovim">vim repo</a> trong một số plugin mà tôi hay dùng.</p>
 
