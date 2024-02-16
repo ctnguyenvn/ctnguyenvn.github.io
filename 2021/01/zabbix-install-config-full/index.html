@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Cài đặt và cấu hình Zabbix 5.0 | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device
+như hình sau
+
+1. Giới thiệu mô hình lab
+
+
+
+
+  
+    
+      Thông tin
+       
+      Hostname
+    
+  
+  
+    
+      R1
+      Cisco 3640
+      R-C3640
+    
+    
+      Linux
+      CentOS 7
+      LinuxAgent
+    
+    
+      Linux
+      Ubuntu 18.04
+      Zabbix-Server
+    
+    
+      Windows
+      Windows server 2012
+      WindowAgent
+    
+    
+      Soft
+      GNS3 2.2.17
+       
+    
+    
+      IP
+      Như mô hình
+       
+    
+  
+
+
+
+  Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông
+qua R1.
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta property="og:title" content="Cài đặt và cấu hình Zabbix 5.0 - Happy Investigating" />
+    <meta property="twitter:title" content="Cài đặt và cấu hình Zabbix 5.0 - Happy Investigating" />
+     
+    <meta property="og:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/bulma.min.css" /> -->
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/highlight.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.github.io/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" />
+        
+</head>
+
+    <body>
+		<div>
+			<div class="border-b"><nav class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+    <div class="">
+        <a href="https://ctnguyenvn.github.io">
+            <img src="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" class="h-6" alt="ctnguyenvn" />
+        </a>
+    </div>
+    <div class="hidden md:flex justify-center gap-6">
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Home</a>
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Blog</a>
+        <a href="/projects" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Projects</a>
+        <a href="/about" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">About</a>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://twitter.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://t.me/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-telegram"></i>
+        </a>
+    </div>
+</nav>
+</div>
+			<main><div class="max-w-screen-lg mx-auto my-2 py-2 md:my-6 md:py-6 px-4">
+    <div class="text-center pt-4">
+        <p>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/tools">Tools</a>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/monitoring">Monitoring</a>
+             
+        </p>
+        <h1 class="text-4xl font-semibold pt-1 pb-4">
+            <a href="/2021/01/zabbix-install-config-full/" class="is-size-3 has-text-black-ter has-text-weight-semibold">Cài đặt và cấu hình Zabbix 5.0</a>
+        </h1>
+        <div class="flex justify-center gap-2">
+            <div class="border-b-2 border-yellow-400 pb-1">
+                <span>ctnguyenvn</span>
+                -
+                <span>31 January, 2021</span>
+            </div>
+        </div>
+    </div>
+    <div class="content my-4 py-4 text-justify"><p>Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device
+như hình sau</p>
+
+<h3 id="1-giới-thiệu-mô-hình-lab">1. Giới thiệu mô hình lab</h3>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Thông tin</th>
+      <th> </th>
+      <th>Hostname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R1</td>
+      <td>Cisco 3640</td>
+      <td>R-C3640</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>CentOS 7</td>
+      <td>LinuxAgent</td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>Ubuntu 18.04</td>
+      <td>Zabbix-Server</td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>Windows server 2012</td>
+      <td>WindowAgent</td>
+    </tr>
+    <tr>
+      <td>Soft</td>
+      <td>GNS3 2.2.17</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>IP</td>
+      <td>Như mô hình</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông
+qua R1.</p>
+</blockquote>
+
+<!--more-->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R1# config terminal
+R1(config)# hostname R-C3640
+R-C3640(config)# access-list 1 permit any
+R-C3640(config)# ip nat inside source list 1 interface e0/0 overload
+
+R-C3640(config)# interface e0/0
+R-C3640(config-if)# ip address dhcp
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat outside
+R-C3640(config-if)# exit
+
+R-C3640(config)# interface e0/1
+R-C3640(config-if)# ip address 172.16.10.5 255.255.255.0
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat inside
+R-C3640(config-if)# exit
+
+R-C3640(config)# interface e0/2
+R-C3640(config-if)# ip address 172.17.10.5 255.255.255.0
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat inside
+R-C3640(config-if)# exit
+
+R-C3640(config)# interface e0/3
+R-C3640(config-if)# ip address 192.168.10.5 255.255.255.0
+R-C3640(config-if)# no shutdown
+R-C3640(config-if)# ip nat inside
+R-C3640(config-if)# exit
+
+R-C3640(config)# end
+R-C3640# wr
+</code></pre></div></div>
+
+<h3 id="2-cài-đặt-các-chương-trình-cần-thiết-vm-zabbix-server">2. Cài đặt các chương trình cần thiết (VM: Zabbix-Server)</h3>
+
+<h4 id="21-cài-đặt-apache">2.1 Cài đặt Apache</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ apt install apache2 -y
+</code></pre></div></div>
+
+<h4 id="22-cấu-hình-apache">2.2 Cấu hình Apache</h4>
+
+<p>Copy tập tin cấu hình mới (VirtualHost)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ cd /etc/apache2/sites-available
+ctnguyenvn[~]$ cp 000-default.conf zabbix.congtrulab.local.conf
+</code></pre></div></div>
+
+<p>Sửa đổi nội dung file cấu hình mới với vim</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ vim /etc/apache2/sites-available/zabbix.congtrulab.local.conf
+&lt;VirtualHost *:80&gt;
+    ServerName zabbix.congtrulab.local
+
+    ServerAdmin admin@congtrulab.local
+    DocumentRoot /var/www/zabbix.congtrulab.local
+
+    ErrorLog ${APACHE_LOG_DIR}/zabbix.congtrulab.local-error.log
+    CustomLog ${APACHE_LOG_DIR}/zabbix.congtrulab.local-access.log combined
+
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>Tạo thư mục root web</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ mkdir /var/www/zabbix.congtrulab.local
+</code></pre></div></div>
+
+<p>Kích hoạt file cấu hình và khởi động apache</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ a2ensite /etc/apache2/sites-available/zabbix.congtrulab.local.conf
+ctnguyenvn[~]$ systemctl start apache2
+ctnguyenvn[~]$ systemctl enable apache2
+</code></pre></div></div>
+
+<p>Thêm rule firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ufw allow http
+ctnguyenvn[~]$ ufw reload
+</code></pre></div></div>
+
+<h4 id="23-cài-đặt-php-72">2.3 Cài đặt PHP 7.2</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ apt install php7.2 php7.2-common php-mysql php-gd php-curl \
+php-bcmath php7.2-xml php-net-socket php-mbstring php-gettext
+</code></pre></div></div>
+
+<h4 id="24-cấu-hình-php">2.4 Cấu hình PHP</h4>
+
+<p>Mở file <code class="language-plaintext highlighter-rouge">/etc/php/7.2/apache2/php.ini</code> và thay đổi một số cấu hình cơ bản bao
+gồm</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>max_execution_time = 300
+max_input_time = 300
+memory_limit = 128M
+post_max_size = 32M
+upload_max_filesize = 16M
+date.timezone = Asia/Ho_Chi_Minh
+</code></pre></div></div>
+
+<h4 id="25-cài-đặt-mysql-server">2.5 Cài đặt mysql server</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ apt install mysql-server
+ctnguyenvn[~]$ systemctl start mysql
+ctnguyenvn[~]$ systemctl enable mysql
+</code></pre></div></div>
+
+<p>Thiết lập ban đầu với <code class="language-plaintext highlighter-rouge">mysql_secure_installation</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ mysql_secure_installation
++++ snip some code +++
+Set root password? [Y/n] Y  &lt;=== Chọn Y và bắt đầu đặt mật khẩu mới cho root db user
+New password:
+Re-enter new password:
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
++++ snip some code +++
+Remove anonymous users? [Y/n] n
+ ... skipping.
++++ snip some code +++
+Disallow root login remotely? [Y/n] y
+ ... Success!
++++ snip some code +++
+Remove test database and access to it? [Y/n] n
+ ... skipping.
++++ snip some code +++
+Reload privilege tables now? [Y/n] y
+ ... Success!
++++ snip some code +++
+</code></pre></div></div>
+
+<h4 id="26-cấu-hình-database-sử-dụng-cho-zabbix">2.6 Cấu hình database sử dụng cho zabbix</h4>
+
+<p>Tạo database cho zabbix (sử dụng cho phần sau). Sử dụng lệnh sau và bắt đầu tạo
+database</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ mysql -u root -p
+Enter password:: &lt;== nhập password vừa tạo phía trên
++++&lt;snip some code&gt;+++
+MariaDB [(none)]&gt;create database zabbix_db character set utf8 collate utf8_bin;
+MariaDB [(none)]&gt;create user zabbix_user@'localhost' identified by 'zabbix@pw123';
+MariaDB [(none)]&gt;grant all privileges on zabbix_db.* to zabbix_user@'localhost';
+MariaDB [(none)]&gt;flush privileges;
+MariaDB [(none)]&gt;quit
+</code></pre></div></div>
+
+<p>Thêm rule cho firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ufw allow mysql
+ctnguyenvn[~]$ ufw reload
+</code></pre></div></div>
+
+<h3 id="3-cài-đặt-zabbix-server-version-50">3. Cài đặt Zabbix Server (version 5.0)</h3>
+
+<p>Cài đặt</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+bionic_all.deb
+ctnguyenvn[~]$ dpkg -i zabbix-release_5.0-1+bionic_all.deb
+ctnguyenvn[~]$ apt update
+ctnguyenvn[~]$ apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent
+</code></pre></div></div>
+
+<blockquote>
+  <p>Xem thêm tại
+<a href="https://www.zabbix.com/documentation/5.0/manual/installation">official documents 5.0</a></p>
+</blockquote>
+
+<p>Khởi động zabbix</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ systemctl start zabbix-server
+ctnguyenvn[~]$ systemctl enable zabbix-server
+</code></pre></div></div>
+
+<p>Cấu hình cho phép các dịch vụ bởi firewall</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ ufw allow zabbix-agent
+ctnguyenvn[~]$ ufw allow zabbix-trapper
+ctnguyenvn[~]$ ufw reload
+</code></pre></div></div>
+
+<h3 id="4-cấu-hình-trên-zabbix-server">4. Cấu hình trên zabbix server</h3>
+
+<p>Sử dụng database của zabbix-mysql cung cấp để thêm vào db đã tạo</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ cd /usr/share/doc/zabbix-server-mysql*
+ctnguyenvn[~]$ gunzip create.sql.gz
+ctnguyenvn[~]$ mysql -u root -p zabbix_db &lt; create.sql
+Enter password: &lt;== Nhập mật khẩu của user root mysql
+</code></pre></div></div>
+
+<p>Cấu hình một số thông tin trong <code class="language-plaintext highlighter-rouge">zabbix_server.conf</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ vim /etc/zabbix/zabbix_server.conf
+
++++ snip some code +++
+
+DBName=zabbix_db
+DBUser=zabbix_user
+DBPassword=zabbix@pw123
+
++++ snip some code +++
+
+</code></pre></div></div>
+
+<blockquote>
+  <p>Lưu ý: Cần tìm và thay đổi DB name, user, password đúng với Database đã tạo
+(phía trên)</p>
+</blockquote>
+
+<p>Khởi động lại apache và Zabbix server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ systemctl restart apache2
+ctnguyenvn[~]$ systemctl restart zabbix-server
+</code></pre></div></div>
+
+<p>Sử dụng trình duyệt truy cập vào địa chỉ <code class="language-plaintext highlighter-rouge">&lt;IP Zabbix Server&gt;/zabbix</code> và chọn lần
+lượt như hình sau</p>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/1.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Tôi đã thay đổi file hosts để có thể sử dụng domain</p>
+</blockquote>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/2.png" alt="zabbix" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/3.png" alt="zabbix" class="center-image" /></p>
+
+<blockquote>
+  <p>Lưu ý: Nhập đúng tên database, user và password trong bước tạo database phía
+trên</p>
+</blockquote>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/4.png" alt="zabbix" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/5.png" alt="zabbix" class="center-image" /></p>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/6.png" alt="zabbix" class="center-image" /></p>
+
+<p>Sau khi nhận thông báo thành công, có thể login với tài khoản quản trị mặc định
+là</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User: Admin
+Pass: zabbix
+</code></pre></div></div>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/7.png" alt="zabbix" class="center-image" /></p>
+
+<p>Và giao diện đầu tiên của zabbix như sau</p>
+
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/8.png" alt="zabbix" class="center-image" /></p>
+
+<p>Quá trình cài đặt cơ bản zabbix server 5.0 đã thành công. Cuối cùng có thể thêm
+một số thiết bị như Linux, windows, cisco router vào zabbix server như
+<a href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent">sau</a></p>
+</div>
+    <div class="gap-2 my-4">
+        <a href="https://twitter.com/intent/tweet?text=Cài đặt và cấu hình Zabbix 5.0&url=https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-twitter-x text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-facebook text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/&title=Cài đặt và cấu hình Zabbix 5.0=&source=ctnguyenvn" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-linkedin text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://reddit.com/submit?url=https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/&title=Cài đặt và cấu hình Zabbix 5.0" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-reddit text-gray-200 hover:text-gray-800"></i></a>
+    </div>
+    <div class="flex justify-between gap-2 my-8">
+        
+        <div class="w-1/2 text-left">
+            <a class="prev" href="/2021/01/lvm/">
+                
+                <img src="https://ctnguyenvn.github.io/images/lvm/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-start"></i>
+                Previous Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2021/01/lvm/">Cơ bản về LVM (logical Volume management)</a>
+        </div>
+         
+        <div class="w-1/2 text-right">
+            <a href="/2021/02/install-add-devices-zabbix-agent/">
+                
+                <img src="https://ctnguyenvn.github.io/images/zabbix/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-end"></i>
+                Next Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2021/02/install-add-devices-zabbix-agent/">Giám sát một số devices với zabbix agent, SNMP</a>
+        </div>
+        
+    </div>
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/';
+        this.page.identifier = 'ctnguyenvn';
+    };
+    (function () {
+        var d = document,
+            s = d.createElement('script');
+        s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
+</div>
+</main>
+			<div class="border-t bg-black">
+<div class="max-w-screen-xl mx-auto flex flex-col px-2 py-6 text-center">
+    <p class="text-gray-300">
+        <strong>@2024</strong>
+        by
+        <a href="/" class="hover:text-yellow-400">ctnguyenvn</a>
+        /
+        <a href="/tags" class="hover:text-yellow-400">Tags</a>
+        /
+        <a href="/archive" class="hover:text-yellow-400">Archive</a>
+    </p>
+</div>
+</div>
+		</div>
+        <script src="https://ctnguyenvn.github.io/assets/js/custom.js"></script>
+    </body>
+</html>

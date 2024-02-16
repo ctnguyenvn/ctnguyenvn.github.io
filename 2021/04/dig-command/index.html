@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Sử dụng Dig (Domain Information Groper) - truy vấn DNS | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS.
+Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn.
+Các truy vấn phổ biến gồm NS, CNAME, MX, TXT…
+
+1. Cài đặt Dig
+
+Đối với Ubuntu/Debian
+
+ctnguyenvn[~]$ sudo apt install dnsutils
+
+
+Đối với CentOS/Fedora
+
+ctnguyenvn[~]$ sudo yum install bind-utils
+
+
+Có thể kiểm tra kết quả cài đặt dig như sau:
+
+ctnguyenvn[~]$ dig -v
+DiG 9.16.13
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta property="og:title" content="Sử dụng Dig (Domain Information Groper) - truy vấn DNS - Happy Investigating" />
+    <meta property="twitter:title" content="Sử dụng Dig (Domain Information Groper) - truy vấn DNS - Happy Investigating" />
+     
+    <meta property="og:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/bulma.min.css" /> -->
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/highlight.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.github.io/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.github.io/2021/04/dig-command/" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" />
+        
+</head>
+
+    <body>
+		<div>
+			<div class="border-b"><nav class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+    <div class="">
+        <a href="https://ctnguyenvn.github.io">
+            <img src="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" class="h-6" alt="ctnguyenvn" />
+        </a>
+    </div>
+    <div class="hidden md:flex justify-center gap-6">
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Home</a>
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Blog</a>
+        <a href="/projects" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Projects</a>
+        <a href="/about" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">About</a>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://twitter.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://t.me/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-telegram"></i>
+        </a>
+    </div>
+</nav>
+</div>
+			<main><div class="max-w-screen-lg mx-auto my-2 py-2 md:my-6 md:py-6 px-4">
+    <div class="text-center pt-4">
+        <p>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/notes">Notes</a>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/linux-command">linux command</a>
+             
+        </p>
+        <h1 class="text-4xl font-semibold pt-1 pb-4">
+            <a href="/2021/04/dig-command/" class="is-size-3 has-text-black-ter has-text-weight-semibold">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a>
+        </h1>
+        <div class="flex justify-center gap-2">
+            <div class="border-b-2 border-yellow-400 pb-1">
+                <span>ctnguyenvn</span>
+                -
+                <span>03 April, 2021</span>
+            </div>
+        </div>
+    </div>
+    <div class="content my-4 py-4 text-justify"><p><code class="language-plaintext highlighter-rouge">Dig</code> là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS.
+<code class="language-plaintext highlighter-rouge">Dig</code> thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn.
+Các truy vấn phổ biến gồm NS, CNAME, MX, TXT…</p>
+
+<h3 id="1-cài-đặt-dig">1. Cài đặt Dig</h3>
+
+<p>Đối với Ubuntu/Debian</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo apt install dnsutils
+</code></pre></div></div>
+
+<p>Đối với CentOS/Fedora</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ sudo yum install bind-utils
+</code></pre></div></div>
+
+<p>Có thể kiểm tra kết quả cài đặt dig như sau:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig -v
+DiG 9.16.13
+</code></pre></div></div>
+
+<!--more-->
+
+<h3 id="2-sử-dụng-dig-cơ-bản">2. Sử dụng dig cơ bản</h3>
+
+<h4 id="21-cú-pháp-lệnh-dig">2.1 Cú pháp lệnh <code class="language-plaintext highlighter-rouge">dig</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig  [@server]  [option]  &lt;name&gt;  [type]  [queryopt]
+</code></pre></div></div>
+
+<p>Trong đó:</p>
+
+<ul>
+  <li>
+    <p><strong>@server</strong>: Tên máy chủ/IP server để truy vấn, IP có thể là IPv4/IPv6 và
+nếu là tên miền thì <code class="language-plaintext highlighter-rouge">dig</code> sẽ phân giải tên miền trước khi thực hiện truy
+vấn. Ngược lại nếu <strong>@server</strong> không được cung cấp thì <code class="language-plaintext highlighter-rouge">Dig</code> sẽ cố gắng tìm
+kiếm địa chỉ từ <code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code>.</p>
+  </li>
+  <li>
+    <p><strong>option</strong>: Cung cấp các tùy chọn truy vấn như <code class="language-plaintext highlighter-rouge">-4 (IPv4)</code>, <code class="language-plaintext highlighter-rouge">-6 (IPv6)</code>.</p>
+  </li>
+  <li>
+    <p><strong>name</strong>: Là địa chỉ cần truy vấn (domain/ip)</p>
+  </li>
+  <li>
+    <p><strong>type</strong>: Loại truy vấn mà người dùng yêu cầu, có thể là ANY, A, MX… Nếu
+không được chỉ định cụ thể <code class="language-plaintext highlighter-rouge">dig</code> sẽ mặc định sử dụng truy vấn cho A record.</p>
+  </li>
+  <li>
+    <p><strong>queryopt</strong>: Là một số tùy chọn hiển thị kết quả cũng như xử lý một số thao
+tác khác với <code class="language-plaintext highlighter-rouge">dig</code> như thời gian chờ. Cú pháp cụ thể là
+<code class="language-plaintext highlighter-rouge">+[no]keyword=value</code>, ví dụ <code class="language-plaintext highlighter-rouge">+[no]all</code>.</p>
+  </li>
+</ul>
+
+<h4 id="22-một-số-loại-dns-record">2.2 Một số loại DNS record</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Loại</th>
+      <th>Ý nghĩa</th>
+      <th>Ví dụ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>IP version 4</td>
+      <td>209.132.183.143</td>
+    </tr>
+    <tr>
+      <td>AAAA</td>
+      <td>Ip version 6</td>
+      <td>2404:6800:4005:804::200e</td>
+    </tr>
+    <tr>
+      <td>CNAME</td>
+      <td>Bí danh</td>
+      <td>d27136625.redhat.com</td>
+    </tr>
+    <tr>
+      <td>MX</td>
+      <td>Tên máy chủ MAIL</td>
+      <td>us-smtp-inbound-2.mimecast.com, us-smtp-inbound-1.mimecast.com</td>
+    </tr>
+    <tr>
+      <td>NS</td>
+      <td>Máy chủ tên miền</td>
+      <td>a1-68.akam.net, a9-65.akam.net</td>
+    </tr>
+    <tr>
+      <td>PTR</td>
+      <td>Phân giải ngược ip -&gt; domain</td>
+      <td>82.236.125.74.in-addr.arpa</td>
+    </tr>
+    <tr>
+      <td>SOA</td>
+      <td>Thông tin về DNS Zone</td>
+      <td>a1-68.akam.net. noc.redhat.com. (<br />     2021032600 ; serial<br />     300 ; refresh (5 minutes)<br />     180 ; retry (3 minutes)<br />     604800 ; expire (1 week)<br />     14400 ; minimum (4 hours)<br />)</td>
+    </tr>
+    <tr>
+      <td>TXT</td>
+      <td>Text record</td>
+      <td>google-site-verification=fkn6chapCdY NWIcpsgH0K6mkR0yo7ldeIRC7EH23yoo, amazonses:ablaZDaC37ye QUcZAZjbfqRELxucC+8pBdvhFEpTSlY=</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="23-hiểu-về-kết-quả-hiển-thị-với-dig">2.3 Hiểu về kết quả hiển thị với <code class="language-plaintext highlighter-rouge">Dig</code></h4>
+
+<p>Ở dạng đơn giản nhất, <code class="language-plaintext highlighter-rouge">dig</code> hiển thị tất cả thông tin như <code class="language-plaintext highlighter-rouge">HEADER</code>,
+<code class="language-plaintext highlighter-rouge">QUESTION SECTION</code>, <code class="language-plaintext highlighter-rouge">ANSWER SECTION</code>. Ví dụ khi thực hiện truy vấn đến
+<code class="language-plaintext highlighter-rouge">ctnguyenvn.me</code> sẽ được kết quả như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig ctnguyenvn.me
+
+; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; ctnguyenvn.me
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36324
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7a4965fc65f495d7eb1f1e31606861de717b28cb6a50c187 (good)
+;; QUESTION SECTION:
+;ctnguyenvn.me.     IN  A
+
+;; ANSWER SECTION:
+ctnguyenvn.me.    14400 IN  A 185.199.110.153
+ctnguyenvn.me.    14400 IN  A 185.199.108.153
+ctnguyenvn.me.    14400 IN  A 185.199.109.153
+ctnguyenvn.me.    14400 IN  A 185.199.111.153
+
+;; Query time: 340 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 19:38:54 +07 2021
+;; MSG SIZE  rcvd: 134
+</code></pre></div></div>
+
+<p>Trong đó</p>
+
+<p><em>01. Phần đầu tiên bao gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; ctnguyenvn.me
+;; global options: +cmd
+</code></pre></div></div>
+
+<p>Chỉ phiên bản <code class="language-plaintext highlighter-rouge">dig</code>, server name nếu không được cung cấp sẽ sử dụng server từ
+<code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code> như đã nói trên và hiển thị kết quả sẽ là <code class="language-plaintext highlighter-rouge">&lt;&lt;&gt;&gt;</code>. Cuối cùng
+là địa chỉ truy vấn.</p>
+
+<p>Dòng thứ hai là <code class="language-plaintext highlighter-rouge">global optiopns</code>, mặc định sẽ là <code class="language-plaintext highlighter-rouge">+cmd</code>.</p>
+
+<blockquote>
+  <p>Nếu muốn loại bỏ kết quả hiển thị phần này chỉ cần sử dụng <code class="language-plaintext highlighter-rouge">+nocmd</code> (trong mục
+<strong>queryopt</strong>)</p>
+</blockquote>
+
+<p><em>02. Phân tiếp theo bao gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36324
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+</code></pre></div></div>
+
+<p>Trong phần này, kết quả trả về như là HEADER bao gồm <code class="language-plaintext highlighter-rouge">opcode</code>, <code class="language-plaintext highlighter-rouge">status</code>, <code class="language-plaintext highlighter-rouge">flag</code>
+và số lượng kết quả của từng SECTION. Cụ thể ví dụ trên <code class="language-plaintext highlighter-rouge">opcode</code> là <code class="language-plaintext highlighter-rouge">QUERY</code> và
+trạng thái query là <code class="language-plaintext highlighter-rouge">NOERROR</code> (không lỗi). Cuối cùng nhận được 1 <code class="language-plaintext highlighter-rouge">QUERY</code>, 4
+<code class="language-plaintext highlighter-rouge">ANSWER</code>.</p>
+
+<blockquote>
+  <p>Nếu muốn loại bỏ kết quả hiển thị phần này chỉ cần sử dụng <code class="language-plaintext highlighter-rouge">+nocomments</code>
+(trong mục <strong>queryopt</strong>)</p>
+</blockquote>
+
+<p><em>03. Phần tiếp theo là :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7a4965fc65f495d7eb1f1e31606861de717b28cb6a50c187 (good)
+</code></pre></div></div>
+
+<p>Đây là phần thông tin mở rộng
+<a href="https://en.wikipedia.org/wiki/Extension_Mechanisms_for_DNS">EDNS</a> cho các truy
+vấn DNS. Hiển thị thông tin phiên bản, flag và kích thước UDP (byte).</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+noedns</code>.</p>
+</blockquote>
+
+<p><em>04. Phần tiếp theo bao gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; QUESTION SECTION:
+;ctnguyenvn.me.   IN  A
+</code></pre></div></div>
+
+<p>Trong phần <code class="language-plaintext highlighter-rouge">QUESTION</code> hiển thị thông tin truy vấn (với <code class="language-plaintext highlighter-rouge">type</code> cung cấp). Trong
+ví dụ này <code class="language-plaintext highlighter-rouge">option</code> và <code class="language-plaintext highlighter-rouge">type</code> không được cung cấp nên mặc định <code class="language-plaintext highlighter-rouge">dig</code> sẽ sử dụng
+<code class="language-plaintext highlighter-rouge">class IN </code>và <code class="language-plaintext highlighter-rouge">A record</code>.</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+noquestion</code>.</p>
+</blockquote>
+
+<p><em>05 Phần tiếp theo là :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; ANSWER SECTION:
+ctnguyenvn.me.    14400 IN  A 185.199.110.153
+ctnguyenvn.me.    14400 IN  A 185.199.108.153
+ctnguyenvn.me.    14400 IN  A 185.199.109.153
+ctnguyenvn.me.    14400 IN  A 185.199.111.153
+</code></pre></div></div>
+
+<p>Trong phần <code class="language-plaintext highlighter-rouge">ANSWER</code> này <code class="language-plaintext highlighter-rouge">dig</code> sẽ hiển thị kết quả sau khi thực hiện truy vấn.
+Trong ví dụ này tất cả các IP tương ứng với domain <code class="language-plaintext highlighter-rouge">ctnguyenvn.me</code> sẽ được hiển
+thị (do mặc định thì <code class="language-plaintext highlighter-rouge">dig</code> chỉ truy vấn với <code class="language-plaintext highlighter-rouge">A record</code>).</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+noanswer</code>.</p>
+</blockquote>
+
+<p><em>06 Phần tiếp theo gồm :</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Query time: 340 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 19:38:54 +07 2021
+;; MSG SIZE  rcvd: 134
+</code></pre></div></div>
+
+<p>Phần cuối cùng hiển thị tổng quan kết quả đã truy vấn, gồm thời gian thực hiện,
+máy chủ và thời điểm thực hiện truy vấn cũng như kích thước msg.</p>
+
+<blockquote>
+  <p>Tương tự có thể loại bỏ với <code class="language-plaintext highlighter-rouge">+nostats</code>.</p>
+</blockquote>
+
+<p><strong>Lưu ý</strong>: Ngoài ra còn phần <code class="language-plaintext highlighter-rouge">AUTHORITY</code> hiển thị máy chủ authority và
+<code class="language-plaintext highlighter-rouge">ADDITIONAL</code> hiển hị thông tin bổ sung cho các máy chủ authority trong phần
+<code class="language-plaintext highlighter-rouge">AUTHORITY</code></p>
+
+<h3 id="3-một-số-command-hay-dùng">3. Một số command hay dùng</h3>
+
+<p>Truy vấn sử dụng server google</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig @8.8.8.8 redhat.vn +noall +answer
+redhat.vn.    21599 IN  A 209.132.183.143
+</code></pre></div></div>
+
+<p>Truy vấn tên miền với A record và +short</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.vn +short
+209.132.183.143
+</code></pre></div></div>
+
+<p>Truy vấn các record khác với MX (Mail), NS (Name server), CNAME, SOA hoặc sử
+dụng ANY để truy vấn tới tất cả</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.vn ANY
+
+; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; redhat.vn ANY
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36902
+;; flags: qr rd ra; QUERY: 1, ANSWER: 7, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7518ce04f46e36208773e08760689be7b39fe15838e9d666 (good)
+;; QUESTION SECTION:
+;redhat.vn.     IN  ANY
+
+;; ANSWER SECTION:
+redhat.vn.    86400 IN  SOA ns1.redhat.com. noc.redhat.com. 2021020900 3600 1800 604800 86400
+redhat.vn.    86400 IN  A 209.132.183.143
+redhat.vn.    86400 IN  TXT "v=spf1 -all"
+redhat.vn.    43199 IN  NS  ns3.redhat.com.
+redhat.vn.    43199 IN  NS  ns1.redhat.com.
+redhat.vn.    43199 IN  NS  ns2.redhat.com.
+redhat.vn.    43199 IN  NS  ns4.redhat.com.
+
+;; Query time: 366 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 23:46:03 +07 2021
+;; MSG SIZE  rcvd: 228
+</code></pre></div></div>
+
+<p>Tất nhiên có thể truy vấn với từng <code class="language-plaintext highlighter-rouge">type</code> cụ thể kết hợp với <code class="language-plaintext highlighter-rouge">queryopt</code> như MX</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com MX +noall +answer
+redhat.com.   600 IN  MX  10 us-smtp-inbound-2.mimecast.com.
+redhat.com.   600 IN  MX  10 us-smtp-inbound-1.mimecast.com.
+</code></pre></div></div>
+
+<p>Với TXT</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com TXT +noall +answer
+redhat.com.   3600  IN  TXT "status-page-domain-verification=dfx5rbys1ts5"
+redhat.com.   3600  IN  TXT "google-site-verification=TaSjV4JOe2XfmL_vHFKJHkPk8sjgoLkuuTTWezDO0Pw"
+redhat.com.   3600  IN  TXT "google-site-verification=rl_wq5rq_W7A7OSyK08d8Ta_Hf6AKP5tqtdlo4iGTvs"
+redhat.com.   3600  IN  TXT "miro-verification=0bc02d4257d450b9f9034363a58f88b4b904dc22
+...
+</code></pre></div></div>
+
+<p>Với Name Server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com NS +noall +answer
+redhat.com.   3600  IN  NS  a28-64.akam.net.
+redhat.com.   3600  IN  NS  a13-66.akam.net.
+redhat.com.   3600  IN  NS  a1-68.akam.net.
+redhat.com.   3600  IN  NS  a9-65.akam.net.
+...
+</code></pre></div></div>
+
+<p>Với SOA kết hợp <code class="language-plaintext highlighter-rouge">+multiline</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig redhat.com SOA +multiline +noall +answer
+redhat.com.   3600 IN SOA a1-68.akam.net. noc.redhat.com. (
+        2021032600 ; serial
+        300        ; refresh (5 minutes)
+        180        ; retry (3 minutes)
+        604800     ; expire (1 week)
+        14400      ; minimum (4 hours)
+        )
+</code></pre></div></div>
+
+<p>Truy vấn yêu cầu phân giải ngược từ IP -&gt; domain</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig -x 209.132.183.143 +noall +answer
+143.183.132.209.in-addr.arpa. 600 IN  PTR intl-subdomains.redhat.com.
+</code></pre></div></div>
+
+<p>Việc sử dụng <code class="language-plaintext highlighter-rouge">dig</code> khá linh hoạt giữa các <code class="language-plaintext highlighter-rouge">option</code> và các <code class="language-plaintext highlighter-rouge">queryopt</code>. Ngoài ra
+còn rất nhiều tùy chọn hay ho khác có thể tìm kiếm tại
+<a href="https://linux.die.net/man/1/dig">đây</a>. Ví dụ như <code class="language-plaintext highlighter-rouge">dig</code> hỗ trợ cả việc output
+với <code class="language-plaintext highlighter-rouge">yaml</code> như sau</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctnguyenvn[~]$ dig ctnguyenvn.me +yaml
+-
+  type: MESSAGE
+  message:
+    type: RECURSIVE_RESPONSE
+    query_time: !!timestamp 2021-04-03T17:09:36.641Z
+    response_time: !!timestamp 2021-04-03T17:09:36.745Z
+    message_size: 134b
+    socket_family: INET
+    socket_protocol: UDP
+    response_address: 203.113.188.1
+    response_port: 53
+    query_address: 0.0.0.0
+    query_port: 44726
+    response_message_data:
+      opcode: QUERY
+      status: NOERROR
+      id: 31427
+      flags: qr rd ra
+      QUESTION: 1
+      ANSWER: 4
+      AUTHORITY: 0
+      ADDITIONAL: 1
+      OPT_PSEUDOSECTION:
+        EDNS:
+          version: 0
+          flags:
+          udp: 1232
+          COOKIE: 37a8b00427ec104a010000006068a150fa872d014dcd4fc3 (good)
+      QUESTION_SECTION:
+        - ctnguyenvn.me. IN A
+      ANSWER_SECTION:
+        - ctnguyenvn.me. 14400 IN A 185.199.111.153
+        - ctnguyenvn.me. 14400 IN A 185.199.110.153
+        - ctnguyenvn.me. 14400 IN A 185.199.108.153
+        - ctnguyenvn.me. 14400 IN A 185.199.109.153
+</code></pre></div></div>
+
+<p>Cuối cùng <code class="language-plaintext highlighter-rouge">dig</code> cũng hỗ trợ đầu vào là file chứa danh sách các domain/ip với tùy
+chọn -f (<code class="language-plaintext highlighter-rouge">dig -f &lt;file&gt;....</code>). <code class="language-plaintext highlighter-rouge">Dig</code> cũng hỗ trợ file <code class="language-plaintext highlighter-rouge">${HOME}/.digrc</code> để nhận
+các tham số mặc định trong mỗi lệnh người dùng sẽ thực hiện. Cụ thể <code class="language-plaintext highlighter-rouge">dig</code> sẽ tìm
+kiếm đọc nội dung từ file này lên trước và đưa vào command trước khi đọc tùy
+chọn người dùng cung cấp.</p>
+</div>
+    <div class="gap-2 my-4">
+        <a href="https://twitter.com/intent/tweet?text=Sử dụng Dig (Domain Information Groper) - truy vấn DNS&url=https://ctnguyenvn.github.io/2021/04/dig-command/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-twitter-x text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ctnguyenvn.github.io/2021/04/dig-command/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-facebook text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ctnguyenvn.github.io/2021/04/dig-command/&title=Sử dụng Dig (Domain Information Groper) - truy vấn DNS=&source=ctnguyenvn" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-linkedin text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://reddit.com/submit?url=https://ctnguyenvn.github.io/2021/04/dig-command/&title=Sử dụng Dig (Domain Information Groper) - truy vấn DNS" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-reddit text-gray-200 hover:text-gray-800"></i></a>
+    </div>
+    <div class="flex justify-between gap-2 my-8">
+        
+        <div class="w-1/2 text-left">
+            <a class="prev" href="/2021/02/git-command-basic/">
+                
+                <img src="https://ctnguyenvn.github.io/images/git/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-start"></i>
+                Previous Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2021/02/git-command-basic/">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a>
+        </div>
+         
+        <div class="w-1/2 text-right">
+            <a href="/2022/11/mot-so-vim-key-co-ban/">
+                
+                <img src="https://ctnguyenvn.github.io/images/nvim/neovim-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-end"></i>
+                Next Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2022/11/mot-so-vim-key-co-ban/">Một số key trong vim giúp edit nhanh hơn</a>
+        </div>
+        
+    </div>
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://ctnguyenvn.github.io/2021/04/dig-command/';
+        this.page.identifier = 'ctnguyenvn';
+    };
+    (function () {
+        var d = document,
+            s = d.createElement('script');
+        s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
+</div>
+</main>
+			<div class="border-t bg-black">
+<div class="max-w-screen-xl mx-auto flex flex-col px-2 py-6 text-center">
+    <p class="text-gray-300">
+        <strong>@2024</strong>
+        by
+        <a href="/" class="hover:text-yellow-400">ctnguyenvn</a>
+        /
+        <a href="/tags" class="hover:text-yellow-400">Tags</a>
+        /
+        <a href="/archive" class="hover:text-yellow-400">Archive</a>
+    </p>
+</div>
+</div>
+		</div>
+        <script src="https://ctnguyenvn.github.io/assets/js/custom.js"></script>
+    </body>
+</html>

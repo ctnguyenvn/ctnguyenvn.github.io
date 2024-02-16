@@ -1,7 +1,7 @@
 // navigator responsive
 document.addEventListener('DOMContentLoaded', () => {
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    $navbarBurgers.forEach(el => {
+    $navbarBurgers.forEach((el) => {
         el.addEventListener('click', () => {
             const target = el.dataset.target;
             const $target = document.getElementById(target);
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $target.classList.toggle('is-active');
         });
     });
-
 });
 
 // searching
@@ -27,7 +26,6 @@ function submitted(event) {
 if (f) {
     f.addEventListener('submit', submitted);
 }
-
 
 // dark theme
 // let darkMode = localStorage.getItem("darkMode");
@@ -58,3 +56,15 @@ if (f) {
 //     }
 // });
 
+document.addEventListener('DOMContentLoaded', function () {
+    adjustColumnHeights();
+});
+
+function adjustColumnHeights() {
+    var columns = document.querySelectorAll('.post-column');
+
+    columns.forEach(function (column) {
+        var height = column.offsetHeight;
+        column.style.height = height + 'px';
+    });
+}

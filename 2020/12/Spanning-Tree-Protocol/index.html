@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Spanning Tree Protocol (STP) | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Một mạng mạnh mẽ được thiết kế không chỉ đem lại tính hiệu quả cho việc truyền
+các gói hoặc frame, mà còn phải xem xét làm thế nào để khôi phục hoạt động của
+mạng một cách nhanh chóng khi mạng xảy ra lỗi.
+
+Trong môi trường lớp 2 (switching hoặc bridging), không sử dụng giao thức định
+tuyến và cũng không cho phép các con đường dự phòng, thay vì bridge cung cấp
+việc truyền dữ liệu giữa các mạng hoặc các port của switch. Giao thức Spanning
+Tree cung cấp liên kết dự phòng để mạng chuyển mạch lớp 2 có thể khôi phục từ
+lỗi mà không cần có sự can thiệp kịp thời. STP được định nghĩa trong chuẩn RFC
+IEEE 802.1D.
+
+Trong một mạng xảy ra nối vòng (vòng lặp) sẽ xuất hiện các hiện tượng sau:
+
+
+
+
+  
+    Broadcast storm: Là hiện tượng rất nhiều frame chạy liên tục trong môi
+trường các Switch đấu vòng – dự phòng khi chưa thực hiện chống loop – STP.
+Làm cho tốc độ hệ thống mạng chậm và có thể làm treo các switch tốc tộ thấp
+  
+  
+    Multi Frame copy: hiện tượng đa bản sao frame (1 thiết bị nhận rất nhiều
+frame giống nhau)
+  
+  
+    Instability MAC table: hiện tượng bảng MAC không ổn định.
+  
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta property="og:title" content="Spanning Tree Protocol (STP) - Happy Investigating" />
+    <meta property="twitter:title" content="Spanning Tree Protocol (STP) - Happy Investigating" />
+     
+    <meta property="og:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/bulma.min.css" /> -->
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/highlight.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.github.io/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.github.io/2020/12/Spanning-Tree-Protocol/" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" />
+        
+</head>
+
+    <body>
+		<div>
+			<div class="border-b"><nav class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+    <div class="">
+        <a href="https://ctnguyenvn.github.io">
+            <img src="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" class="h-6" alt="ctnguyenvn" />
+        </a>
+    </div>
+    <div class="hidden md:flex justify-center gap-6">
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Home</a>
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Blog</a>
+        <a href="/projects" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Projects</a>
+        <a href="/about" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">About</a>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://twitter.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://t.me/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-telegram"></i>
+        </a>
+    </div>
+</nav>
+</div>
+			<main><div class="max-w-screen-lg mx-auto my-2 py-2 md:my-6 md:py-6 px-4">
+    <div class="text-center pt-4">
+        <p>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/protocols">Protocols</a>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/networks">Networks</a>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/ccna">CCNA</a>
+             
+        </p>
+        <h1 class="text-4xl font-semibold pt-1 pb-4">
+            <a href="/2020/12/Spanning-Tree-Protocol/" class="is-size-3 has-text-black-ter has-text-weight-semibold">Spanning Tree Protocol (STP)</a>
+        </h1>
+        <div class="flex justify-center gap-2">
+            <div class="border-b-2 border-yellow-400 pb-1">
+                <span>ctnguyenvn</span>
+                -
+                <span>29 December, 2020</span>
+            </div>
+        </div>
+    </div>
+    <div class="content my-4 py-4 text-justify"><p>Một mạng mạnh mẽ được thiết kế không chỉ đem lại tính hiệu quả cho việc truyền
+các gói hoặc frame, mà còn phải xem xét làm thế nào để khôi phục hoạt động của
+mạng một cách nhanh chóng khi mạng xảy ra lỗi.</p>
+
+<p>Trong môi trường lớp 2 (switching hoặc bridging), không sử dụng giao thức định
+tuyến và cũng không cho phép các con đường dự phòng, thay vì bridge cung cấp
+việc truyền dữ liệu giữa các mạng hoặc các port của switch. Giao thức Spanning
+Tree cung cấp liên kết dự phòng để mạng chuyển mạch lớp 2 có thể khôi phục từ
+lỗi mà không cần có sự can thiệp kịp thời. STP được định nghĩa trong chuẩn RFC
+IEEE 802.1D.</p>
+
+<p>Trong một mạng xảy ra nối vòng (vòng lặp) sẽ xuất hiện các hiện tượng sau:</p>
+
+<p><img src="https://ctnguyenvn.github.io/images/STP-Protocol/1.jpg" alt="STP" class="center-image" /></p>
+
+<ul>
+  <li>
+    <p>Broadcast storm: Là hiện tượng rất nhiều frame chạy liên tục trong môi
+trường các Switch đấu vòng – dự phòng khi chưa thực hiện chống loop – STP.
+Làm cho tốc độ hệ thống mạng chậm và có thể làm treo các switch tốc tộ thấp</p>
+  </li>
+  <li>
+    <p>Multi Frame copy: hiện tượng đa bản sao frame (1 thiết bị nhận rất nhiều
+frame giống nhau)</p>
+  </li>
+  <li>
+    <p>Instability MAC table: hiện tượng bảng MAC không ổn định.</p>
+  </li>
+</ul>
+
+<!--more-->
+
+<h3 id="i-stp-spanning-tree-protocol">I. STP (Spanning-tree Protocol):</h3>
+
+<p>Là một giao thức ngăn chặn sự lặp vòng, cho phép các bridge truyền thông với
+nhau để phát hiện vòng lặp vật lý trong mạng. Sau đó giao thức này sẽ định rõ
+một thuật toán mà bridge có thể tạo ra một topology luận lý chứa loop-free. Nói
+cách khác STP sẽ tạo một cấu trúc cây của free-loop gồm các lá và các nhánh nối
+toàn bộ mạng lớp 2.</p>
+
+<p>Hoạt động của spanning-tree protocol trải qua 4 bước (bầu chọn) sau:</p>
+
+<ul>
+  <li>
+    <p>Root switch.</p>
+  </li>
+  <li>
+    <p>Root port.</p>
+  </li>
+  <li>
+    <p>Designated port.</p>
+  </li>
+  <li>
+    <p>Blocking port (alternated port).</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Lưu ý: Giao thức STP sẽ được bật một cách default trên switch.</p>
+</blockquote>
+
+<h4 id="1-root-switch">1. Root switch:</h4>
+
+<p>Khi bật STP thì các switch gởi tất cả các gói BPDU(là đơn vị thông tin, là loại
+gói tin được sử dụng trong giao thức STP) ra các cổng của nó.</p>
+
+<p>BPDU: Bridge ID (8 byte) trong đó priority (độ ưu tiên) (2 byte) và MAC (6
+byte).</p>
+
+<p>Đầu tiên mỗi con switch đều tự xem nó là root switch. Sau khi trao đổi thông tin
+thì switch nào có Bridge ID nhỏ nhất sẽ được bầu làm root switch. Giá trị bridge
+ID nhỏ nhất được tính như sau:</p>
+
+<ul>
+  <li>
+    <p>So sánh switch nào có priority nhỏ nhất ngay lập tức sẽ đc làm root switch.</p>
+  </li>
+  <li>
+    <p>Nếu như các switch có priority bằng nhau thì mới sử dụng địa chỉ MAC để so
+sánh. switch nào có địa chỉ MAC nhỏ nhất sẽ đc bầu làm root switch.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Lưu ý:</p>
+
+  <ul>
+    <li>Priority (2 byte) có giá trị từ 0-65535 và mặc định là 32768.</li>
+    <li>Địa chỉ MAC được so sánh nhỏ nhất tính từ trái qua phải.</li>
+  </ul>
+</blockquote>
+
+<p>Sau khi bầu chọn root switch xong thì chỉ có switch này gửi gói BPDU(2s/lần) ra
+toàn mạng. các switch còn lại chỉ forward</p>
+
+<h4 id="2-root-port">2. Root port:</h4>
+
+<p>Là port cung cấp đường về root switch cho con switch đang xét mà có tổng path
+cost nhỏ nhất.(Cost là giá trị đặc trưng trên mỗi cổng và biến đổi theo
+bandwidth)</p>
+
+<p>Tổng path cost được tính từ root switch đến switch đang xét nếu đi vào thì cộng
+và đi ra thì không cộng.</p>
+
+<p>Nếu tổng path trên các cổng bằng nhau thì sẽ xét sender Bridge ID trên các
+switch nối với nó. Cổng nào nối với Bridge ID nhỏ nhất sẽ được bầu làm Root
+port.</p>
+
+<p>Nếu nếu giữa 2 switch có nhiều cổng thì sẽ xét port id gồm (port priority mặc
+định là 128) và port number (số vật lý của cổng).</p>
+
+<h4 id="3-designated-port">3. Designated port:</h4>
+
+<p>Là port cung cấp đường về root switch cho phân đoạn mạng mà có tổng path cost là
+nhỏ nhất.</p>
+
+<blockquote>
+  <p>Lưu ý: + Tất cả các cổng của root switch đều là Designated port và các cổng
+nối với root port đều là Designated port</p>
+</blockquote>
+
+<h4 id="4-blocking-port">4. Blocking port:</h4>
+
+<p>Cổng không có tác dụng gì sẽ bị khóa.</p>
+
+<p>STP timer. STP sử dụng 3 bộ định thời (hay STP timers) như sau:</p>
+
+<ul>
+  <li>Hello timer (2s): là thời gian root switch gửi gói BPDU ra các cổng của nó.</li>
+  <li>
+    <p>Forward delay timer (15s): xét các trạng thái sau (STP port status):</p>
+
+    <ul>
+      <li>
+        <p>Disable: Cổng bị shutdown.</p>
+      </li>
+      <li>
+        <p>Blocking: Cổng chỉ nhận gói BPDU, không gửi BPDU, không học MAC, không
+forward data.</p>
+      </li>
+      <li>
+        <p>Listening: Cổng được quyền nhận và gửi gói BPDU, không học MAC, không
+forward data.</p>
+      </li>
+      <li>
+        <p>Learning: Cổng được quyền nhận và gửi gói BPDU, học MAC, không forward
+data.</p>
+      </li>
+      <li>
+        <p>Forwarding: Cổng được quyền nhận và gửi gói BPDU, học MAC, và forward
+data.</p>
+
+        <blockquote>
+          <p>Nếu khi bật STP lên cổng nào đc xác định khóa sẽ sẽ vào trạng thái
+Blocking. Nhưng các cổng còn lại cũng không được phép forward data
+ngay mà phải mất 30s mới được forward data vì mất 15s để Listening vaf
+15s để Learning.</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>Max-Age timer (20s): khi cổng không nhận được gói BPDU nó sẽ đợi 20s. Nếu
+sau 20s mà vẫn không nhận được gói BPDu thì mới xử lí.</li>
+</ul>
+
+<h3 id="ii-giao-thức-pvst-vlan-stp">II. Giao thức pVST+ (vlan STP).</h3>
+
+<p>Phát triển dựa trên STP với switch cisco nhưng giá trị priority sẽ được tính
+khác (phù hợp với dùng nhiều vlan trên 1 switch) như sau:</p>
+
+<p>Giá trị priority gồm 2 byte (16 bit) sẽ được tách ra thành 2 phần:</p>
+
+<ul>
+  <li>
+    <p>Phần đầu 4 bit (tính từ trái qua): sẽ là priority và giá trị này sẽ là bội
+số của 4096.</p>
+  </li>
+  <li>
+    <p>Phần sau 12 bit còn lại sẽ dùng cho vlan.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Do đó giá trị priority trên vlan thứ n sẽ bằng giá trị priority ở phần đầu
+cộng với n.</p>
+</blockquote>
+
+<h3 id="iii-lệnh-cấu-hình-cơ-bản">III. Lệnh cấu hình cơ bản:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch(config)#spanning-tree vlan n root primary
+&gt; cấu hình cho switch này là root switch
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch(config)#spanning-tree vlan n root secondary
+&gt; cấu hình cho switch này là root switch dự phòng
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch(config)#spanning-tree vlan n priority gia_tri
+&gt; thay đổi giá trị priority cho vlan n
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch(config)#switchport mode access
+switch(config-if)#spanning-tree portfast
+&gt; cấu hình bỏ qua 30s forward gồm 15s listenning và 15s learning
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch#show spanning-tree vlan n
+&gt; show cấu hình spanning tree vlan n
+</code></pre></div></div>
+</div>
+    <div class="gap-2 my-4">
+        <a href="https://twitter.com/intent/tweet?text=Spanning Tree Protocol (STP)&url=https://ctnguyenvn.github.io/2020/12/Spanning-Tree-Protocol/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-twitter-x text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ctnguyenvn.github.io/2020/12/Spanning-Tree-Protocol/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-facebook text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ctnguyenvn.github.io/2020/12/Spanning-Tree-Protocol/&title=Spanning Tree Protocol (STP)=&source=ctnguyenvn" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-linkedin text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://reddit.com/submit?url=https://ctnguyenvn.github.io/2020/12/Spanning-Tree-Protocol/&title=Spanning Tree Protocol (STP)" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-reddit text-gray-200 hover:text-gray-800"></i></a>
+    </div>
+    <div class="flex justify-between gap-2 my-8">
+        
+        <div class="w-1/2 text-left">
+            <a class="prev" href="/2020/12/HTTP-Protocol/">
+                
+                <img src="https://ctnguyenvn.github.io/images/HTTP-Protocol/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-start"></i>
+                Previous Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2020/12/HTTP-Protocol/">Giao thức HTTP (Hyper Text Transfer Protocol)</a>
+        </div>
+         
+        <div class="w-1/2 text-right">
+            <a href="/2021/01/install-Warp-CloudFlare-on-linux/">
+                
+                <img src="https://ctnguyenvn.github.io/images/install-warp/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-end"></i>
+                Next Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2021/01/install-Warp-CloudFlare-on-linux/">Cài đặt VPN Warp CloudFlare trên Linux</a>
+        </div>
+        
+    </div>
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://ctnguyenvn.github.io/2020/12/Spanning-Tree-Protocol/';
+        this.page.identifier = 'ctnguyenvn';
+    };
+    (function () {
+        var d = document,
+            s = d.createElement('script');
+        s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
+</div>
+</main>
+			<div class="border-t bg-black">
+<div class="max-w-screen-xl mx-auto flex flex-col px-2 py-6 text-center">
+    <p class="text-gray-300">
+        <strong>@2024</strong>
+        by
+        <a href="/" class="hover:text-yellow-400">ctnguyenvn</a>
+        /
+        <a href="/tags" class="hover:text-yellow-400">Tags</a>
+        /
+        <a href="/archive" class="hover:text-yellow-400">Archive</a>
+    </p>
+</div>
+</div>
+		</div>
+        <script src="https://ctnguyenvn.github.io/assets/js/custom.js"></script>
+    </body>
+</html>

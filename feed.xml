@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://ctnguyenvn.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ctnguyenvn.me/" rel="alternate" type="text/html" /><updated>2023-11-12T19:09:58+07:00</updated><id>https://ctnguyenvn.me/feed.xml</id><title type="html">ctnguyenvn</title><subtitle>Happy Investigating</subtitle><author><name>ctnguyenvn</name></author><entry><title type="html">Tìm kiếm subdomain không sử dụng brute-force</title><link href="https://ctnguyenvn.me/2023/07/01/subdomain-enumeration-without-bruteforce/" rel="alternate" type="text/html" title="Tìm kiếm subdomain không sử dụng brute-force" /><published>2023-07-01T00:00:00+07:00</published><updated>2023-07-01T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2023/07/01/subdomain-enumeration-without-bruteforce</id><content type="html" xml:base="https://ctnguyenvn.me/2023/07/01/subdomain-enumeration-without-bruteforce/"><![CDATA[<p>Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua các search engine như bing/google…</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://ctnguyenvn.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ctnguyenvn.github.io/" rel="alternate" type="text/html" /><updated>2024-02-16T17:24:55+07:00</updated><id>https://ctnguyenvn.github.io/feed.xml</id><title type="html">ctnguyenvn</title><subtitle>Happy Investigating</subtitle><author><name>ctnguyenvn</name></author><entry><title type="html">Tìm kiếm subdomain không sử dụng brute-force</title><link href="https://ctnguyenvn.github.io/2023/07/subdomain-enumeration-without-bruteforce/" rel="alternate" type="text/html" title="Tìm kiếm subdomain không sử dụng brute-force" /><published>2023-07-01T00:00:00+07:00</published><updated>2023-07-01T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2023/07/subdomain-enumeration-without-bruteforce</id><content type="html" xml:base="https://ctnguyenvn.github.io/2023/07/subdomain-enumeration-without-bruteforce/"><![CDATA[<p>Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua các search engine như bing/google…</p>
 
 <p>Tiếp theo tôi xin chia sẻ về tìm kiếm subdomain (passive scanning) mà tôi hay dùng</p>
 
@@ -112,7 +112,7 @@ cms.bachhoaxanh.com,103.48.76.192,anubis
 <span class="na">zoomeyeapi</span><span class="pi">:</span> <span class="pi">[]</span>
 </code></pre></div></div>
 
-<p>Như vậy qua bài viết đơn giản này chúng ta có thể tìm kiếm các subdomain phục vụ cho một số nhu cầu công việc mà không cần phải dò quét tác động trực tiếp đến target.</p>]]></content><author><name>ctnguyenvn</name></author><category term="tutorials" /><category term="enumeration" /><summary type="html"><![CDATA[Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua các search engine như bing/google… Tiếp theo tôi xin chia sẻ về tìm kiếm subdomain (passive scanning) mà tôi hay dùng Tìm kiếm subdomain manual Suy cho cùng việc tìm kiếm không tác động trực tiếp đến target này phổ biến 2 loại là sử dụng search engine như Google, Bing cùng một số trang web như virustotal, censys, shodan… và thông qua thông tin về các certificate của webdomain đó. Đối với search engine như Google, Bing tôi thường sử dụng dorks cơ bản như: Đơn giản là site:domain.com, -site:domain.com hoặc kết hợp cả 2 ví như hay như site:redhat.com -inurl:research.redhat.com -intitle:"Red hat" Ưu điểm của việc này là có thể tìm kiếm một số subdomain không sử dụng HTTPS có thể bị xót. Đối với thông tin từ các certs, tôi thường tìm một số thông tin trên các trang gồm: crt.sh censys.io virustotal shodan Ưu điểm của các trang này là hiển thị nhanh chóng các subdomain. Tuy nhiên chúng ta vẫn phải trích xuất chúng một cách thủ công mặc dù có thể chưa hoàn toàn xác định được các domain này có còn hoạt động hay không. Trong một số trường hợp nhất định việc tìm kiếm này đôi khi cũng có nhiều thông tin hữu ích. Tìm kiếm subdomain sử dụng công cụ Việc sử dụng một công cụ nào đó thay thế về cơ bản chỉ là tự động hoá quá trình tìm kiếm manual. Có nhiều công cụ thực hiện công việc này như amass, Knock, Sublist3r hay đối với tôi thì công cụ thường xuyên xử dụng nhất là subfinder, công cụ này tốc độ nhanh và đặc biệt các option khá đơn giản khi sử dụng. Tất nhiên amass cũng là công cụ khá mạnh và hỗ trợ rất nhiều tính năng khác (kể cả bruteforce - active scanning). └──╼ $./subfinder -d bachhoaxanh.com __ _____ __ _______ __/ /_ / __(_)___ ____/ /__ _____ / ___/ / / / __ \/ /_/ / __ \/ __ / _ \/ ___/ (__ ) /_/ / /_/ / __/ / / / / /_/ / __/ / /____/\__,_/_.___/_/ /_/_/ /_/\__,_/\___/_/ projectdiscovery.io [INF] Current subfinder version v2.6.0 (latest) [INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml [INF] Enumerating subdomains for bachhoaxanh.com www.bachhoaxanh.com cms.bachhoaxanh.com hddt.bachhoaxanh.com autodiscover.bachhoaxanh.com mail.bachhoaxanh.com owa.bachhoaxanh.com staging.bachhoaxanh.com alpha.bachhoaxanh.com beta.bachhoaxanh.com vieclam.bachhoaxanh.com bachhoaxanh.com [INF] Found 11 subdomains for bachhoaxanh.com in 30 seconds 2 milliseconds Ưu điểm của phương thức này là thời gian tìm kiếm nhanh, ngoài ra hỗ trợ resolve ra các địa chỉ IP và cũng hỗ trợ kiểm tra trạng thái các subdomain này active/non-active. └──╼ $./subfinder -active -ip -d bachhoaxanh.com __ _____ __ _______ __/ /_ / __(_)___ ____/ /__ _____ / ___/ / / / __ \/ /_/ / __ \/ __ / _ \/ ___/ (__ ) /_/ / /_/ / __/ / / / / /_/ / __/ / /____/\__,_/_.___/_/ /_/_/ /_/\__,_/\___/_/ projectdiscovery.io [INF] Current subfinder version v2.6.0 (latest) [INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml [INF] Enumerating subdomains for bachhoaxanh.com alpha.bachhoaxanh.com,14.161.40.155,leakix beta.bachhoaxanh.com,14.161.40.155,leakix www.bachhoaxanh.com,103.48.76.192,digitorus bachhoaxanh.com,103.48.76.192,digitorus mail.bachhoaxanh.com,203.113.172.93,crtsh vieclam.bachhoaxanh.com,103.48.76.199,anubis staging.bachhoaxanh.com,103.48.76.192,leakix hddt.bachhoaxanh.com,103.48.76.141,anubis cms.bachhoaxanh.com,103.48.76.192,anubis [INF] Found 9 subdomains for bachhoaxanh.com in 5 seconds 443 milliseconds Tuy nhiên các công cụ này chỉ hỗ trợ một số trang miễn phí. Đối với một số trang khác để hiệu quả hơn trong việc tìm kiếm chúng ta cần sử dụng API key, có thể thêm vào config tại ~/.config/subfinder/provider-config.yaml. └──╼ $cat /home/admin/.config/subfinder/provider-config.yaml censys: [] - ac331e2f-b635-4581-878a-66d4e79a2c13:dd53-1b6e-4655-83f6-f347b363def9 certspotter: [] dnsdb: [] dnsrepo: [] github: - ghp_dbyJGU3jv1xmwk4SDXavrLDJ4dl2pSJMHHA1 passivetotal: - hunterman@simbox.io:HUnice_123 shodan: - PSKINdQe1GyxGgecYz2191H2JoS9qvgD - OefcMxcunkm72Po71vVtX8zUN57vQtAC - pHHlgpFt8Ka3Stb5UlTxcaEwciOeF2QM threatbook: [] virustotal: [] whoisxmlapi: [] zoomeye: [] zoomeyeapi: [] Như vậy qua bài viết đơn giản này chúng ta có thể tìm kiếm các subdomain phục vụ cho một số nhu cầu công việc mà không cần phải dò quét tác động trực tiếp đến target.]]></summary></entry><entry><title type="html">Thu thập log từ Cisco IOS về SIEM (ELK)</title><link href="https://ctnguyenvn.me/2023/02/22/collect-log-from-cisco-ios-to-ELK/" rel="alternate" type="text/html" title="Thu thập log từ Cisco IOS về SIEM (ELK)" /><published>2023-02-22T00:00:00+07:00</published><updated>2023-02-22T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2023/02/22/collect-log-from-cisco-ios-to-ELK</id><content type="html" xml:base="https://ctnguyenvn.me/2023/02/22/collect-log-from-cisco-ios-to-ELK/"><![CDATA[<p>Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này.</p>
+<p>Như vậy qua bài viết đơn giản này chúng ta có thể tìm kiếm các subdomain phục vụ cho một số nhu cầu công việc mà không cần phải dò quét tác động trực tiếp đến target.</p>]]></content><author><name>ctnguyenvn</name></author><category term="tutorials" /><category term="enumeration" /><summary type="html"><![CDATA[Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này là trực tiếp dò quét (bruteforce) đến mục tiêu và gián tiếp thông qua các search engine như bing/google… Tiếp theo tôi xin chia sẻ về tìm kiếm subdomain (passive scanning) mà tôi hay dùng Tìm kiếm subdomain manual Suy cho cùng việc tìm kiếm không tác động trực tiếp đến target này phổ biến 2 loại là sử dụng search engine như Google, Bing cùng một số trang web như virustotal, censys, shodan… và thông qua thông tin về các certificate của webdomain đó. Đối với search engine như Google, Bing tôi thường sử dụng dorks cơ bản như: Đơn giản là site:domain.com, -site:domain.com hoặc kết hợp cả 2 ví như hay như site:redhat.com -inurl:research.redhat.com -intitle:"Red hat" Ưu điểm của việc này là có thể tìm kiếm một số subdomain không sử dụng HTTPS có thể bị xót. Đối với thông tin từ các certs, tôi thường tìm một số thông tin trên các trang gồm: crt.sh censys.io virustotal shodan Ưu điểm của các trang này là hiển thị nhanh chóng các subdomain. Tuy nhiên chúng ta vẫn phải trích xuất chúng một cách thủ công mặc dù có thể chưa hoàn toàn xác định được các domain này có còn hoạt động hay không. Trong một số trường hợp nhất định việc tìm kiếm này đôi khi cũng có nhiều thông tin hữu ích. Tìm kiếm subdomain sử dụng công cụ Việc sử dụng một công cụ nào đó thay thế về cơ bản chỉ là tự động hoá quá trình tìm kiếm manual. Có nhiều công cụ thực hiện công việc này như amass, Knock, Sublist3r hay đối với tôi thì công cụ thường xuyên xử dụng nhất là subfinder, công cụ này tốc độ nhanh và đặc biệt các option khá đơn giản khi sử dụng. Tất nhiên amass cũng là công cụ khá mạnh và hỗ trợ rất nhiều tính năng khác (kể cả bruteforce - active scanning). └──╼ $./subfinder -d bachhoaxanh.com __ _____ __ _______ __/ /_ / __(_)___ ____/ /__ _____ / ___/ / / / __ \/ /_/ / __ \/ __ / _ \/ ___/ (__ ) /_/ / /_/ / __/ / / / / /_/ / __/ / /____/\__,_/_.___/_/ /_/_/ /_/\__,_/\___/_/ projectdiscovery.io [INF] Current subfinder version v2.6.0 (latest) [INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml [INF] Enumerating subdomains for bachhoaxanh.com www.bachhoaxanh.com cms.bachhoaxanh.com hddt.bachhoaxanh.com autodiscover.bachhoaxanh.com mail.bachhoaxanh.com owa.bachhoaxanh.com staging.bachhoaxanh.com alpha.bachhoaxanh.com beta.bachhoaxanh.com vieclam.bachhoaxanh.com bachhoaxanh.com [INF] Found 11 subdomains for bachhoaxanh.com in 30 seconds 2 milliseconds Ưu điểm của phương thức này là thời gian tìm kiếm nhanh, ngoài ra hỗ trợ resolve ra các địa chỉ IP và cũng hỗ trợ kiểm tra trạng thái các subdomain này active/non-active. └──╼ $./subfinder -active -ip -d bachhoaxanh.com __ _____ __ _______ __/ /_ / __(_)___ ____/ /__ _____ / ___/ / / / __ \/ /_/ / __ \/ __ / _ \/ ___/ (__ ) /_/ / /_/ / __/ / / / / /_/ / __/ / /____/\__,_/_.___/_/ /_/_/ /_/\__,_/\___/_/ projectdiscovery.io [INF] Current subfinder version v2.6.0 (latest) [INF] Loading provider config from /home/admin/.config/subfinder/provider-config.yaml [INF] Enumerating subdomains for bachhoaxanh.com alpha.bachhoaxanh.com,14.161.40.155,leakix beta.bachhoaxanh.com,14.161.40.155,leakix www.bachhoaxanh.com,103.48.76.192,digitorus bachhoaxanh.com,103.48.76.192,digitorus mail.bachhoaxanh.com,203.113.172.93,crtsh vieclam.bachhoaxanh.com,103.48.76.199,anubis staging.bachhoaxanh.com,103.48.76.192,leakix hddt.bachhoaxanh.com,103.48.76.141,anubis cms.bachhoaxanh.com,103.48.76.192,anubis [INF] Found 9 subdomains for bachhoaxanh.com in 5 seconds 443 milliseconds Tuy nhiên các công cụ này chỉ hỗ trợ một số trang miễn phí. Đối với một số trang khác để hiệu quả hơn trong việc tìm kiếm chúng ta cần sử dụng API key, có thể thêm vào config tại ~/.config/subfinder/provider-config.yaml. └──╼ $cat /home/admin/.config/subfinder/provider-config.yaml censys: [] - ac331e2f-b635-4581-878a-66d4e79a2c13:dd53-1b6e-4655-83f6-f347b363def9 certspotter: [] dnsdb: [] dnsrepo: [] github: - ghp_dbyJGU3jv1xmwk4SDXavrLDJ4dl2pSJMHHA1 passivetotal: - hunterman@simbox.io:HUnice_123 shodan: - PSKINdQe1GyxGgecYz2191H2JoS9qvgD - OefcMxcunkm72Po71vVtX8zUN57vQtAC - pHHlgpFt8Ka3Stb5UlTxcaEwciOeF2QM threatbook: [] virustotal: [] whoisxmlapi: [] zoomeye: [] zoomeyeapi: [] Như vậy qua bài viết đơn giản này chúng ta có thể tìm kiếm các subdomain phục vụ cho một số nhu cầu công việc mà không cần phải dò quét tác động trực tiếp đến target.]]></summary></entry><entry><title type="html">Thu thập log từ Cisco IOS về SIEM (ELK)</title><link href="https://ctnguyenvn.github.io/2023/02/collect-log-from-cisco-ios-to-ELK/" rel="alternate" type="text/html" title="Thu thập log từ Cisco IOS về SIEM (ELK)" /><published>2023-02-22T00:00:00+07:00</published><updated>2023-02-22T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2023/02/collect-log-from-cisco-ios-to-ELK</id><content type="html" xml:base="https://ctnguyenvn.github.io/2023/02/collect-log-from-cisco-ios-to-ELK/"><![CDATA[<p>Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này.</p>
 
 <h3 id="sơ-lược-mô-hình">Sơ lược mô hình</h3>
 
@@ -299,7 +299,7 @@ output <span class="o">{</span>
 
 <p><img src="/images/ELK/cisco/5.jpg" alt="" /></p>
 
-<p>Lưu ý: Các field trong config parse log chỉ là tham khảo, bạn có thể tùy chỉnh theo nhu cầu.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="collect-log" /><category term="ELK" /><summary type="html"><![CDATA[Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này. Sơ lược mô hình Trong bài viết này tôi sẽ chia sẻ một bài Lab nhỏ nhằm thu thập một số nhật ký cần thiết trên các thiết bị router/switch về hệ thống SIEM. Cụ thể tôi sẽ sử dụng IOS Version 12.4 Router 3700 Software (C3725-ADVENTERPRISEK9-M) giả lập trên phần mềm GNS3 kết hợp với ELK. ELK được build trên docker theo mô hình AIO và được cài đặt trên máy ảo vmware chạy hệ điều hành CentOS 7. Mô hình cơ bản như sau Lưu ý: Hiện tại tôi gửi log về logstash nhằm mục đích parse manual, tuy nhiên thực tế hiện tại filebeat có module cisco tương đối đủ để auto parse mà không cần parse tay ở logstash. Ngược lại với cách này yêu cầu dựng 1 server trung gian khác chạy filebeat để listen nên tôi không đề cập trong bài viết này.]]></summary></entry><entry><title type="html">PrintNightmare của letsdefend challenge</title><link href="https://ctnguyenvn.me/2022/12/25/investigate-printNightmare/" rel="alternate" type="text/html" title="PrintNightmare của letsdefend challenge" /><published>2022-12-25T00:00:00+07:00</published><updated>2022-12-25T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2022/12/25/investigate-printNightmare</id><content type="html" xml:base="https://ctnguyenvn.me/2022/12/25/investigate-printNightmare/"><![CDATA[<p>Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới <a href="https://www.linkedin.com/in/bohan-zhang-078751137/">Bohan Zhang</a> tại <a href="https://app.letsdefend.io/challenge/PrintNightmare">đây</a></p>
+<p>Lưu ý: Các field trong config parse log chỉ là tham khảo, bạn có thể tùy chỉnh theo nhu cầu.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="collect-log" /><category term="ELK" /><summary type="html"><![CDATA[Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command… nhằm phục vụ công việc ghi nhận nhật ký login, thao tác của tài khoản quản trị trên các thiết bị router/switch này. Sơ lược mô hình Trong bài viết này tôi sẽ chia sẻ một bài Lab nhỏ nhằm thu thập một số nhật ký cần thiết trên các thiết bị router/switch về hệ thống SIEM. Cụ thể tôi sẽ sử dụng IOS Version 12.4 Router 3700 Software (C3725-ADVENTERPRISEK9-M) giả lập trên phần mềm GNS3 kết hợp với ELK. ELK được build trên docker theo mô hình AIO và được cài đặt trên máy ảo vmware chạy hệ điều hành CentOS 7. Mô hình cơ bản như sau Lưu ý: Hiện tại tôi gửi log về logstash nhằm mục đích parse manual, tuy nhiên thực tế hiện tại filebeat có module cisco tương đối đủ để auto parse mà không cần parse tay ở logstash. Ngược lại với cách này yêu cầu dựng 1 server trung gian khác chạy filebeat để listen nên tôi không đề cập trong bài viết này.]]></summary></entry><entry><title type="html">PrintNightmare của letsdefend challenge</title><link href="https://ctnguyenvn.github.io/2022/12/investigate-printNightmare/" rel="alternate" type="text/html" title="PrintNightmare của letsdefend challenge" /><published>2022-12-25T00:00:00+07:00</published><updated>2022-12-25T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2022/12/investigate-printNightmare</id><content type="html" xml:base="https://ctnguyenvn.github.io/2022/12/investigate-printNightmare/"><![CDATA[<p>Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới <a href="https://www.linkedin.com/in/bohan-zhang-078751137/">Bohan Zhang</a> tại <a href="https://app.letsdefend.io/challenge/PrintNightmare">đây</a></p>
 
 <p>Thông tin:</p>
 
@@ -456,9 +456,9 @@ output <span class="o">{</span>
 
 <h3 id="summary">Summary</h3>
 
-<p>Lỗ hỗng <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527">PrintNightmare</a> là lỗ hỗng trên Windows Print Spooler cho phép kẻ tấn công sau khi khai thác thành công có thể chạy mã tùy ý với đặc quyền hệ thống. Sau đó chúng có thể cài đặt chương trình; xem, thay đổi hoặc xóa dữ liệu; hoặc tạo tài khoản mới với đầy đủ quyền của người dùng,…</p>]]></content><author><name>ctnguyenvn</name></author><category term="dfir" /><category term="Games" /><category term="Forensic" /><summary type="html"><![CDATA[Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case. pcap/memory file: download / pass: infected Công cụ sử dụng: Brim / Wireshark / Redline Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài này có thể là attacker đã khai thác thành công và tất cả những gì chúng ta cần truy vết là những gì sau đó. Sau khi tải file được cung cấp và giải nén ta được một số file quan trọng gồm: AnalysisSession1.mans -&gt; Analysis session mở với Redline challenge-v1.pcapng -&gt; Traffic giữa attacker với nạn nhân suricata.rules -&gt; rule alert của suricata với lỗ hỗng PrintNightmare]]></summary></entry><entry><title type="html">Một số key trong vim giúp edit nhanh hơn</title><link href="https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban/" rel="alternate" type="text/html" title="Một số key trong vim giúp edit nhanh hơn" /><published>2022-11-06T00:00:00+07:00</published><updated>2022-11-06T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban</id><content type="html" xml:base="https://ctnguyenvn.me/2022/11/06/mot-so-vim-key-co-ban/"><![CDATA[<p>Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại <a href="https://github.com/ctnguyenvn/vimrc/tree/neovim">vim repo</a> trong một số plugin mà tôi hay dùng.</p>
+<p>Lỗ hỗng <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527">PrintNightmare</a> là lỗ hỗng trên Windows Print Spooler cho phép kẻ tấn công sau khi khai thác thành công có thể chạy mã tùy ý với đặc quyền hệ thống. Sau đó chúng có thể cài đặt chương trình; xem, thay đổi hoặc xóa dữ liệu; hoặc tạo tài khoản mới với đầy đủ quyền của người dùng,…</p>]]></content><author><name>ctnguyenvn</name></author><category term="dfir" /><category term="Games" /><category term="Forensic" /><summary type="html"><![CDATA[Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case. pcap/memory file: download / pass: infected Công cụ sử dụng: Brim / Wireshark / Redline Trước khi đi qua từng câu hỏi tôi xin đề cập trước rằng bối cảnh của bài này có thể là attacker đã khai thác thành công và tất cả những gì chúng ta cần truy vết là những gì sau đó. Sau khi tải file được cung cấp và giải nén ta được một số file quan trọng gồm: AnalysisSession1.mans -&gt; Analysis session mở với Redline challenge-v1.pcapng -&gt; Traffic giữa attacker với nạn nhân suricata.rules -&gt; rule alert của suricata với lỗ hỗng PrintNightmare]]></summary></entry><entry><title type="html">Một số key trong vim giúp edit nhanh hơn</title><link href="https://ctnguyenvn.github.io/2022/11/mot-so-vim-key-co-ban/" rel="alternate" type="text/html" title="Một số key trong vim giúp edit nhanh hơn" /><published>2022-11-06T00:00:00+07:00</published><updated>2022-11-06T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2022/11/mot-so-vim-key-co-ban</id><content type="html" xml:base="https://ctnguyenvn.github.io/2022/11/mot-so-vim-key-co-ban/"><![CDATA[<p>Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại <a href="https://github.com/ctnguyenvn/vimrc/tree/neovim">vim repo</a> trong một số plugin mà tôi hay dùng.</p>
 
-<p><img src="https://ctnguyenvn.me/images/nvim/neovim-avt.webp" alt="neovim" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/nvim/neovim-avt.webp" alt="neovim" class="center-image" /></p>
 
 <p>Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại <a href="https://devhints.io/vim">đây</a>.</p>
 
@@ -771,7 +771,7 @@ output <span class="o">{</span>
   </tbody>
 </table>
 
-<p>Lưu ý trên đây là một số vimkey cơ bản mà tôi hay dùng với mục đích giúp edit file nhanh hơn. Các vimkey/command nâng cao các bạn có thể tìm hiểu thêm tại trang chủ <a href="https://www.vim.org">vim</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tip-tricks" /><category term="vim" /><category term="linux command" /><summary type="html"><![CDATA[Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại đây.]]></summary></entry><entry><title type="html">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</title><link href="https://ctnguyenvn.me/2021/04/03/dig-command/" rel="alternate" type="text/html" title="Sử dụng Dig (Domain Information Groper) - truy vấn DNS" /><published>2021-04-03T00:00:00+07:00</published><updated>2021-04-03T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/04/03/dig-command</id><content type="html" xml:base="https://ctnguyenvn.me/2021/04/03/dig-command/"><![CDATA[<p><code class="language-plaintext highlighter-rouge">Dig</code> là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS.
+<p>Lưu ý trên đây là một số vimkey cơ bản mà tôi hay dùng với mục đích giúp edit file nhanh hơn. Các vimkey/command nâng cao các bạn có thể tìm hiểu thêm tại trang chủ <a href="https://www.vim.org">vim</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tip-tricks" /><category term="vim" /><category term="linux command" /><summary type="html"><![CDATA[Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau đây không được sắp xếp theo các group mà chủ yếu là các vimkey tôi hay dùng. Bạn có thể xem thêm rất nhiều vimkey khác đã được group tại đây.]]></summary></entry><entry><title type="html">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</title><link href="https://ctnguyenvn.github.io/2021/04/dig-command/" rel="alternate" type="text/html" title="Sử dụng Dig (Domain Information Groper) - truy vấn DNS" /><published>2021-04-03T00:00:00+07:00</published><updated>2021-04-03T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2021/04/dig-command</id><content type="html" xml:base="https://ctnguyenvn.github.io/2021/04/dig-command/"><![CDATA[<p><code class="language-plaintext highlighter-rouge">Dig</code> là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS.
 <code class="language-plaintext highlighter-rouge">Dig</code> thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn.
 Các truy vấn phổ biến gồm NS, CNAME, MX, TXT…</p>
 
@@ -1153,7 +1153,7 @@ với <code class="language-plaintext highlighter-rouge">yaml</code> như sau</p
 chọn -f (<code class="language-plaintext highlighter-rouge">dig -f &lt;file&gt;....</code>). <code class="language-plaintext highlighter-rouge">Dig</code> cũng hỗ trợ file <code class="language-plaintext highlighter-rouge">${HOME}/.digrc</code> để nhận
 các tham số mặc định trong mỗi lệnh người dùng sẽ thực hiện. Cụ thể <code class="language-plaintext highlighter-rouge">dig</code> sẽ tìm
 kiếm đọc nội dung từ file này lên trước và đưa vào command trước khi đọc tùy
-chọn người dùng cung cấp.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Notes" /><category term="linux command" /><summary type="html"><![CDATA[Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig Đối với Ubuntu/Debian ctnguyenvn[~]$ sudo apt install dnsutils Đối với CentOS/Fedora ctnguyenvn[~]$ sudo yum install bind-utils Có thể kiểm tra kết quả cài đặt dig như sau: ctnguyenvn[~]$ dig -v DiG 9.16.13]]></summary></entry><entry><title type="html">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</title><link href="https://ctnguyenvn.me/2021/02/13/git-command-basic/" rel="alternate" type="text/html" title="Tổng hợp một số lệnh cơ bản khi sử dụng git/github" /><published>2021-02-13T00:00:00+07:00</published><updated>2021-02-13T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/02/13/git-command-basic</id><content type="html" xml:base="https://ctnguyenvn.me/2021/02/13/git-command-basic/"><![CDATA[<p>Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv</p>
+chọn người dùng cung cấp.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Notes" /><category term="linux command" /><summary type="html"><![CDATA[Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig Đối với Ubuntu/Debian ctnguyenvn[~]$ sudo apt install dnsutils Đối với CentOS/Fedora ctnguyenvn[~]$ sudo yum install bind-utils Có thể kiểm tra kết quả cài đặt dig như sau: ctnguyenvn[~]$ dig -v DiG 9.16.13]]></summary></entry><entry><title type="html">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</title><link href="https://ctnguyenvn.github.io/2021/02/git-command-basic/" rel="alternate" type="text/html" title="Tổng hợp một số lệnh cơ bản khi sử dụng git/github" /><published>2021-02-13T00:00:00+07:00</published><updated>2021-02-13T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2021/02/git-command-basic</id><content type="html" xml:base="https://ctnguyenvn.github.io/2021/02/git-command-basic/"><![CDATA[<p>Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv</p>
 
 <p>Một số cheat sheet &amp; tip link git</p>
 
@@ -1367,13 +1367,13 @@ ctnguyenvn[~]$ git branch &lt;new_branch_name&gt;
 
 <p>Bài viết chỉ mang tính chất ghi chép cơ bản trong quá trình thực hiện một số
 thao tác với git khi làm việc, không giải thích cụ thể hoạt động/chi tiết các
-lệnh. Cụ thể xem thêm tại <a href="https://git-scm.com/book/en/v2/">git book</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Git" /><category term="Notes" /><summary type="html"><![CDATA[Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv Một số cheat sheet &amp; tip link git https://quickref.me/git http://schuber…/cseg_git_cheat_sheet.pdf https://github.com/git-tips/tips Một số lệnh cơ bản Cấu hình thông tin user/email Cấu hình user/email ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;" ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;" Xem cấu hình ctnguyenvn[~]$ git config --list]]></summary></entry><entry><title type="html">Giám sát một số devices với zabbix agent, SNMP</title><link href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent/" rel="alternate" type="text/html" title="Giám sát một số devices với zabbix agent, SNMP" /><published>2021-02-01T00:00:00+07:00</published><updated>2021-02-01T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent</id><content type="html" xml:base="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent/"><![CDATA[<p>Trong
+lệnh. Cụ thể xem thêm tại <a href="https://git-scm.com/book/en/v2/">git book</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Git" /><category term="Notes" /><summary type="html"><![CDATA[Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn của mình, cụ thể lập trình viên có thể lưu trữ nhiều phiên bản khác nhau của mã nguồn phần mềm, thêm sửa xóa code hay xem lịch sử thay đổi và những thay đổi được thực hiện bởi người nào. vv Một số cheat sheet &amp; tip link git https://quickref.me/git http://schuber…/cseg_git_cheat_sheet.pdf https://github.com/git-tips/tips Một số lệnh cơ bản Cấu hình thông tin user/email Cấu hình user/email ctnguyenvn[~]$ git config --global user.name "&lt;user name&gt;" ctnguyenvn[~]$ git config --global user.email "&lt;user email&gt;" Xem cấu hình ctnguyenvn[~]$ git config --list]]></summary></entry><entry><title type="html">Giám sát một số devices với zabbix agent, SNMP</title><link href="https://ctnguyenvn.github.io/2021/02/install-add-devices-zabbix-agent/" rel="alternate" type="text/html" title="Giám sát một số devices với zabbix agent, SNMP" /><published>2021-02-01T00:00:00+07:00</published><updated>2021-02-01T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2021/02/install-add-devices-zabbix-agent</id><content type="html" xml:base="https://ctnguyenvn.github.io/2021/02/install-add-devices-zabbix-agent/"><![CDATA[<p>Trong
 <a href="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full">bài viết trước</a>
 tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này
 tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình
 thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau:</p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
 
 <table>
   <thead>
@@ -1460,23 +1460,23 @@ ctnguyenvn[~]$ firewall-cmd --reload
 
 <p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/9.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/9.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host Name</code>, <code class="language-plaintext highlighter-rouge">IP</code> đúng với <code class="language-plaintext highlighter-rouge">hostname</code> và <code class="language-plaintext highlighter-rouge">ip</code> của máy
 Linux agent cần thêm vào zabbix.</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/10.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/10.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> có thể chọn như hình sau</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/11.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/11.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iv)</em></strong> <em>Tiếp theo nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
 khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
 <code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>ZBX</strong> (chứng tỏ đã thêm host mới này sử dụng zabbix
 agent)</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/12.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/12.png" alt="zabbix" class="center-image" /></p>
 
 <h3 id="2-thêm-windows-os-vào-zabbix-sử-dụng-zabbix-agent">2. Thêm Windows OS vào Zabbix (sử dụng zabbix agent)</h3>
 
@@ -1490,15 +1490,15 @@ trên windows server 2012 r2 tại
 <p><strong><em>(i)</em></strong> <em>Sau khi tải về và run file cài đặt (file .MSI) ta sẽ được như sau,
 nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/13.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/13.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(ii)</em></strong> <em>Tiếp theo chọn <code class="language-plaintext highlighter-rouge">I accept....</code> và nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/14.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/14.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host name</code>, <code class="language-plaintext highlighter-rouge">Zabbix Server IP/DNS</code> và nhấn <code class="language-plaintext highlighter-rouge">Next</code></em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/15.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/15.png" alt="zabbix" class="center-image" /></p>
 
 <blockquote>
   <p>Lưu ý: Đặt đúng tên máy để cấu hình chính xác hơn khi thêm thiết bị vào máy
@@ -1508,16 +1508,16 @@ là WINDOWSAGENT</p>
 
 <p><strong><em>(iv)</em></strong> <em>Nhấn <code class="language-plaintext highlighter-rouge">Next</code> ở cửa sổ tiếp theo</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/16.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/16.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(v)</em></strong> <em>Cuối cùng nhấn <code class="language-plaintext highlighter-rouge">Install</code> và đợi quá trình cài đặt zabbix agent hoàn
 tất.</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/17.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/17.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(vi)</em></strong> <em>Nhấn <code class="language-plaintext highlighter-rouge">Finish</code></em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/18.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/18.png" alt="zabbix" class="center-image" /></p>
 
 <blockquote>
   <p>Lưu ý: Có thể cần phải mở firewall port 10050 trên máy window server này cho
@@ -1531,23 +1531,23 @@ server</p>
 
 <p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/19.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/19.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập <code class="language-plaintext highlighter-rouge">Host Name</code>, <code class="language-plaintext highlighter-rouge">IP</code> đúng với <code class="language-plaintext highlighter-rouge">hostname</code> và <code class="language-plaintext highlighter-rouge">ip</code> của máy
 Windows agent cần thêm vào zabbix.</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/20.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/20.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(ii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> có thể chọn như hình sau</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/21.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/21.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iv)</em></strong> <em>Tiếp theo nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
 khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
 <code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>ZBX</strong> (chứng tỏ đã thêm host mới này sử dụng zabbix
 agent)</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/22.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/22.png" alt="zabbix" class="center-image" /></p>
 
 <h3 id="3-thêm-router-cisco-vào-zabbix-sử-dụng-snmp">3. Thêm Router Cisco vào Zabbix (sử dụng SNMP)</h3>
 
@@ -1576,7 +1576,7 @@ server</p>
 <p><strong><em>(i)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> -&gt; <code class="language-plaintext highlighter-rouge">Create host</code> để tạo 1 <code class="language-plaintext highlighter-rouge">host</code> mới.
 Sau đó nhập thông tin như hình sau</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/23.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/23.png" alt="zabbix" class="center-image" /></p>
 
 <blockquote>
   <p>Lưu ý: Ở bước 2 chỉ là xóa phương thức sử dụng agent, thay vào đó sẽ sử dụng
@@ -1586,22 +1586,22 @@ Sau đó nhập thông tin như hình sau</em></p>
 <p><strong><em>(ii)</em></strong> <em>Tiếp theo nhập đúng IP của Cisco router, port và SNMP version như
 hình sau</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/24.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/24.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iii)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Templates</code> chọn như hình</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/25.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/25.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iv)</em></strong> <em>Tiếp theo tại tab <code class="language-plaintext highlighter-rouge">Macros</code> cột <code class="language-plaintext highlighter-rouge">Macro</code> nhập <strong>{$SNMP_COMMUNITY}</strong> và
 <code class="language-plaintext highlighter-rouge">Value</code> nhập đúng <code class="language-plaintext highlighter-rouge">Community</code> <strong>zabbix-congtrulab</strong> đã cấu hình ở trên</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/26.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/26.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(v)</em></strong> <em>Cuối cùng nhấn <code class="language-plaintext highlighter-rouge">add</code>, sau đó quay lại <code class="language-plaintext highlighter-rouge">Monitoring</code> -&gt; <code class="language-plaintext highlighter-rouge">Hosts</code> (đợi
 khoảng 1 phút) sẽ thấy một host mới đã được thêm vào đồng thời trường
 <code class="language-plaintext highlighter-rouge">Availability</code> sẽ sáng ở <strong>SNMP</strong> (chứng tỏ đã thêm host mới này sử dụng SNMP)</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/27.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/27.png" alt="zabbix" class="center-image" /></p>
 
 <h3 id="4-cấu-hình-tạo-report-qua-email">4. Cấu hình tạo report qua email</h3>
 
@@ -1612,13 +1612,13 @@ bản cấu hình report thông qua Email. Cụ thể như sau:</p>
 <code class="language-plaintext highlighter-rouge">Media types</code>, lúc này sẽ xuất hiện rất nhiều <code class="language-plaintext highlighter-rouge">media types</code> có sẵn, nhấp chọn
 <code class="language-plaintext highlighter-rouge">Email</code> hoặc chọn <code class="language-plaintext highlighter-rouge">create media types</code> để tạo mới.</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/28.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/28.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(ii)</em></strong> <em>Tiếp theo tùy thuộc vào mail server mà cần nhập đúng thông tin mail
 server. Cụ thể trong bài này tôi sử dụng gmail, do đó sẽ nhập thông tin như hình
 sau</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/29.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/29.png" alt="zabbix" class="center-image" /></p>
 
 <blockquote>
   <p>Lưu ý: Việc này cho phép zabbix server sử dụng email này để đăng nhập và gửi
@@ -1631,11 +1631,11 @@ khoản gmail</p>
 bất kỳ cho việc test này bằng cách vào <code class="language-plaintext highlighter-rouge">Configuration</code> -&gt; <code class="language-plaintext highlighter-rouge">Actions</code> -&gt; nhấn vào
 <strong>disable</strong> tại một <code class="language-plaintext highlighter-rouge">trigger action</code> muốn test</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/30.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/30.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(iv)</em></strong> <em>Sau đó sẽ thấy trạng thái <strong>Enable</strong> tại report này</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/31.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/31.png" alt="zabbix" class="center-image" /></p>
 
 <p>Sau khi cấu hình gửi report qua email thành công, tiếp theo sẽ cấu hình người
 nhận report. Trong bài lab này tôi sẽ cấu hình gửi đến admin hiện tại.</p>
@@ -1645,26 +1645,26 @@ nhận report. Trong bài lab này tôi sẽ cấu hình gửi đến admin hi�
 <p><strong><em>(v)</em></strong> <em>Chọn <code class="language-plaintext highlighter-rouge">User setting</code> -&gt; <code class="language-plaintext highlighter-rouge">Media</code> -&gt; chọn <code class="language-plaintext highlighter-rouge">Type</code> <strong>Email</strong> và Email
 người nhận report. Ngoài ra có thể chọn các mức cảnh báo như sau</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/32.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/32.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(vi)</em></strong> <em>Sau đó nhấn <code class="language-plaintext highlighter-rouge">Add</code> -&gt; <code class="language-plaintext highlighter-rouge">Update</code></em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/33.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/33.png" alt="zabbix" class="center-image" /></p>
 
 <p><strong><em>(vii)</em></strong> <em>Cuối cùng để kiểm tra quá trình gửi report đã thành công chưa, tôi
 thử thay đổi RAM/CPU trên VM Windows Server chạy Agent và reboot. Kết quả nhận
 được qua mail ví dụ như CPU như sau.</em></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/34.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/34.png" alt="zabbix" class="center-image" /></p>
 
 <p>Trong bài này tôi chỉ đơn giản thêm các thiết bị vào zabbix với mục đích lưu
 trữ. Tuy nhiên việc cấu hình để giám sát các hoạt động cụ thể khác trên router
-như CPU, Network Interface,… hay trên Linux, windows server cần nhiều hơn nữa.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tutorials" /><category term="Tools" /><category term="Monitoring" /><summary type="html"><![CDATA[Trong bài viết trước tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau: Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17   IP Như mô hình  ]]></summary></entry><entry><title type="html">Cài đặt và cấu hình Zabbix 5.0</title><link href="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full/" rel="alternate" type="text/html" title="Cài đặt và cấu hình Zabbix 5.0" /><published>2021-01-31T00:00:00+07:00</published><updated>2021-01-31T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full</id><content type="html" xml:base="https://ctnguyenvn.me/2021/01/31/zabbix-install-config-full/"><![CDATA[<p>Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device
+như CPU, Network Interface,… hay trên Linux, windows server cần nhiều hơn nữa.</p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tutorials" /><category term="Tools" /><category term="Monitoring" /><summary type="html"><![CDATA[Trong bài viết trước tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này tôi sẽ thêm một số device vào zabbix để giám sát chúng. Ngoài ra cũng cấu hình thêm việc nhận thông báo qua email. Mô hình cụ thể vẫn như sơ đồ sau: Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17   IP Như mô hình  ]]></summary></entry><entry><title type="html">Cài đặt và cấu hình Zabbix 5.0</title><link href="https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/" rel="alternate" type="text/html" title="Cài đặt và cấu hình Zabbix 5.0" /><published>2021-01-31T00:00:00+07:00</published><updated>2021-01-31T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full</id><content type="html" xml:base="https://ctnguyenvn.github.io/2021/01/zabbix-install-config-full/"><![CDATA[<p>Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device
 như hình sau</p>
 
 <h3 id="1-giới-thiệu-mô-hình-lab">1. Giới thiệu mô hình lab</h3>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/0.png" alt="zabbix" class="center-image" /></p>
 
 <table>
   <thead>
@@ -1934,26 +1934,26 @@ ctnguyenvn[~]$ systemctl restart zabbix-server
 <p>Sử dụng trình duyệt truy cập vào địa chỉ <code class="language-plaintext highlighter-rouge">&lt;IP Zabbix Server&gt;/zabbix</code> và chọn lần
 lượt như hình sau</p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/1.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/1.png" alt="zabbix" class="center-image" /></p>
 
 <blockquote>
   <p>Lưu ý: Tôi đã thay đổi file hosts để có thể sử dụng domain</p>
 </blockquote>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/2.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/2.png" alt="zabbix" class="center-image" /></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/3.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/3.png" alt="zabbix" class="center-image" /></p>
 
 <blockquote>
   <p>Lưu ý: Nhập đúng tên database, user và password trong bước tạo database phía
 trên</p>
 </blockquote>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/4.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/4.png" alt="zabbix" class="center-image" /></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/5.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/5.png" alt="zabbix" class="center-image" /></p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/6.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/6.png" alt="zabbix" class="center-image" /></p>
 
 <p>Sau khi nhận thông báo thành công, có thể login với tài khoản quản trị mặc định
 là</p>
@@ -1962,15 +1962,15 @@ là</p>
 Pass: zabbix
 </code></pre></div></div>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/7.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/7.png" alt="zabbix" class="center-image" /></p>
 
 <p>Và giao diện đầu tiên của zabbix như sau</p>
 
-<p><img src="https://ctnguyenvn.me/images/zabbix/8.png" alt="zabbix" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/zabbix/8.png" alt="zabbix" class="center-image" /></p>
 
 <p>Quá trình cài đặt cơ bản zabbix server 5.0 đã thành công. Cuối cùng có thể thêm
 một số thiết bị như Linux, windows, cisco router vào zabbix server như
-<a href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent">sau</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tutorials" /><category term="Tools" /><category term="Monitoring" /><summary type="html"><![CDATA[Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device như hình sau 1. Giới thiệu mô hình lab Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17   IP Như mô hình   Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông qua R1.]]></summary></entry><entry><title type="html">Cơ bản về LVM (logical Volume management)</title><link href="https://ctnguyenvn.me/2021/01/25/lvm/" rel="alternate" type="text/html" title="Cơ bản về LVM (logical Volume management)" /><published>2021-01-25T00:00:00+07:00</published><updated>2021-01-25T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/01/25/lvm</id><content type="html" xml:base="https://ctnguyenvn.me/2021/01/25/lvm/"><![CDATA[<p>Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
+<a href="https://ctnguyenvn.me/2021/02/01/install-add-devices-zabbix-agent">sau</a></p>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="tutorials" /><category term="Tools" /><category term="Monitoring" /><summary type="html"><![CDATA[Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device như hình sau 1. Giới thiệu mô hình lab Thông tin   Hostname R1 Cisco 3640 R-C3640 Linux CentOS 7 LinuxAgent Linux Ubuntu 18.04 Zabbix-Server Windows Windows server 2012 WindowAgent Soft GNS3 2.2.17   IP Như mô hình   Lưu ý: Router được cấu hình NAT để tất cả các VM kết nối với Internet thông qua R1.]]></summary></entry><entry><title type="html">Cơ bản về LVM (logical Volume management)</title><link href="https://ctnguyenvn.github.io/2021/01/lvm/" rel="alternate" type="text/html" title="Cơ bản về LVM (logical Volume management)" /><published>2021-01-25T00:00:00+07:00</published><updated>2021-01-25T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2021/01/lvm</id><content type="html" xml:base="https://ctnguyenvn.github.io/2021/01/lvm/"><![CDATA[<p>Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý
 lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung
 lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng
 Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group
@@ -2007,7 +2007,7 @@ là các khối <code class="language-plaintext highlighter-rouge">Extent</code>
 
 <!--more-->
 
-<p><img src="https://ctnguyenvn.me/images/lvm/Lvm.png" alt="LVM" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/lvm/Lvm.png" alt="LVM" class="center-image" /></p>
 
 <p>Trong hình trên (nguồn: wikimedia) có thể thấy rằng các <code class="language-plaintext highlighter-rouge">Logical Volume</code>
 <code class="language-plaintext highlighter-rouge">/dev/hlv</code> được tạo nên không chỉ riêng từ <code class="language-plaintext highlighter-rouge">Physical Volume</code> <code class="language-plaintext highlighter-rouge">hdisk1</code> mà còn có
@@ -2319,7 +2319,7 @@ sdd                8:48   0   10G  0 disk
 <blockquote>
   <p>Lưu ý: Khi sử dụng <code class="language-plaintext highlighter-rouge">pvmove</code> cần đảm bảo dung lượng trống trên các ổ khác vẫn
 đủ kích thước để lưu dữ liệu sau khi loại bỏ <code class="language-plaintext highlighter-rouge">Physical Volume</code> hiện tại.</p>
-</blockquote>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Linux system" /><category term="Notes" /><summary type="html"><![CDATA[Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group như working, devops thay vì các tên truyền thống mặc định như sda, sdb. 1. Giới thiệu Volume Group (VG) - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập hợp/ánh xạ các Physical Volume và Logical Volume thành một đơn vị chung về mặt khởi tạo. Cụ thể Volume Group tập hợp các ổ cứng vật lý (Physical Volume) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng khối có kích thước bằng nhau, sau đó sẽ tạo các Logical Volume từ chúng. Physical Volume (PV) - là thành phần cơ bản được sử dụng trong LVM cho phép tạo các Volume group, chúng có thể là các ổ cứng HDD, SSD hay có thể là software raid. Logical Volume (LV) - là phân vùng luận lý được tạo ra từ Volume Group, về mặt lý thuyết có thể xem Logical Volume giống như partition trên các hệ thống non-LVM, tuy nhiên Logical Volume có thể được thay đổi kích trước dễ dàng mà không làm gián đoạn hệ thống. Physical Extent (PE) và Logical Extent (LE) - Physical Volume được chia thành các khối bằng nhau gọi là Physical Extent, tương tự đối với phân vùng Logical Volume được gọi là Logical Extent. Extent - là đơn vị nhỏ nhất của Volume Group, cũng là kỹ thuật giúp LVM có thể thay đổi dung lượng các Logical Volume mà không làm gián đoạn hệ thống như đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng Extent tương ứng, nghĩa là ánh xạ số lượng Physical Extent trên Physical Volume sang Logical Extent trên Logical Volume. Lưu ý rằng việc ánh xạ Extent từ Physical Volume sang Logical Volume có thể không cần phải là các khối Extent liên tục từ Physical Volume]]></summary></entry><entry><title type="html">Cài đặt VPN Warp CloudFlare trên Linux</title><link href="https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux/" rel="alternate" type="text/html" title="Cài đặt VPN Warp CloudFlare trên Linux" /><published>2021-01-04T00:00:00+07:00</published><updated>2021-01-04T00:00:00+07:00</updated><id>https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux</id><content type="html" xml:base="https://ctnguyenvn.me/2021/01/04/install-Warp-CloudFlare-on-linux/"><![CDATA[<p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
+</blockquote>]]></content><author><name>ctnguyenvn</name></author><category term="linux-sysad" /><category term="Linux system" /><category term="Notes" /><summary type="html"><![CDATA[Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung lượng các ổ đĩa và giúp quản lý tốt hơn các thiết bị lưu trữ trên nền tảng Linux. Ngoài ra LVM còn cho phép các quản trị viên thay đổi các định danh group như working, devops thay vì các tên truyền thống mặc định như sda, sdb. 1. Giới thiệu Volume Group (VG) - là mức trừu tượng cao nhất trong kỹ thuật LVM. Nó tập hợp/ánh xạ các Physical Volume và Logical Volume thành một đơn vị chung về mặt khởi tạo. Cụ thể Volume Group tập hợp các ổ cứng vật lý (Physical Volume) lại thành một kho lưu trữ/ổ đĩa chung và chia chúng ra từng khối có kích thước bằng nhau, sau đó sẽ tạo các Logical Volume từ chúng. Physical Volume (PV) - là thành phần cơ bản được sử dụng trong LVM cho phép tạo các Volume group, chúng có thể là các ổ cứng HDD, SSD hay có thể là software raid. Logical Volume (LV) - là phân vùng luận lý được tạo ra từ Volume Group, về mặt lý thuyết có thể xem Logical Volume giống như partition trên các hệ thống non-LVM, tuy nhiên Logical Volume có thể được thay đổi kích trước dễ dàng mà không làm gián đoạn hệ thống. Physical Extent (PE) và Logical Extent (LE) - Physical Volume được chia thành các khối bằng nhau gọi là Physical Extent, tương tự đối với phân vùng Logical Volume được gọi là Logical Extent. Extent - là đơn vị nhỏ nhất của Volume Group, cũng là kỹ thuật giúp LVM có thể thay đổi dung lượng các Logical Volume mà không làm gián đoạn hệ thống như đã nói ở trên. Cụ thể việc thay đổi kích thước này chỉ là thay đổi số lượng Extent tương ứng, nghĩa là ánh xạ số lượng Physical Extent trên Physical Volume sang Logical Extent trên Logical Volume. Lưu ý rằng việc ánh xạ Extent từ Physical Volume sang Logical Volume có thể không cần phải là các khối Extent liên tục từ Physical Volume]]></summary></entry><entry><title type="html">Cài đặt VPN Warp CloudFlare trên Linux</title><link href="https://ctnguyenvn.github.io/2021/01/install-Warp-CloudFlare-on-linux/" rel="alternate" type="text/html" title="Cài đặt VPN Warp CloudFlare trên Linux" /><published>2021-01-04T00:00:00+07:00</published><updated>2021-01-04T00:00:00+07:00</updated><id>https://ctnguyenvn.github.io/2021/01/install-Warp-CloudFlare-on-linux</id><content type="html" xml:base="https://ctnguyenvn.github.io/2021/01/install-Warp-CloudFlare-on-linux/"><![CDATA[<p>Warp là chương trình VPN (có cung cấp phiên bản miễn phí) được cung cấp bởi
 CloudFlare. Hiện tại <a href="https://1.1.1.1/">Warp client</a> chỉ hỗ trợ Anroid/IOS và
 windows/OSX. Tuy không được CloudFlare hỗ trợ cho phiên bản Linux nhưng chúng ta
 có thể sử dụng warp thông qua Wireguard.</p>
@@ -2377,7 +2377,7 @@ ctnguyenvn[~]$ sudo /opt/wgcf/wgcf generate -p /opt/wgcf/warp.conf --config /opt
 <p>Nếu muốn update key khi cần sử dụng warp+ thì bạn có thể mở file
 <code class="language-plaintext highlighter-rouge">/opt/wgcf/warp-account.toml</code> và sửa dòng <code class="language-plaintext highlighter-rouge">lincese_key</code> thành key mới</p>
 
-<p><img src="https://ctnguyenvn.me/images/install-warp/1.png" alt="wg show" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/install-warp/1.png" alt="wg show" class="center-image" /></p>
 
 <p>và thực hiện lệnh</p>
 
@@ -2416,7 +2416,7 @@ tại, có thể xóa device này sử dụng lệnh sau:</p>
 
 <p>Kiểm tra kết quả</p>
 
-<p><img src="https://ctnguyenvn.me/images/install-warp/2.png" alt="wg show" class="center-image" /></p>
+<p><img src="https://ctnguyenvn.github.io/images/install-warp/2.png" alt="wg show" class="center-image" /></p>
 
 <p>Ngoài ra có thể tự động kích hoạt vpn warp khi khởi động OS ta có thể sử dụng</p>
 

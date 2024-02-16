@@ -12,239 +12,156 @@
     
     <meta name="author" content="ctnguyenvn" />
     
-    <meta
-        property="og:title"
-        content="Archive - Happy Investigating"
-    />
-    <meta
-        property="twitter:title"
-        content="Archive - Happy Investigating"
-    />
+    <meta property="og:title" content="Archive - Happy Investigating" />
+    <meta property="twitter:title" content="Archive - Happy Investigating" />
      
-    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
-    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="og:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
     
     <meta property="og:site_name" content="ctnguyenvn - System security" />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
-    />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://ctnguyenvn.me/assets/css/styles.css"
-    />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://ctnguyenvn.me/assets/css/highlight.css"
-    />
+    <!-- <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/bulma.min.css" /> -->
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/highlight.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
     <link
         rel="alternate"
         type="application/rss+xml"
         title=" - Happy Investigating"
-        href="https://ctnguyenvn.me/feed.xml"
+        href="https://ctnguyenvn.github.io/feed.xml"
     />
-    <link rel="canonical" href="https://ctnguyenvn.me/archive" />
+    <link rel="canonical" href="https://ctnguyenvn.github.io/archive" />
     <meta name="theme-color" content="#000000" />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
-    />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" />
         
 </head>
 
     <body>
-        <div><nav
-    class="navbar px-2 py-4"
-    role="navigation"
-    aria-label="main navigation"
->
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://ctnguyenvn.me">
-                <img
-                    src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
-                    alt="Logo"
-                />
-                <span class="pl-2 is-size-4 has-text-weight-bold has-text-dark"
-                    >ctnguyenvn</span
-                >
-            </a>
-            <a
-                role="button"
-                class="navbar-burger"
-                aria-label="menu"
-                aria-expanded="false"
-                data-target="navbarMenu"
-            >
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="navbarMenu" class="navbar-menu">
-            <div class="navbar-end">
-                <form class="navbar-item mx-3" id="searchForm" role="search">
-                    <input
-                        type="input"
-                        id="query"
-                        name="q"
-                        placeholder="Search..."
-                        class="input is-rounded"
-                        autocomplete="off"
-                    />
-                </form>
-                <a class="navbar-item has-text-grey-dark" href="/"> Home </a>
-                <div class="navbar-item is-hoverable">
-                    <a href="#" class="navbar-item has-text-grey-dark">
-                        Blog
-                    </a>
-                    <div class="navbar-dropdown">
-                        <a
-                            href="/category/linux-sysad/"
-                            class="navbar-item has-text-grey-dark"
-                            >Linux sysadmin</a
-                        >
-                        <a
-                            href="/category/dfir/"
-                            class="navbar-item has-text-grey-dark"
-                            >Digital forensic</a
-                        >
-                        <a
-                            href="/category/tutorials/"
-                            class="navbar-item has-text-grey-dark"
-                            >Some tutorials</a
-                        >
-                        <a
-                            href="/category/tip-tricks/"
-                            class="navbar-item has-text-grey-dark"
-                            >Tip & trick</a
-                        >
-                    </div>
-                </div>
-                <a class="navbar-item has-text-grey-dark" href="/about">
-                    About
-                </a>
-            </div>
-        </div>
+		<div>
+			<div class="border-b"><nav class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+    <div class="">
+        <a href="https://ctnguyenvn.github.io">
+            <img src="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" class="h-6" alt="ctnguyenvn" />
+        </a>
+    </div>
+    <div class="hidden md:flex justify-center gap-6">
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Home</a>
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Blog</a>
+        <a href="/projects" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Projects</a>
+        <a href="/about" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">About</a>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://twitter.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://t.me/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-telegram"></i>
+        </a>
     </div>
 </nav>
 </div>
-        <div><section class="hero">
-    <div class="hero-body">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8 is-offset-2 mb-4">
-                    <div class="content">
-                        <h1 class="mt-1">Archive</h1>
-                        <table class="table">
-                            <tbody>
- 							  
-                                <tr>
-									<th>07-01-2023</th>
-									<td> <a class="text-dark" href="/2023/07/01/subdomain-enumeration-without-bruteforce/">Tìm kiếm subdomain không sử dụng brute-force</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>02-22-2023</th>
-									<td> <a class="text-dark" href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/">Thu thập log từ Cisco IOS về SIEM (ELK)</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>12-25-2022</th>
-									<td> <a class="text-dark" href="/2022/12/25/investigate-printNightmare/">PrintNightmare của letsdefend challenge</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>11-06-2022</th>
-									<td> <a class="text-dark" href="/2022/11/06/mot-so-vim-key-co-ban/">Một số key trong vim giúp edit nhanh hơn</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>04-03-2021</th>
-									<td> <a class="text-dark" href="/2021/04/03/dig-command/">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>02-13-2021</th>
-									<td> <a class="text-dark" href="/2021/02/13/git-command-basic/">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>02-01-2021</th>
-									<td> <a class="text-dark" href="/2021/02/01/install-add-devices-zabbix-agent/">Giám sát một số devices với zabbix agent, SNMP</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>01-31-2021</th>
-									<td> <a class="text-dark" href="/2021/01/31/zabbix-install-config-full/">Cài đặt và cấu hình Zabbix 5.0</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>01-25-2021</th>
-									<td> <a class="text-dark" href="/2021/01/25/lvm/">Cơ bản về LVM (logical Volume management)</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>01-04-2021</th>
-									<td> <a class="text-dark" href="/2021/01/04/install-Warp-CloudFlare-on-linux/">Cài đặt VPN Warp CloudFlare trên Linux</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>12-29-2020</th>
-									<td> <a class="text-dark" href="/2020/12/29/Spanning-Tree-Protocol/">Spanning Tree Protocol (STP)</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>12-14-2020</th>
-									<td> <a class="text-dark" href="/2020/12/14/HTTP-Protocol/">Giao thức HTTP (Hyper Text Transfer Protocol)</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>07-03-2019</th>
-									<td> <a class="text-dark" href="/2019/07/03/some-regex/">Một số regex hay dùng</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>05-22-2019</th>
-									<td> <a class="text-dark" href="/2019/05/22/qick-arguments/">Một số cái beep trong shell</a</td>
-                                </tr>
-								  
-                                <tr>
-									<th>03-02-2019</th>
-									<td> <a class="text-dark" href="/2019/03/02/install-ArchLinux/">Cài đặt Arch Linux trên Virtualbox [Notes]</a</td>
-                                </tr>
-								
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+			<main><div class="max-w-screen-lg mx-auto my-4 py-4">
+    <div class="text-center">
+        <h1 class="my-4 text-2xl"><span class="border-b-4 border-yellow-400">Archive</span></h1>
     </div>
-</section>
-
-</div>
-        <div><footer class="footer py-6 my-5">
-    <div class="content has-text-centered">
-		<div class="mb-2">
-			<a href="https://youtube.com/ctnguyenvn"><i class="bi bi-youtube is-size-4 mx-1 icon-size-normal"></i></a>
-			<a href="https://t.me/ctnguyenvn"><i class="bi bi-telegram is-size-4 mx-1 icon-size-normal"></i></a>
-			<a href="https://twitter.com/ctnguyenvn"><i class="bi bi-twitter is-size-4 mx-1 icon-size-normal"></i></a>
-			<a href="https://github.com/ctnguyenvn"><i class="bi bi-github is-size-4 mx-1 icon-size-normal"></i></a>
-		</div>
-        <p>
-            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
-            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
+    <div class="content my-4 py-4 text-justify">
+          
+        <p class="flex gap-4">
+            <span>07-01-2023</span>
+            <a class="text-dark" href="/2023/07/subdomain-enumeration-without-bruteforce/">Tìm kiếm subdomain không sử dụng brute-force</a>
         </p>
+          
+        <p class="flex gap-4">
+            <span>02-22-2023</span>
+            <a class="text-dark" href="/2023/02/collect-log-from-cisco-ios-to-ELK/">Thu thập log từ Cisco IOS về SIEM (ELK)</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>12-25-2022</span>
+            <a class="text-dark" href="/2022/12/investigate-printNightmare/">PrintNightmare của letsdefend challenge</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>11-06-2022</span>
+            <a class="text-dark" href="/2022/11/mot-so-vim-key-co-ban/">Một số key trong vim giúp edit nhanh hơn</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>04-03-2021</span>
+            <a class="text-dark" href="/2021/04/dig-command/">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>02-13-2021</span>
+            <a class="text-dark" href="/2021/02/git-command-basic/">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>02-01-2021</span>
+            <a class="text-dark" href="/2021/02/install-add-devices-zabbix-agent/">Giám sát một số devices với zabbix agent, SNMP</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>01-31-2021</span>
+            <a class="text-dark" href="/2021/01/zabbix-install-config-full/">Cài đặt và cấu hình Zabbix 5.0</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>01-25-2021</span>
+            <a class="text-dark" href="/2021/01/lvm/">Cơ bản về LVM (logical Volume management)</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>01-04-2021</span>
+            <a class="text-dark" href="/2021/01/install-Warp-CloudFlare-on-linux/">Cài đặt VPN Warp CloudFlare trên Linux</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>12-29-2020</span>
+            <a class="text-dark" href="/2020/12/Spanning-Tree-Protocol/">Spanning Tree Protocol (STP)</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>12-14-2020</span>
+            <a class="text-dark" href="/2020/12/HTTP-Protocol/">Giao thức HTTP (Hyper Text Transfer Protocol)</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>07-03-2019</span>
+            <a class="text-dark" href="/2019/07/some-regex/">Một số regex hay dùng</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>05-22-2019</span>
+            <a class="text-dark" href="/2019/05/qick-arguments/">Một số cái beep trong shell</a>
+        </p>
+          
+        <p class="flex gap-4">
+            <span>03-02-2019</span>
+            <a class="text-dark" href="/2019/03/install-ArchLinux/">Cài đặt Arch Linux trên Virtualbox [Notes]</a>
+        </p>
+        
     </div>
-</footer>
 </div>
-    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+
+</main>
+			<div class="border-t bg-black">
+<div class="max-w-screen-xl mx-auto flex flex-col px-2 py-6 text-center">
+    <p class="text-gray-300">
+        <strong>@2024</strong>
+        by
+        <a href="/" class="hover:text-yellow-400">ctnguyenvn</a>
+        /
+        <a href="/tags" class="hover:text-yellow-400">Tags</a>
+        /
+        <a href="/archive" class="hover:text-yellow-400">Archive</a>
+    </p>
+</div>
+</div>
+		</div>
+        <script src="https://ctnguyenvn.github.io/assets/js/custom.js"></script>
     </body>
 </html>

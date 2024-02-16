@@ -12,488 +12,318 @@
     
     <meta name="author" content="ctnguyenvn" />
     
-    <meta
-        property="og:title"
-        content="ctnguyenvn - Happy Investigating"
-    />
-    <meta
-        property="twitter:title"
-        content="ctnguyenvn - Happy Investigating"
-    />
+    <meta property="og:title" content="ctnguyenvn - Happy Investigating" />
+    <meta property="twitter:title" content="ctnguyenvn - Happy Investigating" />
      
-    <meta property="og:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
-    <meta property="twitter:image" content="https://ctnguyenvn.me/assets/img/ctnguyenvn.webp" />
+    <meta property="og:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
     
     <meta property="og:site_name" content="ctnguyenvn - System security" />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://ctnguyenvn.me/assets/css/bulma.min.css"
-    />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://ctnguyenvn.me/assets/css/styles.css"
-    />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://ctnguyenvn.me/assets/css/highlight.css"
-    />
+    <!-- <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/bulma.min.css" /> -->
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/highlight.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
     <link
         rel="alternate"
         type="application/rss+xml"
         title=" - Happy Investigating"
-        href="https://ctnguyenvn.me/feed.xml"
+        href="https://ctnguyenvn.github.io/feed.xml"
     />
-    <link rel="canonical" href="https://ctnguyenvn.me/index.html" />
+    <link rel="canonical" href="https://ctnguyenvn.github.io/index.html" />
     <meta name="theme-color" content="#000000" />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
-    />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" />
         
 </head>
 
     <body>
-        <div><nav
-    class="navbar px-2 py-4"
-    role="navigation"
-    aria-label="main navigation"
->
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://ctnguyenvn.me">
-                <img
-                    src="https://ctnguyenvn.me/assets/img/ctnguyenvn.png"
-                    alt="Logo"
-                />
-                <span class="pl-2 is-size-4 has-text-weight-bold has-text-dark"
-                    >ctnguyenvn</span
-                >
-            </a>
-            <a
-                role="button"
-                class="navbar-burger"
-                aria-label="menu"
-                aria-expanded="false"
-                data-target="navbarMenu"
-            >
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="navbarMenu" class="navbar-menu">
-            <div class="navbar-end">
-                <form class="navbar-item mx-3" id="searchForm" role="search">
-                    <input
-                        type="input"
-                        id="query"
-                        name="q"
-                        placeholder="Search..."
-                        class="input is-rounded"
-                        autocomplete="off"
-                    />
-                </form>
-                <a class="navbar-item has-text-grey-dark" href="/"> Home </a>
-                <div class="navbar-item is-hoverable">
-                    <a href="#" class="navbar-item has-text-grey-dark">
-                        Blog
-                    </a>
-                    <div class="navbar-dropdown">
-                        <a
-                            href="/category/linux-sysad/"
-                            class="navbar-item has-text-grey-dark"
-                            >Linux sysadmin</a
-                        >
-                        <a
-                            href="/category/dfir/"
-                            class="navbar-item has-text-grey-dark"
-                            >Digital forensic</a
-                        >
-                        <a
-                            href="/category/tutorials/"
-                            class="navbar-item has-text-grey-dark"
-                            >Some tutorials</a
-                        >
-                        <a
-                            href="/category/tip-tricks/"
-                            class="navbar-item has-text-grey-dark"
-                            >Tip & trick</a
-                        >
-                    </div>
-                </div>
-                <a class="navbar-item has-text-grey-dark" href="/about">
-                    About
-                </a>
-            </div>
-        </div>
+		<div>
+			<div class="border-b"><nav class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+    <div class="">
+        <a href="https://ctnguyenvn.github.io">
+            <img src="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" class="h-6" alt="ctnguyenvn" />
+        </a>
+    </div>
+    <div class="hidden md:flex justify-center gap-6">
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Home</a>
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Blog</a>
+        <a href="/projects" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Projects</a>
+        <a href="/about" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">About</a>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://twitter.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://t.me/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-telegram"></i>
+        </a>
     </div>
 </nav>
 </div>
-        <div><section class="py-5">
-    <div class="container">
-        <div class="columns">
-            <div class="column">
-                <div class="py-2 has-text-centered">
-                    <h3 class="py-1 is-size-4 has-text-weight-semibold">
-                        Happy Investigating
-                    </h3>
-                    <p class="py-2">Không có ai muốn khổ đau cho chính mình</p>
-                    <div class="py-1 topbar-icon">
-                        <a
-                            href="https://github.com/ctnguyenvn"
-                            class="mx-1"
-                        >
-                            <span class="icon has-text-dark">
-                                <i class="bi bi-github icon-size-normal"></i>
-                            </span>
-                        </a>
-                        <a href="https://t.me/ctnguyenvn" class="mx-1">
-                            <span class="icon has-text-dark">
-                                <i class="bi bi-telegram icon-size-normal"></i>
-                            </span>
-                        </a>
-                        <a
-                            href="https://twitter.com/ctnguyenvn"
-                            class="mx-1"
-                        >
-                            <span class="icon has-text-dark">
-                                <i class="bi bi-twitter icon-size-normal"></i>
-                            </span>
-                        </a>
-                        <a href="#" class="mx-1">
-                            <span class="icon has-text-dark">
-                                <i class="bi bi-discord icon-size-normal"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
+			<main><div class="max-w-screen-xl mx-auto my-4 p-2">
+    <div class="flex flex-col md:flex-row justify-start p-2 gap-4">
+        <div class="md:w-2/3">
+            <img src="https://ctnguyenvn.github.io/assets/img/home-head.png" />
+        </div>
+        <div class="md:w-1/3">
+            <div class="text-2xl">
+                <h4 class="text-xl font-semibold py-4"><span class="border-b-4 border-yellow-400">ctnguyenvn !</span></h4>
+            </div>
+            <div>
+                <p>Xin chào, blog này được tạo ra với mục đích lưu lại một số ý tưởng, vấn đề và một số ghi chép linh tinh trong quá trình học tập, nghiên cứu và làm việc của tôi. Tất cả nội dung blog này thể hiện đều là ý kiến cá nhân của tôi và không đại diện cho bất kỳ tổ chức nào.</p>
+            </div>
+            <div class="flex flex-wrap gap-1 my-2">
+                <a href="/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black my-1 px-2 py-1 transition delay-100 duration-200">Linux Sysadmin</a>
+                <a href="/category/dfir" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black my-1 px-2 py-1 transition delay-100 duration-200">Digital Forensic</a>
+                <a href="/category/tutorials" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black my-1 px-2 py-1 transition delay-100 duration-200">Some Tutorials</a>
+                <a href="/category/tip-trick" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black my-1 px-2 py-1 transition delay-100 duration-200">Tip & Trick</a>
             </div>
         </div>
     </div>
-</section>
-<section class="hero">
-    <div class="hero-body p-0 my-2">
-        <div class="container">
-            
-            <div class="columns pt-3">
-                <div class="column is-10 is-offset-1 py-2">
-                    <div class="content px-4">
-                        <a
-                            href="/2023/07/01/subdomain-enumeration-without-bruteforce/"
-                            class="is-size-4 has-text-black-ter has-text-weight-semibold"
-                            >Tìm kiếm subdomain không sử dụng brute-force</a
-                        >
-                        <div class="has-text-grey">
-                            <span class="">
-                                <a class="tag-color"
-                                    ><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a
-                                >
-                            </span>
-                            <span
-                                >published on
-                                <span class="mx-2"
-                                    ><i class="bi bi-calendar-event"></i></span
-                                >01-07-2023</span
-                            >
-                            <br />
-                            <span class="">
-                                included in  
-                                <a
-                                    class="tag-color"
-                                    href="/tag/enumeration"
-                                    ><i class="bi bi-folder mx-1"></i>enumeration</a
-                                >
-                                 
-                            </span>
-                        </div>
-                        <div class="py-1 has-text-home">
-                            Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain cụ thể nào đó. Khái niệm active scanning và passive scanning có thể hiểu trong trường hợp này...
-                        </div>
-                        <a class="tag-color is-size-6">Read more</a>
-                        <hr class="slash mt-4 mb-1" />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns pt-3">
-                <div class="column is-10 is-offset-1 py-2">
-                    <div class="content px-4">
-                        <a
-                            href="/2023/02/22/collect-log-from-cisco-ios-to-ELK/"
-                            class="is-size-4 has-text-black-ter has-text-weight-semibold"
-                            >Thu thập log từ Cisco IOS về SIEM (ELK)</a
-                        >
-                        <div class="has-text-grey">
-                            <span class="">
-                                <a class="tag-color"
-                                    ><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a
-                                >
-                            </span>
-                            <span
-                                >published on
-                                <span class="mx-2"
-                                    ><i class="bi bi-calendar-event"></i></span
-                                >22-02-2023</span
-                            >
-                            <br />
-                            <span class="">
-                                included in  
-                                <a
-                                    class="tag-color"
-                                    href="/tag/collect-log"
-                                    ><i class="bi bi-folder mx-1"></i>collect-log</a
-                                >
-                                 
-                                <a
-                                    class="tag-color"
-                                    href="/tag/elk"
-                                    ><i class="bi bi-folder mx-1"></i>ELK</a
-                                >
-                                 
-                            </span>
-                        </div>
-                        <div class="py-1 has-text-home">
-                            Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường sẽ là traffic/status interface…). Tuy nhiên hôm nay tôi có nhu cầu thu thập nhật ký audit/logon/history command…...
-                        </div>
-                        <a class="tag-color is-size-6">Read more</a>
-                        <hr class="slash mt-4 mb-1" />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns pt-3">
-                <div class="column is-10 is-offset-1 py-2">
-                    <div class="content px-4">
-                        <a
-                            href="/2022/12/25/investigate-printNightmare/"
-                            class="is-size-4 has-text-black-ter has-text-weight-semibold"
-                            >PrintNightmare của letsdefend challenge</a
-                        >
-                        <div class="has-text-grey">
-                            <span class="">
-                                <a class="tag-color"
-                                    ><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a
-                                >
-                            </span>
-                            <span
-                                >published on
-                                <span class="mx-2"
-                                    ><i class="bi bi-calendar-event"></i></span
-                                >25-12-2022</span
-                            >
-                            <br />
-                            <span class="">
-                                included in  
-                                <a
-                                    class="tag-color"
-                                    href="/tag/games"
-                                    ><i class="bi bi-folder mx-1"></i>Games</a
-                                >
-                                 
-                                <a
-                                    class="tag-color"
-                                    href="/tag/forensic"
-                                    ><i class="bi bi-folder mx-1"></i>Forensic</a
-                                >
-                                 
-                            </span>
-                        </div>
-                        <div class="py-1 has-text-home">
-                            Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case. pcap/memory file: download / pass: infected Công cụ sử dụng: Brim / Wireshark / Redline Trước khi đi...
-                        </div>
-                        <a class="tag-color is-size-6">Read more</a>
-                        <hr class="slash mt-4 mb-1" />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns pt-3">
-                <div class="column is-10 is-offset-1 py-2">
-                    <div class="content px-4">
-                        <a
-                            href="/2022/11/06/mot-so-vim-key-co-ban/"
-                            class="is-size-4 has-text-black-ter has-text-weight-semibold"
-                            >Một số key trong vim giúp edit nhanh hơn</a
-                        >
-                        <div class="has-text-grey">
-                            <span class="">
-                                <a class="tag-color"
-                                    ><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a
-                                >
-                            </span>
-                            <span
-                                >published on
-                                <span class="mx-2"
-                                    ><i class="bi bi-calendar-event"></i></span
-                                >06-11-2022</span
-                            >
-                            <br />
-                            <span class="">
-                                included in  
-                                <a
-                                    class="tag-color"
-                                    href="/tag/vim"
-                                    ><i class="bi bi-folder mx-1"></i>vim</a
-                                >
-                                 
-                                <a
-                                    class="tag-color"
-                                    href="/tag/linux-command"
-                                    ><i class="bi bi-folder mx-1"></i>linux command</a
-                                >
-                                 
-                            </span>
-                        </div>
-                        <div class="py-1 has-text-home">
-                            Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các vimkey được config tại vim repo trong một số plugin mà tôi hay dùng. Một số vimkey sau...
-                        </div>
-                        <a class="tag-color is-size-6">Read more</a>
-                        <hr class="slash mt-4 mb-1" />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns pt-3">
-                <div class="column is-10 is-offset-1 py-2">
-                    <div class="content px-4">
-                        <a
-                            href="/2021/04/03/dig-command/"
-                            class="is-size-4 has-text-black-ter has-text-weight-semibold"
-                            >Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a
-                        >
-                        <div class="has-text-grey">
-                            <span class="">
-                                <a class="tag-color"
-                                    ><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a
-                                >
-                            </span>
-                            <span
-                                >published on
-                                <span class="mx-2"
-                                    ><i class="bi bi-calendar-event"></i></span
-                                >03-04-2021</span
-                            >
-                            <br />
-                            <span class="">
-                                included in  
-                                <a
-                                    class="tag-color"
-                                    href="/tag/notes"
-                                    ><i class="bi bi-folder mx-1"></i>Notes</a
-                                >
-                                 
-                                <a
-                                    class="tag-color"
-                                    href="/tag/linux-command"
-                                    ><i class="bi bi-folder mx-1"></i>linux command</a
-                                >
-                                 
-                            </span>
-                        </div>
-                        <div class="py-1 has-text-home">
-                            Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT… 1. Cài đặt Dig...
-                        </div>
-                        <a class="tag-color is-size-6">Read more</a>
-                        <hr class="slash mt-4 mb-1" />
-                    </div>
-                </div>
-            </div>
-            
-            <div class="columns pt-3">
-                <div class="column is-10 is-offset-1 py-2">
-                    <div class="content px-4">
-                        <a
-                            href="/2021/02/13/git-command-basic/"
-                            class="is-size-4 has-text-black-ter has-text-weight-semibold"
-                            >Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a
-                        >
-                        <div class="has-text-grey">
-                            <span class="">
-                                <a class="tag-color"
-                                    ><i class="bi bi-person-circle mx-1"></i>ctnguyenvn</a
-                                >
-                            </span>
-                            <span
-                                >published on
-                                <span class="mx-2"
-                                    ><i class="bi bi-calendar-event"></i></span
-                                >13-02-2021</span
-                            >
-                            <br />
-                            <span class="">
-                                included in  
-                                <a
-                                    class="tag-color"
-                                    href="/tag/git"
-                                    ><i class="bi bi-folder mx-1"></i>Git</a
-                                >
-                                 
-                                <a
-                                    class="tag-color"
-                                    href="/tag/notes"
-                                    ><i class="bi bi-folder mx-1"></i>Notes</a
-                                >
-                                 
-                            </span>
-                        </div>
-                        <div class="py-1 has-text-home">
-                            Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là hệ thống cho phép các lập trình viên quản lý kiểm soát sự thay đổi trên mã nguồn...
-                        </div>
-                        <a class="tag-color is-size-6">Read more</a>
-                        <hr class="slash mt-4 mb-1" />
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</section>
+</div>
 
+<div class="max-w-screen-xl mx-auto flex flex-wrap px-2">
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2023/07/subdomain-enumeration-without-bruteforce/"><img src="https://ctnguyenvn.github.io/images/ELK/cisco/1.png" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/tutorials" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">tutorials</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2023/07/subdomain-enumeration-without-bruteforce/" class="font-semibold text-xl hover:text-yellow-400">Tìm kiếm subdomain không sử dụng brute-force</a></h4>
+        <p class="text-gray-900">Tuy nhiên bài viết này không focus vào vấn đề tìm kiếm thông tin khai thác mà chỉ giới hạn trong vấn đề tìm kiếm thông tin subdomain đối với một domain...</p>
+        <p class="font-normal mt-2">1 July, 2023</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2023/02/collect-log-from-cisco-ios-to-ELK/"><img src="https://ctnguyenvn.github.io/images/ELK/cisco/1.png" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2023/02/collect-log-from-cisco-ios-to-ELK/" class="font-semibold text-xl hover:text-yellow-400">Thu thập log từ Cisco IOS về SIEM (ELK)</a></h4>
+        <p class="text-gray-900">Trong thực tế đối với các thiết bị như router/switch các team network/system sẽ sử dụng một số công cụ như zabbix, SolarWinds, Nagios… để tích hợp nhằm mục đích monitoring (thường...</p>
+        <p class="font-normal mt-2">22 February, 2023</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2022/12/investigate-printNightmare/"><img src="https://ctnguyenvn.github.io/images/default.png" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/dfir" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">dfir</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2022/12/investigate-printNightmare/" class="font-semibold text-xl hover:text-yellow-400">PrintNightmare của letsdefend challenge</a></h4>
+        <p class="text-gray-900">Xin chào, bài viết này chia sẻ về thử thách PrintNightmare được cung cấp bới Bohan Zhang tại đây Thông tin: Our system exploited by PrintNightmare vulnerability. You should investigate the case....</p>
+        <p class="font-normal mt-2">25 December, 2022</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2022/11/mot-so-vim-key-co-ban/"><img src="https://ctnguyenvn.github.io/images/nvim/neovim-avt.webp" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+        <a href="https://ctnguyenvn.github.io/category/tip-tricks" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">tip tricks</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2022/11/mot-so-vim-key-co-ban/" class="font-semibold text-xl hover:text-yellow-400">Một số key trong vim giúp edit nhanh hơn</a></h4>
+        <p class="text-gray-900">Vim hay Neovim là một editer mạnh mẽ phổ biến trên các nền tảng *nix. Bài viết này ngoài ghi chép một số vimkey cơ bản hay dùng còn note lại các...</p>
+        <p class="font-normal mt-2">6 November, 2022</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2021/04/dig-command/"><img src="https://ctnguyenvn.github.io/images/dig/post-avt.webp" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2021/04/dig-command/" class="font-semibold text-xl hover:text-yellow-400">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a></h4>
+        <p class="text-gray-900">Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. Dig thực hiện truy vấn DNS và hiển thị kết quả từ các máy...</p>
+        <p class="font-normal mt-2">3 April, 2021</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2021/02/git-command-basic/"><img src="https://ctnguyenvn.github.io/images/git/post-avt.webp" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2021/02/git-command-basic/" class="font-semibold text-xl hover:text-yellow-400">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a></h4>
+        <p class="text-gray-900">Git là một hệ thống quản lý phiên phản phân tán (Distributed Version Control System – Distributed VCS) các mã nguồn phổ biến được release bởi Linus Torvalds năm 2005. VCS là...</p>
+        <p class="font-normal mt-2">13 February, 2021</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2021/02/install-add-devices-zabbix-agent/"><img src="https://ctnguyenvn.github.io/images/zabbix/post-avt.webp" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+        <a href="https://ctnguyenvn.github.io/category/tutorials" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">tutorials</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2021/02/install-add-devices-zabbix-agent/" class="font-semibold text-xl hover:text-yellow-400">Giám sát một số devices với zabbix agent, SNMP</a></h4>
+        <p class="text-gray-900">Trong bài viết trước tôi đã cài đặt và cấu hình cơ bản zabbix với mô hình lab đơn giản. Trong bài này tôi sẽ thêm một số device vào zabbix để...</p>
+        <p class="font-normal mt-2">1 February, 2021</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2021/01/zabbix-install-config-full/"><img src="https://ctnguyenvn.github.io/images/zabbix/post-avt.webp" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+        <a href="https://ctnguyenvn.github.io/category/tutorials" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">tutorials</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2021/01/zabbix-install-config-full/" class="font-semibold text-xl hover:text-yellow-400">Cài đặt và cấu hình Zabbix 5.0</a></h4>
+        <p class="text-gray-900">Trong mô hình lab cơ bản này sẽ bao gồm các VM như Windows, Linux, Cisco device như hình sau 1. Giới thiệu mô hình lab Thông tin   Hostname R1 Cisco...</p>
+        <p class="font-normal mt-2">31 January, 2021</p>
+    </div>
+    
+    <div class="lg:basis-1/3 md:basis-1/2 p-2">
+        
+        <a href="/2021/01/lvm/"><img src="https://ctnguyenvn.github.io/images/lvm/post-avt.webp" class="h-60 transition delay-100 duration-100 hover:opacity-90" /></a>
+        
+        <br />
+
+        
+        <a href="https://ctnguyenvn.github.io/category/linux-sysad" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux sysad</a>
+        
+
+        <h4 class="my-3 leading-5"><a href="/2021/01/lvm/" class="font-semibold text-xl hover:text-yellow-400">Cơ bản về LVM (logical Volume management)</a></h4>
+        <p class="text-gray-900">Logical Volume Management (LVM) là kỹ thuật cho phép ghép nghiều ổ cứng vật lý lại với nhau và phân chúng thành nhiều phân vùng nhỏ hơn, dễ dàng tăng giảm dung...</p>
+        <p class="font-normal mt-2">25 January, 2021</p>
+    </div>
+    
+</div>
 <!-- pagination -->
-<section><!-- Pagination links -->
+<!-- Pagination links -->
+<div class="flex justify-center gap-1 my-6" role="navigation" aria-label="pagination">
+    
+    <span class="bg-black px-3 py-2 rounded text-white">Previous</span>
+    
+    <span class="page_number">
+        <!-- Page: 1 of 2 -->
+    </span>
+    
+    <a href="/p2/" class="bg-black px-3 py-2 rounded text-white hover:underline hover:text-yellow-400">Next</a>
+    
+</div>
 
-<div class="container px-0">
-    <div class="columns">
-        <div class="column is-10 is-offset-1 px-4 my-4">
-            <nav class="" role="navigation" aria-label="pagination">
-                
-                <span class="pagination-link button is-info is-light">Previous</span>
-                
-                <span class="page_number">
-                    <!-- Page: 1 of 3 -->
-                </span>
-                
-                <a href="/p2/" class="pagination-link button is-info is-light"
-                    >Next</a
-                >
-                
-            </nav>
+<div class="max-w-screen-xl mx-auto grid md:grid-cols-3 md:grid-auto-rows-1/3 gap-4 px-2 border-t">
+    <div class="mt-2 md:my-4 md:py-4">
+        <h4 class="text-xl font-semibold py-4"><span class="border-b-4 border-yellow-400">About me</span></h4>
+        <p>Xin chào, đây là nơi tôi ghi chép những điều linh tinh trong quá trình học hỏi và nghiên cứu cá nhân. Blog này không theo một chủ đề cụ thể nào, chỉ là nơi chia sẻ những ý tưởng, vấn đề và giải pháp mà tôi gặp phải trong quá trình học tập & nghiên cứu.</p>
+    </div>
+    <div class="md:my-4 md:py-4">
+        <h4 class="text-xl font-semibold py-4"><span class="border-b-4 border-yellow-400">Tags</span></h4>
+        <div class="flex flex-wrap">
+            
+            <a href="/tag/arch-linux" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Arch Linux</a>
+            
+            <a href="/tag/linux-command" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">linux command</a>
+            
+            <a href="/tag/regex" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">regex</a>
+            
+            <a href="/tag/bash-shell" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Bash shell</a>
+            
+            <a href="/tag/protocols" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Protocols</a>
+            
+            <a href="/tag/networks" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Networks</a>
+            
+            <a href="/tag/ccna" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">CCNA</a>
+            
+            <a href="/tag/vpn" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">VPN</a>
+            
+            <a href="/tag/linux-system" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Linux system</a>
+            
+            <a href="/tag/notes" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Notes</a>
+            
+            <a href="/tag/tools" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Tools</a>
+            
+            <a href="/tag/monitoring" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Monitoring</a>
+            
+            <a href="/tag/git" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Git</a>
+            
+            <a href="/tag/vim" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">vim</a>
+            
+            <a href="/tag/games" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Games</a>
+            
+            <a href="/tag/forensic" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">Forensic</a>
+            
+            <a href="/tag/collect-log" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">collect-log</a>
+            
+            <a href="/tag/elk" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">ELK</a>
+            
+            <a href="/tag/enumeration" class="border border-yellow-400 text-sm rounded hover:bg-yellow-400 hover:text-black m-1 px-2 py-1 transition delay-100 duration-200">enumeration</a>
+            
+        </div>
+    </div>
+    <div class="mb-4 md:my-4 md:py-4">
+        <h4 class="text-xl font-semibold py-4"><span class="border-b-4 border-yellow-400">Recent Posts</span></h4>
+        <div>
+            
+            <div class="my-2"><a href="/2023/02/collect-log-from-cisco-ios-to-ELK/" class="hover:text-yellow-400">Thu thập log từ Cisco IOS về SIEM (ELK)</a></div>
+            
+            <div class="my-2"><a href="/2022/12/investigate-printNightmare/" class="hover:text-yellow-400">PrintNightmare của letsdefend challenge</a></div>
+            
+            <div class="my-2"><a href="/2022/11/mot-so-vim-key-co-ban/" class="hover:text-yellow-400">Một số key trong vim giúp edit nhanh hơn</a></div>
+            
+            <div class="my-2"><a href="/2021/04/dig-command/" class="hover:text-yellow-400">Sử dụng Dig (Domain Information Groper) - truy vấn DNS</a></div>
+            
+            <div class="my-2"><a href="/2021/02/git-command-basic/" class="hover:text-yellow-400">Tổng hợp một số lệnh cơ bản khi sử dụng git/github</a></div>
+            
         </div>
     </div>
 </div>
-</section>
+</main>
+			<div class="border-t bg-black">
+<div class="max-w-screen-xl mx-auto flex flex-col px-2 py-6 text-center">
+    <p class="text-gray-300">
+        <strong>@2024</strong>
+        by
+        <a href="/" class="hover:text-yellow-400">ctnguyenvn</a>
+        /
+        <a href="/tags" class="hover:text-yellow-400">Tags</a>
+        /
+        <a href="/archive" class="hover:text-yellow-400">Archive</a>
+    </p>
 </div>
-        <div><footer class="footer py-6 my-5">
-    <div class="content has-text-centered">
-		<div class="mb-2">
-			<a href="https://youtube.com/ctnguyenvn"><i class="bi bi-youtube is-size-4 mx-1 icon-size-normal"></i></a>
-			<a href="https://t.me/ctnguyenvn"><i class="bi bi-telegram is-size-4 mx-1 icon-size-normal"></i></a>
-			<a href="https://twitter.com/ctnguyenvn"><i class="bi bi-twitter is-size-4 mx-1 icon-size-normal"></i></a>
-			<a href="https://github.com/ctnguyenvn"><i class="bi bi-github is-size-4 mx-1 icon-size-normal"></i></a>
+</div>
 		</div>
-        <p>
-            <strong>@2023</strong> by <a href="/">ctnguyenvn</a> /
-            <a href="/tags">Tags</a> / <a href="/archive">Archive</a>
-        </p>
-    </div>
-</footer>
-</div>
-    <script src="https://ctnguyenvn.me/assets/js/custom.js"></script>
+        <script src="https://ctnguyenvn.github.io/assets/js/custom.js"></script>
     </body>
 </html>

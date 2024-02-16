@@ -1,80 +1,175 @@
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css');
 
 body {
-    font-family: -apple-system, Segoe UI, Roboto, Emoji, Helvetica, Arial, sans-serif;
-	background: #f1f1f1;
-    color: #222222;
-	font-size: 1.1em;
-}
-
-.container {
-	background: #ffffff;
-}
-
-.content {
-	font-size: 1.05em;
-    line-height: 1.65;
-    letter-spacing: 0.02em;
-}
-
-.navbar-item,
-.navbar-link {
-    padding: 0.5rem;
-}
-
-.navbar-menu .navbar-item:hover,
-.navbar-link:hover {
-    background: none !important;
-    border-bottom: none !important;
-    text-decoration: underline !important;
-}
-
-.icon-size-normal {
-    font-size: 1.3em;
-}
-
-.icon-size-normal:hover {
-    color: #101010;
-}
-
-.content a:hover {
-    text-decoration: underline;
-}
-
-a:visited {
-    color: #2d96bd;
-}
-
-.topbar-icon i:hover {
-    color: #686666;
-}
-
-.tag-color,
-.content a {
-    color: #2d96bd;
-}
-
-.has-text-home {
-    /* color: #a7a7aa; */
-}
-
-.slash {
-    border-bottom: 1px dotted #d1d1d1;
-}
-
-.post-img {
-    width: 100%;
-    /* height: 300px; */
-}
-
-.post-img:hover {
-    opacity: 0.9;
+    font-family:
+        Roboto,
+        -apple-system,
+        Segoe UI,
+        Emoji,
+        Helvetica,
+        Arial,
+        sans-serif !important;
+    color: #252525 !important;
+    font-size: 1.05em !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.03em !important;
 }
 
 blockquote {
     display: block !important;
     border-left: 0.5rem solid #6bd6fd !important;
     background-color: rgba(107, 214, 253, 0.2) !important;
-    padding: 0.25rem 0.75rem !important;
+    padding: 0.45rem 0.75rem !important;
     margin: 1rem 0 !important;
+}
+
+blockquote p {
+    margin-bottom: 0 !important;
+}
+
+:hover {
+    transition: 0.2s;
+}
+p {
+    margin-bottom: 1.25rem !important;
+}
+
+/* Table */
+table {
+    padding: 0 !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+}
+
+table tr {
+    border-top: 1px solid #cccccc !important;
+    background-color: #f8f8f8 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+table tr:nth-child(2n) {
+    background-color: #fff !important;
+}
+
+table tr th {
+    font-weight: bold !important;
+    border: 1px solid #cccccc !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 6px 13px !important;
+}
+
+table tr td {
+    border: 1px solid #cccccc !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 6px 13px !important;
+}
+
+table tr th :first-child,
+table tr td :first-child {
+    margin-top: 0 !important;
+}
+
+table tr th :last-child,
+table tr td :last-child {
+    margin-bottom: 0 !important;
+}
+
+ul,
+ol {
+    margin: 15px 0 !important;
+    padding-left: 30px !important;
+}
+
+ul {
+    list-style-type: disc !important;
+}
+
+ol {
+    list-style-type: decimal !important;
+}
+
+ol ul,
+ul ol,
+ul ul,
+ol ol {
+    margin: 0 !important;
+}
+
+ul ul,
+ol ul {
+    list-style-type: circle !important;
+}
+
+em,
+i {
+    font-style: italic !important;
+}
+
+strong,
+b {
+    font-weight: bold !important;
+    padding-left: 0.3rem !important;
+    padding-right: 0.3rem !important;
+}
+
+/* Heading 1 */
+h1 {
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Heading 2 */
+h2 {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* Heading 3 */
+h3 {
+  font-size: 1.75rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Heading 4 */
+h4 {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Heading 5 */
+h5 {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/* Heading 6 */
+h6 {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/* Image */
+.content img {
+    border: 1px solid #eee;
+    display: table;
+    margin: auto;
+}
+
+/* Anchor/Link */
+.content a {
+    color: #4299e1 !important;
+    text-decoration: underline !important;
+}
+
+.content a:hover {
+    color: #2b6cb0 !important;
 }

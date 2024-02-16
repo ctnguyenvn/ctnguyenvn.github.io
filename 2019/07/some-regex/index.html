@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+    <title>
+         Một số regex hay dùng | ctnguyenvn 
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta property="og:description" content="Regex (Regular Expressions) hay biểu thức chính quy là một tập các ký tự dùng để
+mô tả một chuỗi nào đó theo những quy tắc, cú pháp nhất định. Regex không những
+được sử dụng trong lập trình mà còn kết hợp mạnh mẽ đối với các công cụ như
+grep, sed,… trên môi trường Linux.
+
+Một số ký tự cơ bản trong regex:
+
+
+  
+    
+      Ký tự
+      Ý nghĩa
+    
+  
+  
+    
+      \
+      Đươc sử dụng để bỏ qua ký tự đặc biệt
+    
+    
+      ^
+      Ký tự đánh dấu bắt đầu 1 chuỗi
+    
+    
+      $
+      Ký tự đánh dấu kết thúc 1 chuỗi
+    
+    
+      .
+      Một ký tự (đơn) bất kỳ
+    
+    
+      |
+      sử dụng như OR. Ví dụ IPv4                                                                                                                                              | IPv6
+    
+    
+      ()
+      Sử dụng như GROUP (độ ưu tiên). Ví dụ IP (v4                                                                                                                            | v6)
+    
+    
+      []
+      Một dãy các ký tự. Ví dụ [abc]. Có thể kết hợp với ^ ở đầu để chỉ phủ định (NOT) hoặc với - để chỉ ký tự liên tiếp như [0-9] (từ 0 -&gt; 9) hay [a-z] (từ a -&gt; z)
+    
+    
+      ?
+      Kiểm tra có 0 hoặc 1 ký tự phía trước. Ví dụ https? sẽ khớp với http và https
+    
+    
+      *
+      Biểu diễn 0 hoặc 1 hoặc nhiều hơn 1 ký tự bất kỳ phía trước
+    
+    
+      +
+      Ký tự phía trước xuất hiện 1 hoặc nhiều lần
+    
+    
+      {n}
+      Ký tự phía trước xuất hiện n lần
+    
+    
+      {min,}
+      Ký tự phía trước xuất hiện min lần trở lên
+    
+    
+      {min,max}
+      Ký tự phía trước xuất hiện tối thiểu min lần và tối đa max lần
+    
+  
+
+
+
+  Xem full tại
+đây
+
+
+" />
+    
+    <meta name="author" content="ctnguyenvn" />
+    
+    <meta property="og:title" content="Một số regex hay dùng - Happy Investigating" />
+    <meta property="twitter:title" content="Một số regex hay dùng - Happy Investigating" />
+     
+    <meta property="og:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    <meta property="twitter:image" content="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.webp" />
+    
+    <meta property="og:site_name" content="ctnguyenvn - System security" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/bulma.min.css" /> -->
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://ctnguyenvn.github.io/assets/css/highlight.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+        rel="alternate"
+        type="application/rss+xml"
+        title=" - Happy Investigating"
+        href="https://ctnguyenvn.github.io/feed.xml"
+    />
+    <link rel="canonical" href="https://ctnguyenvn.github.io/2019/07/some-regex/" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" />
+        
+</head>
+
+    <body>
+		<div>
+			<div class="border-b"><nav class="max-w-screen-xl mx-auto flex justify-between items-center p-4">
+    <div class="">
+        <a href="https://ctnguyenvn.github.io">
+            <img src="https://ctnguyenvn.github.io/assets/img/ctnguyenvn.png" class="h-6" alt="ctnguyenvn" />
+        </a>
+    </div>
+    <div class="hidden md:flex justify-center gap-6">
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Home</a>
+        <a href="/" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Blog</a>
+        <a href="/projects" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">Projects</a>
+        <a href="/about" class="text-xs font-medium uppercase px-2 hover:text-yellow-400">About</a>
+    </div>
+    <div class="flex gap-4">
+        <a href="https://github.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://twitter.com/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-twitter"></i>
+        </a>
+        <a href="https://t.me/ctnguyenvn" class="hover:text-yellow-400">
+            <i class="bi bi-telegram"></i>
+        </a>
+    </div>
+</nav>
+</div>
+			<main><div class="max-w-screen-lg mx-auto my-2 py-2 md:my-6 md:py-6 px-4">
+    <div class="text-center pt-4">
+        <p>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/regex">regex</a>
+             
+            <a class="text-sm bg-yellow-400 px-2 py-1 rounded px mx-1 hover:opacity-90" href="/tag/bash-shell">Bash shell</a>
+             
+        </p>
+        <h1 class="text-4xl font-semibold pt-1 pb-4">
+            <a href="/2019/07/some-regex/" class="is-size-3 has-text-black-ter has-text-weight-semibold">Một số regex hay dùng</a>
+        </h1>
+        <div class="flex justify-center gap-2">
+            <div class="border-b-2 border-yellow-400 pb-1">
+                <span>ctnguyenvn</span>
+                -
+                <span>03 July, 2019</span>
+            </div>
+        </div>
+    </div>
+    <div class="content my-4 py-4 text-justify"><p>Regex (Regular Expressions) hay biểu thức chính quy là một tập các ký tự dùng để
+mô tả một chuỗi nào đó theo những quy tắc, cú pháp nhất định. Regex không những
+được sử dụng trong lập trình mà còn kết hợp mạnh mẽ đối với các công cụ như
+grep, sed,… trên môi trường Linux.</p>
+
+<p>Một số ký tự cơ bản trong regex:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ký tự</th>
+      <th>Ý nghĩa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\</code></td>
+      <td>Đươc sử dụng để bỏ qua ký tự đặc biệt</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">^</code></td>
+      <td>Ký tự đánh dấu bắt đầu 1 chuỗi</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$</code></td>
+      <td>Ký tự đánh dấu kết thúc 1 chuỗi</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>Một ký tự (đơn) bất kỳ</td>
+    </tr>
+    <tr>
+      <td>|</td>
+      <td>sử dụng như <code class="language-plaintext highlighter-rouge">OR</code>. Ví dụ <code class="language-plaintext highlighter-rouge">IPv4                                                                                                                                              | IPv6</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">()</code></td>
+      <td>Sử dụng như <code class="language-plaintext highlighter-rouge">GROUP</code> (độ ưu tiên). Ví dụ <code class="language-plaintext highlighter-rouge">IP (v4                                                                                                                            | v6)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[]</code></td>
+      <td>Một dãy các ký tự. Ví dụ <code class="language-plaintext highlighter-rouge">[abc]</code>. Có thể kết hợp với <code class="language-plaintext highlighter-rouge">^</code> ở đầu để chỉ phủ định (<code class="language-plaintext highlighter-rouge">NOT</code>) hoặc với <code class="language-plaintext highlighter-rouge">-</code> để chỉ ký tự liên tiếp như <code class="language-plaintext highlighter-rouge">[0-9]</code> (từ 0 -&gt; 9) hay <code class="language-plaintext highlighter-rouge">[a-z]</code> (từ a -&gt; z)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">?</code></td>
+      <td>Kiểm tra có 0 hoặc 1 ký tự phía trước. Ví dụ <code class="language-plaintext highlighter-rouge">https?</code> sẽ khớp với <code class="language-plaintext highlighter-rouge">http và https</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">*</code></td>
+      <td>Biểu diễn 0 hoặc 1 hoặc nhiều hơn 1 ký tự bất kỳ phía trước</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">+</code></td>
+      <td>Ký tự phía trước xuất hiện 1 hoặc nhiều lần</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{n}</code></td>
+      <td>Ký tự phía trước xuất hiện <code class="language-plaintext highlighter-rouge">n</code> lần</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{min,}</code></td>
+      <td>Ký tự phía trước xuất hiện <code class="language-plaintext highlighter-rouge">min</code> lần trở lên</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{min,max}</code></td>
+      <td>Ký tự phía trước xuất hiện tối thiểu <code class="language-plaintext highlighter-rouge">min</code> lần và tối đa <code class="language-plaintext highlighter-rouge">max</code> lần</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Xem full tại
+<a href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Regular_Expressions">đây</a></p>
+</blockquote>
+
+<!--more-->
+
+<p>Một số regex phổ biến tôi thường dùng (với <code class="language-plaintext highlighter-rouge">grep -E</code>, lưu ý với <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">$</code> và
+<code class="language-plaintext highlighter-rouge">\b</code>):</p>
+
+<ul>
+  <li><em>Lấy string chỉ chứa domain (URL không có URI)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>^([a-z0-9]+([a-z0-9%-_]_[a-z0-9]+)?\.){0,}([a-z0-9]+([a-z0-9%-_]\_[a-z0-9]+)?){1,63}(\.[a-z0-9]{2,63})+$
+</code></pre></div></div>
+
+<ul>
+  <li><em>Chỉ lấy string domain (cả URL có/không có URI)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>^([a-z0-9]+([a-z0-9%-_]_[a-z0-9]+)?\.){0,}([a-z0-9]+([a-z0-9%-_]\_[a-z0-9]+)?){1,63}(\.[a-z0-9]{2,63})+
+</code></pre></div></div>
+
+<ul>
+  <li><em>Chỉ lấy domain trong những tring có full URL(+URI)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>^([^\/]+:\/\/)?[^\/]\*?\.?([^\/.]+)\.[^\/.]+(?::\d+)?\/
+</code></pre></div></div>
+
+<ul>
+  <li><em>Tất cả domain (bao gồm URI)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>^([a-zA-Z0-9][a-za-z0-9%-_]_\.)_[a-zA-Z0-9]_[a-zA-Z0-9%-_]\_[a-zA-Z0-9]+$
+</code></pre></div></div>
+
+<ul>
+  <li><em>IPv4</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
+</code></pre></div></div>
+
+<ul>
+  <li><em>IPv6</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))
+</code></pre></div></div>
+
+<ul>
+  <li><em>IPv4 &amp; IPv6</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(regex IPv4) | (regex IPv6)
+</code></pre></div></div>
+
+<ul>
+  <li><em>MAC Address (lưu ý với <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">$</code> và <code class="language-plaintext highlighter-rouge">\b</code>)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})
+</code></pre></div></div>
+
+<ul>
+  <li><em>MD5 hash (lưu ý với <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">$</code> và <code class="language-plaintext highlighter-rouge">\b</code>)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[a-f0-9]{32}
+</code></pre></div></div>
+
+<ul>
+  <li><em>Số điện thoại (VN Phone) (lưu ý với <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">$</code> và <code class="language-plaintext highlighter-rouge">\b</code>)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((\+84)|0)+[9837]([0-9]{8})
+</code></pre></div></div>
+
+<ul>
+  <li><em>Email (lưu ý với <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">$</code> và <code class="language-plaintext highlighter-rouge">\b</code>)</em></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[A-Za-z0-9][A-Za-z0-9._-]+@[A-Za-z0-9][A-Za-z0-9.-]+.[A-Za-z0-9.]{2,63}
+</code></pre></div></div>
+
+<ul>
+  <li>Updating…</li>
+</ul>
+
+<p>Một số trang web check online</p>
+
+<ul>
+  <li>https://regexr.com/</li>
+  <li>https://regex101.com/</li>
+  <li>https://www.regextester.com/</li>
+  <li>https://rubular.com/</li>
+</ul>
+</div>
+    <div class="gap-2 my-4">
+        <a href="https://twitter.com/intent/tweet?text=Một số regex hay dùng&url=https://ctnguyenvn.github.io/2019/07/some-regex/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-twitter-x text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ctnguyenvn.github.io/2019/07/some-regex/" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-facebook text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ctnguyenvn.github.io/2019/07/some-regex/&title=Một số regex hay dùng=&source=ctnguyenvn" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-linkedin text-gray-200 hover:text-gray-800"></i></a>
+        <a href="https://reddit.com/submit?url=https://ctnguyenvn.github.io/2019/07/some-regex/&title=Một số regex hay dùng" class="px-2 py-1 rounded bg-gray-800 hover:bg-yellow-400"><i class="bi bi-reddit text-gray-200 hover:text-gray-800"></i></a>
+    </div>
+    <div class="flex justify-between gap-2 my-8">
+        
+        <div class="w-1/2 text-left">
+            <a class="prev" href="/2019/05/qick-arguments/">
+                
+                <img src="https://ctnguyenvn.github.io/images/beep/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-start"></i>
+                Previous Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2019/05/qick-arguments/">Một số cái beep trong shell</a>
+        </div>
+         
+        <div class="w-1/2 text-right">
+            <a href="/2020/12/HTTP-Protocol/">
+                
+                <img src="https://ctnguyenvn.github.io/images/HTTP-Protocol/post-avt.webp" class="hidden md:inline-block h-60 hover:opacity-80" />
+                
+            </a>
+            <div class="py-1">
+                <i class="bi bi-skip-end"></i>
+                Next Page
+            </div>
+            <a class="text-xl font-semibold hover:text-yellow-400 hover:border-b-2 hover:border-yellow-400" href="/2020/12/HTTP-Protocol/">Giao thức HTTP (Hyper Text Transfer Protocol)</a>
+        </div>
+        
+    </div>
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://ctnguyenvn.github.io/2019/07/some-regex/';
+        this.page.identifier = 'ctnguyenvn';
+    };
+    (function () {
+        var d = document,
+            s = d.createElement('script');
+        s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
+</div>
+</main>
+			<div class="border-t bg-black">
+<div class="max-w-screen-xl mx-auto flex flex-col px-2 py-6 text-center">
+    <p class="text-gray-300">
+        <strong>@2024</strong>
+        by
+        <a href="/" class="hover:text-yellow-400">ctnguyenvn</a>
+        /
+        <a href="/tags" class="hover:text-yellow-400">Tags</a>
+        /
+        <a href="/archive" class="hover:text-yellow-400">Archive</a>
+    </p>
+</div>
+</div>
+		</div>
+        <script src="https://ctnguyenvn.github.io/assets/js/custom.js"></script>
+    </body>
+</html>
