@@ -2,6 +2,7 @@
 
 body {
     font-family:
+        'Open Sans',
         Roboto,
         -apple-system,
         Segoe UI,
@@ -9,9 +10,9 @@ body {
         Helvetica,
         Arial,
         sans-serif !important;
-    color: #252525 !important;
+    color: #3b3b3b !important;
     font-size: 1.05em !important;
-    line-height: 1.5 !important;
+    line-height: 1.65 !important;
     letter-spacing: 0.03em !important;
 }
 
@@ -162,6 +163,11 @@ h6 {
     border: 1px solid #eee;
     display: table;
     margin: auto;
+}
+
+.emoji {
+    display: unset !important;
+    border: unset !important;
 }
 
 /* Anchor/Link */
