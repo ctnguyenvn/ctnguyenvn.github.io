@@ -1,0 +1,14 @@
+<footer class="footer text-muted">
+  <div class="container-{{ site.Params.doks.containerBreakpoint | default "lg" }}">
+    <div class="row">
+      <div class="col-lg-8 text-center text-lg-start">
+        Powered by <a href="https://thulite.io" class="text-muted" rel="noopener" target="_blank">Thulite</a> with <a href="https://getdoks.org" class="text-muted" rel="noopener" target="_blank">Doks</a>
+      </div>
+      <div class="col-lg-8 text-center text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">@ {{ now.Year }} <a href="/" class="text-muted">{{ .Site.Title }}</a>. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

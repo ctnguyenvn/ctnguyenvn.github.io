@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dig on pw Labs</title>
+    <link>http://localhost:1313/tags/dig/</link>
+    <description>Recent content in Dig on pw Labs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>Copyright (c) 2020-2025 pwLabs</copyright>
+    <atom:link href="http://localhost:1313/tags/dig/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

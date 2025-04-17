@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="/js/color-mode.f14b3e296de1d0b69e75af684b62a4a912a2cadab04e36123407cd8388204f1d.js"
+  integrity="sha256-8Us&#43;KW3h0Laeda9oS2KkqRKiytqwTjYSNAfNg4ggTx0=">
+</script>
+
+
+<link rel="stylesheet" href="/main.14581530f47e2c5764adfcb0e066d8cb3ac0352b41c24b8075bc2806ed2c542b009ee91f1b391385b4b73f1593ca9536eab2ad10509a25ebf483359d02483d89.css" integrity="sha512-FFgVMPR&#43;LFdkrfyw4GbYyzrANStBwkuAdbwoBu0sVCsAnukfGzkThbS3PxWTypU26rKtEFCaJev0gzWdAkg9iQ==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/blog/s%E1%BB%AD-d%E1%BB%A5ng-dig-domain-information-groper-truy-v%E1%BA%A5n-dns/">
+
+  <link rel="canonical" href="http://localhost:1313/blog/s%E1%BB%AD-d%E1%BB%A5ng-dig-domain-information-groper-truy-v%E1%BA%A5n-dns/">
+
+
+<title>Sử dụng Dig (Domain Information Groper) - truy vấn DNS  |  pw Labs</title>
+<meta name="description" content="Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. `Dig` thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT...">
+
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="/manifest.webmanifest">
+
+<meta property="og:url" content="http://localhost:1313/blog/s%E1%BB%AD-d%E1%BB%A5ng-dig-domain-information-groper-truy-v%E1%BA%A5n-dns/">
+  <meta property="og:site_name" content="pw Labs">
+  <meta property="og:title" content="Sử dụng Dig (Domain Information Groper) - truy vấn DNS">
+  <meta property="og:description" content="Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. `Dig` thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT...">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2025-04-08T16:27:22+02:00">
+    <meta property="article:modified_time" content="2025-04-08T16:27:22+02:00">
+    <meta property="article:tag" content="Dig">
+    <meta property="article:tag" content="Dns">
+    <meta property="og:image" content="http://localhost:1313/cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/cover.png">
+  <meta name="twitter:title" content="Sử dụng Dig (Domain Information Groper) - truy vấn DNS">
+  <meta name="twitter:description" content="Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. `Dig` thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT...">
+      <meta name="twitter:site" content="@ctnguyenvn">
+
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "This Is Pw Labs",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/blog/",
+       "name": "Recent Posts",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "Sử Dụng Dig ( Domain Information Groper) Truy Vấn DNS",
+       "position": 3
+     }
+   ]
+ }
+</script>
+  
+	
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Sử dụng Dig (Domain Information Groper) - truy vấn DNS",
+      "description": "Dig là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. \u0060Dig\u0060 thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT...",
+      "isPartOf": {
+        "@id": "http://localhost:1313/blog/s%E1%BB%AD-d%E1%BB%A5ng-dig-domain-information-groper-truy-v%E1%BA%A5n-dns/"
+      },
+      "mainEntityOfPage": {
+        "@id": "http://localhost:1313/blog/s%E1%BB%AD-d%E1%BB%A5ng-dig-domain-information-groper-truy-v%E1%BA%A5n-dns/"
+      },
+      "datePublished": "2025-04-08T16:27:22+02:00",
+      "dateModified": "2025-04-08T16:27:22+02:00",
+      "author": {
+        "@type": "Organization",
+        "name": "pwLabs",
+        "url": "http://localhost:1313/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "pwLabs"
+      }
+    }
+  ]
+}
+</script>
+
+
+
+
+
+
+</head>
+
+  
+  <body class="single section blog" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div class="sticky-top">
+<div class="header-bar"></div>
+<header class="navbar navbar-expand-lg">
+  <div class="container-lg">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="/">pw Labs</a>
+
+    
+    
+    <button type="button" id="searchToggleMobile" class="btn btn-link nav-link mx-2 d-lg-none" aria-label="Search website">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="10" cy="10" r="7"></circle>
+        <line x1="21" y1="21" x2="15" y2="15"></line>
+      </svg>
+    </button>
+    
+    <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavSection" aria-labelledby="offcanvasNavSectionLabel">
+      <div class="header-bar"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavSectionLabel">Blog</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <aside class="doks-sidebar mt-n3">
+          <nav id="doks-docs-nav" aria-label="Tertiary navigation">
+            
+  
+
+          </nav>
+        </aside>
+      </div>
+    </div>
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="header-bar d-lg-none"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">pw Labs</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/notes/guides/get-started/">Notes</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="http://localhost:1313/blog/" aria-current="true">Blog</a>
+              </li>
+            </ul>
+
+        
+        
+        <button type="button" id="searchToggleDesktop" class="btn btn-link nav-link p-2 d-none d-lg-block" aria-label="Search website">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <circle cx="10" cy="10" r="7"></circle>
+            <line x1="21" y1="21" x2="15" y2="15"></line>
+          </svg>
+        </button>
+        
+        
+        
+        <button id="buttonColorMode" class="btn btn-link mx-auto nav-link p-0 ms-lg-2 me-lg-1" type="button" aria-label="Toggle theme">
+          <svg data-bs-theme-value="dark" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+          </svg>
+          <svg data-bs-theme-value="light" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0m-5 0h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+          </svg>
+        </button>
+        
+        <ul id="socialMenu" class="nav mx-auto flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/ctnguyenvn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://x.com/ctnguyenvn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg><small class="ms-2 visually-hidden">Twitter</small></a>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://linkedin.com/in/ctnguyenvn0x60"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg><small class="ms-2 visually-hidden">LinkedIn</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 visually-hidden" id="searchModalLabel">Search</h1>
+        <button type="button" class="btn-close visually-hidden" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="search-input flex-grow-1 d-none">
+          <form id="search-form" class="search-form" action="#" method="post" accept-charset="UTF-8" role="search">
+            <label for="query" class="visually-hidden">Search</label>
+            <div class="d-flex">
+              <input type="search" id="query" name="query" class="search-text form-control form-control-lg" placeholder="Search" aria-label="Search" maxlength="128" autocomplete="off">
+              <button type="button" class="btn btn-link text-decoration-none px-0 ms-3 d-md-none" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="search-loading status message d-none mt-3 text-center">Loading search index…</p>
+        <p class="search-no-recent message d-none mt-3 text-center">No recent searches</p>
+        <p class="search-no-results message d-none mt-3 text-center">No results for "<strong><span class="query-no-results">Query here</span></strong>"</p>
+        <div id="searchResults" class="search-results"></div>
+        <template>
+          <article class="search-result list-view">
+            <div class="card my-3">
+              <div class="card-body">
+                <header>
+                  <h2 class="h5 title title-submitted mb-0"><a class="stretched-link text-decoration-none text-reset" href="#">Title here</a></h2>
+                  <div class="submitted d-none"><time class="created-date">Date here</time></div>
+                </header>
+                <div class="content">Summary here</div>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+      <div class="modal-footer">
+        <ul class="list-inline me-auto d-none d-md-block">
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4M7 11.53088l-3-3 3-3"></path></g></svg></kbd><span class="DocSearch-Label">to select</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8M10.5 8.5l-3 3-3-3"></path></g></svg></kbd><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8M10.5 6.5l-3-3-3 3"></path></g></svg></kbd><span class="DocSearch-Label">to navigate</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956"></path></g></svg></kbd><span class="DocSearch-Label">to close</span></li>
+        </ul>
+        <p class="d-md-none">Search by <a class="text-decoration-none" href="https://github.com/nextapps-de/flexsearch">FlexSearch</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="wrap container-lg" role="document">
+      <div class="content">
+      
+        
+<article>
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-9">
+    <div class="blog-header">
+      <h1>Sử dụng Dig (Domain Information Groper) - truy vấn DNS</h1>
+      <p>
+  <small>April 8, 2025&nbsp;in&nbsp;<a class="stretched-link position-relative link-muted" href="/categories/tutorial/">tutorial</a><span class="stretched-link position-relative reading-time text-nowrap" title="Estimated reading time"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+        <path d="M12 7v5l3 3"></path>
+      </svg>7&nbsp;minutes</span></small>
+</p>
+
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-11">
+    
+    <div class="content-single fs-5">
+      <p><code>Dig</code> là một công cụ mạnh mẽ và linh hoạt trong việc truy vấn các máy chủ DNS. <code>Dig</code> thực hiện truy vấn DNS và hiển thị kết quả từ các máy chủ được truy vấn. Các truy vấn phổ biến gồm NS, CNAME, MX, TXT&hellip;</p>
+<h3 id="1-cài-đặt-dig">1. Cài đặt Dig</h3>
+<p>Đối với Ubuntu/Debian</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ sudo apt install dnsutils</code></pre>
+  </figure>
+</div>
+<p>Đối với CentOS/Fedora</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ sudo yum install bind-utils</code></pre>
+  </figure>
+</div>
+<p>Có thể kiểm tra kết quả cài đặt dig như sau:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig -v
+DiG 9.16.13</code></pre>
+  </figure>
+</div>
+<h3 id="2-sử-dụng-dig-cơ-bản">2. Sử dụng dig cơ bản</h3>
+<h4 id="21-cú-pháp-lệnh-dig">2.1 Cú pháp lệnh <code>dig</code></h4>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig  [@server]  [option]  &lt;name&gt;  [type]  [queryopt]</code></pre>
+  </figure>
+</div>
+<p>Trong đó:</p>
+<ul>
+<li>
+<p><strong>@server</strong>: Tên máy chủ/IP server để truy vấn, IP có thể là IPv4/IPv6 và nếu là tên miền thì <code>dig</code> sẽ phân giải tên miền trước khi thực hiện truy vấn. Ngược lại nếu <strong>@server</strong> không được cung cấp thì <code>Dig</code> sẽ cố gắng tìm kiếm địa chỉ từ <code>/etc/resolv.conf</code>.</p>
+</li>
+<li>
+<p><strong>option</strong>: Cung cấp các tùy chọn truy vấn như <code>-4 (IPv4)</code>, <code>-6 (IPv6)</code>.</p>
+</li>
+<li>
+<p><strong>name</strong>: Là địa chỉ cần truy vấn (domain/ip)</p>
+</li>
+<li>
+<p><strong>type</strong>: Loại truy vấn mà người dùng yêu cầu, có thể là ANY, A, MX&hellip; Nếu không được chỉ định cụ thể <code>dig</code> sẽ mặc định sử dụng truy vấn cho A record.</p>
+</li>
+<li>
+<p><strong>queryopt</strong>: Là một số tùy chọn hiển thị kết quả cũng như xử lý một số thao tác khác với <code>dig</code> như thời gian chờ. Cú pháp cụ thể là <code>+[no]keyword=value</code>, ví dụ <code>+[no]all</code>.</p>
+</li>
+</ul>
+<h4 id="22-một-số-loại-dns-record">2.2 Một số loại DNS record</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Loại</th>
+          <th>Ý nghĩa</th>
+          <th>Ví dụ</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>A</td>
+          <td>IP version 4</td>
+          <td><code>209.132.183.143</code></td>
+      </tr>
+      <tr>
+          <td>AAAA</td>
+          <td>Ip version 6</td>
+          <td><code>2404:6800:4005:804::200e</code></td>
+      </tr>
+      <tr>
+          <td>CNAME</td>
+          <td>Bí danh</td>
+          <td><code>d27136625.redhat.com</code></td>
+      </tr>
+      <tr>
+          <td>MX</td>
+          <td>Tên máy chủ MAIL</td>
+          <td><code>us-smtp-inbound-2.mimecast.com</code>, <code>us-smtp-inbound-1.mimecast.com</code></td>
+      </tr>
+      <tr>
+          <td>NS</td>
+          <td>Máy chủ tên miền</td>
+          <td><code>a1-68.akam.net</code>, <code>a9-65.akam.net</code></td>
+      </tr>
+      <tr>
+          <td>PTR</td>
+          <td>Phân giải ngược ip -&gt; domain</td>
+          <td><code>82.236.125.74.in-addr.arpa</code></td>
+      </tr>
+      <tr>
+          <td>SOA</td>
+          <td>Thông tin về DNS Zone</td>
+          <td><code>a1-68.akam.net. noc.redhat.com. (</code><br>     <code>2021032600 ; serial</code><br>     <code>300 ; refresh (5 minutes)</code><br>     <code>180 ; retry (3 minutes)</code><br>     <code>604800 ; expire (1 week)</code><br>     <code>14400 ; minimum (4 hours)</code><br><code>)</code></td>
+      </tr>
+      <tr>
+          <td>TXT</td>
+          <td>Text record</td>
+          <td><code>google-site-verification=fkn6chapCdYNWIcpsgH0K6mkR0yo7ldeIRC7EH23yoo</code>, <code>amazonses:ablaZDaC37yeQUcZAZjbfqRELxucC+8pBdvhFEpTSlY=</code></td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="23-hiểu-về-kết-quả-hiển-thị-với-dig">2.3 Hiểu về kết quả hiển thị với <code>Dig</code></h4>
+<p>Ở dạng đơn giản nhất, <code>dig</code> hiển thị tất cả thông tin như <code>HEADER</code>, <code>QUESTION SECTION</code>, <code>ANSWER SECTION</code>. Ví dụ khi thực hiện truy vấn đến <code>ctnguyenvn.me</code> sẽ được kết quả như sau</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig ctnguyenvn.me
+
+; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; ctnguyenvn.me
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36324
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7a4965fc65f495d7eb1f1e31606861de717b28cb6a50c187 (good)
+;; QUESTION SECTION:
+;ctnguyenvn.me.     IN  A
+
+;; ANSWER SECTION:
+ctnguyenvn.me.    14400 IN  A 185.199.110.153
+ctnguyenvn.me.    14400 IN  A 185.199.108.153
+ctnguyenvn.me.    14400 IN  A 185.199.109.153
+ctnguyenvn.me.    14400 IN  A 185.199.111.153
+
+;; Query time: 340 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 19:38:54 +07 2021
+;; MSG SIZE  rcvd: 134</code></pre>
+  </figure>
+</div>
+<p>Trong đó</p>
+<p><em>01. Phần đầu tiên bao gồm :</em></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; ctnguyenvn.me
+;; global options: +cmd</code></pre>
+  </figure>
+</div>
+<p>Chỉ phiên bản <code>dig</code>, server name nếu không được cung cấp sẽ sử dụng server từ <code>/etc/resolv.conf</code> như đã nói trên và hiển thị kết quả sẽ là <code>&lt;&lt;&gt;&gt;</code>. Cuối cùng là địa chỉ truy vấn.</p>
+<p>Dòng thứ hai là <code>global optiopns</code>, mặc định sẽ là <code>+cmd</code>.</p>
+<blockquote>
+<p>Nếu muốn loại bỏ kết quả hiển thị phần này chỉ cần sử dụng <code>+nocmd</code> (trong mục <strong>queryopt</strong>)</p></blockquote>
+<p><em>02. Phân tiếp theo bao gồm :</em></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36324
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1</code></pre>
+  </figure>
+</div>
+<p>Trong phần này, kết quả trả về như là HEADER bao gồm <code>opcode</code>, <code>status</code>, <code>flag</code> và số lượng kết quả của từng SECTION. Cụ thể ví dụ trên <code>opcode</code> là <code>QUERY</code> và trạng thái query là <code>NOERROR</code> (không lỗi). Cuối cùng nhận được 1 <code>QUERY</code>, 4 <code>ANSWER</code>.</p>
+<blockquote>
+<p>Nếu muốn loại bỏ kết quả hiển thị phần này chỉ cần sử dụng <code>+nocomments</code> (trong mục <strong>queryopt</strong>)</p></blockquote>
+<p><em>03. Phần tiếp theo là :</em></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7a4965fc65f495d7eb1f1e31606861de717b28cb6a50c187 (good)</code></pre>
+  </figure>
+</div>
+<p>Đây là phần thông tin mở rộng <a href="https://en.wikipedia.org/wiki/Extension_Mechanisms_for_DNS">EDNS</a> cho các truy vấn DNS. Hiển thị thông tin phiên bản, flag và kích thước UDP (byte).</p>
+<blockquote>
+<p>Tương tự có thể loại bỏ với <code>+noedns</code>.</p></blockquote>
+<p><em>04. Phần tiếp theo bao gồm :</em></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>;; QUESTION SECTION:
+;ctnguyenvn.me.   IN  A</code></pre>
+  </figure>
+</div>
+<p>Trong phần <code>QUESTION</code> hiển thị thông tin truy vấn (với <code>type</code> cung cấp). Trong ví dụ này <code>option</code> và <code>type</code> không được cung cấp nên mặc định <code>dig</code> sẽ sử dụng <code>class IN </code>và <code>A record</code>.</p>
+<blockquote>
+<p>Tương tự có thể loại bỏ với <code>+noquestion</code>.</p></blockquote>
+<p><em>05 Phần tiếp theo là :</em></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>;; ANSWER SECTION:
+ctnguyenvn.me.    14400 IN  A 185.199.110.153
+ctnguyenvn.me.    14400 IN  A 185.199.108.153
+ctnguyenvn.me.    14400 IN  A 185.199.109.153
+ctnguyenvn.me.    14400 IN  A 185.199.111.153</code></pre>
+  </figure>
+</div>
+<p>Trong phần <code>ANSWER</code> này <code>dig</code> sẽ hiển thị kết quả sau khi thực hiện truy vấn. Trong ví dụ này tất cả các IP tương ứng với domain <code>ctnguyenvn.me</code> sẽ được hiển thị (do mặc định thì <code>dig</code> chỉ truy vấn với <code>A record</code>).</p>
+<blockquote>
+<p>Tương tự có thể loại bỏ với <code>+noanswer</code>.</p></blockquote>
+<p><em>06 Phần tiếp theo gồm :</em></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>;; Query time: 340 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 19:38:54 +07 2021
+;; MSG SIZE  rcvd: 134</code></pre>
+  </figure>
+</div>
+<p>Phần cuối cùng hiển thị tổng quan kết quả đã truy vấn, gồm thời gian thực hiện, máy chủ và thời điểm thực hiện truy vấn cũng như kích thước msg.</p>
+<blockquote>
+<p>Tương tự có thể loại bỏ với <code>+nostats</code>.</p></blockquote>
+<p><strong>Lưu ý</strong>: Ngoài ra còn phần <code>AUTHORITY</code> hiển thị máy chủ authority và <code>ADDITIONAL</code> hiển hị thông tin bổ sung cho các máy chủ authority trong phần <code>AUTHORITY</code></p>
+<h3 id="3-một-số-command-hay-dùng">3. Một số command hay dùng</h3>
+<p>Truy vấn sử dụng server google</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig @8.8.8.8 redhat.vn +noall +answer
+redhat.vn.    21599 IN  A 209.132.183.143</code></pre>
+  </figure>
+</div>
+<p>Truy vấn tên miền với A record và +short</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig redhat.vn +short
+209.132.183.143</code></pre>
+  </figure>
+</div>
+<p>Truy vấn các record khác với MX (Mail), NS (Name server), CNAME, SOA hoặc sử dụng ANY để truy vấn tới tất cả</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig redhat.vn ANY
+
+; &lt;&lt;&gt;&gt; DiG 9.16.13 &lt;&lt;&gt;&gt; redhat.vn ANY
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 36902
+;; flags: qr rd ra; QUERY: 1, ANSWER: 7, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+; COOKIE: 7518ce04f46e36208773e08760689be7b39fe15838e9d666 (good)
+;; QUESTION SECTION:
+;redhat.vn.     IN  ANY
+
+;; ANSWER SECTION:
+redhat.vn.    86400 IN  SOA ns1.redhat.com. noc.redhat.com. 2021020900 3600 1800 604800 86400
+redhat.vn.    86400 IN  A 209.132.183.143
+redhat.vn.    86400 IN  TXT &#34;v=spf1 -all&#34;
+redhat.vn.    43199 IN  NS  ns3.redhat.com.
+redhat.vn.    43199 IN  NS  ns1.redhat.com.
+redhat.vn.    43199 IN  NS  ns2.redhat.com.
+redhat.vn.    43199 IN  NS  ns4.redhat.com.
+
+;; Query time: 366 msec
+;; SERVER: 203.113.188.1#53(203.113.188.1)
+;; WHEN: Sat Apr 03 23:46:03 +07 2021
+;; MSG SIZE  rcvd: 228</code></pre>
+  </figure>
+</div>
+<p>Tất nhiên có thể truy vấn với từng <code>type</code> cụ thể kết hợp với <code>queryopt</code> như MX</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig redhat.com MX +noall +answer
+redhat.com.   600 IN  MX  10 us-smtp-inbound-2.mimecast.com.
+redhat.com.   600 IN  MX  10 us-smtp-inbound-1.mimecast.com.</code></pre>
+  </figure>
+</div>
+<p>Với TXT</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig redhat.com TXT +noall +answer
+redhat.com.   3600  IN  TXT &#34;status-page-domain-verification=dfx5rbys1ts5&#34;
+redhat.com.   3600  IN  TXT &#34;google-site-verification=TaSjV4JOe2XfmL_vHFKJHkPk8sjgoLkuuTTWezDO0Pw&#34;
+redhat.com.   3600  IN  TXT &#34;google-site-verification=rl_wq5rq_W7A7OSyK08d8Ta_Hf6AKP5tqtdlo4iGTvs&#34;
+redhat.com.   3600  IN  TXT &#34;miro-verification=0bc02d4257d450b9f9034363a58f88b4b904dc22
+...</code></pre>
+  </figure>
+</div>
+<p>Với Name Server</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig redhat.com NS +noall +answer
+redhat.com.   3600  IN  NS  a28-64.akam.net.
+redhat.com.   3600  IN  NS  a13-66.akam.net.
+redhat.com.   3600  IN  NS  a1-68.akam.net.
+redhat.com.   3600  IN  NS  a9-65.akam.net.
+...</code></pre>
+  </figure>
+</div>
+<p>Với SOA kết hợp <code>+multiline</code></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig redhat.com SOA +multiline +noall +answer
+redhat.com.   3600 IN SOA a1-68.akam.net. noc.redhat.com. (
+        2021032600 ; serial
+        300        ; refresh (5 minutes)
+        180        ; retry (3 minutes)
+        604800     ; expire (1 week)
+        14400      ; minimum (4 hours)
+        )</code></pre>
+  </figure>
+</div>
+<p>Truy vấn yêu cầu phân giải ngược từ IP -&gt; domain</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig -x 209.132.183.143 +noall +answer
+143.183.132.209.in-addr.arpa. 600 IN  PTR intl-subdomains.redhat.com.</code></pre>
+  </figure>
+</div>
+<p>Việc sử dụng <code>dig</code> khá linh hoạt giữa các <code>option</code> và các <code>queryopt</code>. Ngoài ra còn rất nhiều tùy chọn hay ho khác có thể tìm kiếm tại <a href="https://linux.die.net/man/1/dig">đây</a>. Ví dụ như <code>dig</code> hỗ trợ cả việc output với <code>yaml</code> như sau</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>ctnguyenvn[~]$ dig ctnguyenvn.me +yaml
+-
+  type: MESSAGE
+  message:
+    type: RECURSIVE_RESPONSE
+    query_time: !!timestamp 2021-04-03T17:09:36.641Z
+    response_time: !!timestamp 2021-04-03T17:09:36.745Z
+    message_size: 134b
+    socket_family: INET
+    socket_protocol: UDP
+    response_address: 203.113.188.1
+    response_port: 53
+    query_address: 0.0.0.0
+    query_port: 44726
+    response_message_data:
+      opcode: QUERY
+      status: NOERROR
+      id: 31427
+      flags: qr rd ra
+      QUESTION: 1
+      ANSWER: 4
+      AUTHORITY: 0
+      ADDITIONAL: 1
+      OPT_PSEUDOSECTION:
+        EDNS:
+          version: 0
+          flags:
+          udp: 1232
+          COOKIE: 37a8b00427ec104a010000006068a150fa872d014dcd4fc3 (good)
+      QUESTION_SECTION:
+        - ctnguyenvn.me. IN A
+      ANSWER_SECTION:
+        - ctnguyenvn.me. 14400 IN A 185.199.111.153
+        - ctnguyenvn.me. 14400 IN A 185.199.110.153
+        - ctnguyenvn.me. 14400 IN A 185.199.108.153
+        - ctnguyenvn.me. 14400 IN A 185.199.109.153</code></pre>
+  </figure>
+</div>
+<p>Cuối cùng <code>dig</code> cũng hỗ trợ đầu vào là file chứa danh sách các domain/ip với tùy chọn -f (<code>dig -f &lt;file&gt;....</code>). <code>Dig</code> cũng hỗ trợ file <code>${HOME}/.digrc</code> để nhận các tham số mặc định trong mỗi lệnh người dùng sẽ thực hiện. Cụ thể <code>dig</code> sẽ tìm kiếm đọc nội dung từ file này lên trước và đưa vào command trước khi đọc tùy chọn người dùng cung cấp.</p>
+
+    </div>
+    <div class="tag-list-single mt-4">
+      <a class="btn btn-light" href="/tags/dig/" role="button">dig</a>
+      <a class="btn btn-light" href="/tags/dns/" role="button">dns</a>
+      </div>
+    </div>
+  <div class="col-md-12 col-lg-3 d-none d-lg-block">
+    <div class="sticky-top" style="top: 8rem;">
+      <div class="card">
+        <div class="card-body pt-0 px-3 b-1">
+          <h5 class="card-title mb-3">TOC</h5>
+          <div class="table-of-contents" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-cài-đặt-dig">1. Cài đặt Dig</a></li>
+        <li><a href="#2-sử-dụng-dig-cơ-bản">2. Sử dụng dig cơ bản</a></li>
+        <li><a href="#3-một-số-command-hay-dùng">3. Một số command hay dùng</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</article>
+
+      
+      </div>
+    </div>
+    
+    
+
+    <footer class="footer text-muted">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-lg-8 text-center text-lg-start">
+        Powered by <a href="https://thulite.io" class="text-muted" rel="noopener" target="_blank">Thulite</a> with <a href="https://getdoks.org" class="text-muted" rel="noopener" target="_blank">Doks</a>
+      </div>
+      <div class="col-lg-8 text-center text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">@ 2025 <a href="/" class="text-muted">pw Labs</a>. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script async
+  src="/js/app.afba06ab47b7558be2d5ff4d067db7d7be1e8674e59c58ddb55092871b62ad6c.js"
+  integrity="sha256-r7oGq0e3VYvi1f9NBn23174ehnTlnFjdtVCShxtirWw=">
+</script>
+<script async
+  src="/js/flexsearch.8350d2f520e131f8552ed57c1eadd05c50eccf0427267781442dd8ddf8fdcdf7.js"
+  integrity="sha256-g1DS9SDhMfhVLtV8Hq3QXFDszwQnJneBRC3Y3fj9zfc=">
+</script>
+<script async
+  src="/js/search-modal.0895d4b62974623a145949c002ab66abac1dccd37b9bb5659bad59704bc2eb36.js"
+  integrity="sha256-CJXUtil0YjoUWUnAAqtmq6wdzNN7m7Vlm61ZcEvC6zY=">
+</script>
+
+    
+  </body>
+</html>

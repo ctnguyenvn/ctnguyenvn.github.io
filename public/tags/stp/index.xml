@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stp on pw Labs</title>
+    <link>http://localhost:1313/tags/stp/</link>
+    <description>Recent content in Stp on pw Labs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>Copyright (c) 2020-2025 pwLabs</copyright>
+    <lastBuildDate>Tue, 08 Apr 2025 16:27:22 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/stp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Giao thức HTTP (Hyper Text Transfer Protocol)</title>
+      <link>http://localhost:1313/blog/giao-th%E1%BB%A9c-http-hyper-text-transfer-protocol/</link>
+      <pubDate>Tue, 08 Apr 2025 16:27:22 +0200</pubDate>
+      <guid>http://localhost:1313/blog/giao-th%E1%BB%A9c-http-hyper-text-transfer-protocol/</guid>
+      <description>&lt;h3 id=&#34;1-giới-thiệu&#34;&gt;1. Giới thiệu&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol&#34;&gt;HTTP&lt;/a&gt; (HyperText Transfer Protocol - Giao thức truyền tải siêu văn bản) là giao thức nằm ở tầng Application Layer, được sử dụng để liên hệ thông tin giữa các máy chủ dịch vụ và máy sử dụng dịch vụ.&lt;/p&gt;&#xA;&lt;p&gt;Từ lúc ra đời đến nay HTTP trải qua nhiều phiên bản, tuy nhiên phiên bản hoàn chỉnh đầu tiên của HTTP là &lt;strong&gt;HTTP 0.9&lt;/strong&gt; (năm 1991), tiếp theo là &lt;strong&gt;HTTP 1.0&lt;/strong&gt; (năm 1996), &lt;strong&gt;HTTP 1.1&lt;/strong&gt; (năm 1997) và sau đó gần đây nhất là 2x (&lt;strong&gt;HTTP 2.0&lt;/strong&gt;).&lt;/p&gt;&#xA;&lt;p&gt;Tuy phiên bản 2.0 đã ra đời nhưng vì một số lý do mà nó hiện vẫn chưa được phổ biến. Phiên bản &lt;strong&gt;HTTP 1.1&lt;/strong&gt; hiện vẫn là phiên bản HTTP phổ biến nhất, có thể tham khảo thêm tại &lt;a href=&#34;https://www.ietf.org/rfc/rfc2616.txt&#34;&gt;RFC 2616&lt;/a&gt;. Sự khác biệt lớn giữa HTTP/1.0 và HTTP/1.1 là HTTP/1.0 sử dụng một kết nối mới cho mỗi Yêu cầu/Phản hồi trao đổi, trong khi đó kết nối trong HTTP/1.1 có thể được sử dụng cho một hoặc nhiều Request/Response (Yêu cầu/Phản hồi).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spanning Tree Protocol (STP)</title>
+      <link>http://localhost:1313/blog/spanning-tree-protocol-stp/</link>
+      <pubDate>Tue, 08 Apr 2025 16:27:22 +0200</pubDate>
+      <guid>http://localhost:1313/blog/spanning-tree-protocol-stp/</guid>
+      <description>Spanning Tree Protocol (STP) là giao thức định tuyến trong môi trường lớp 2 (switching hoặc bridging) để khôi phục hoạt động của mạng một cách nhanh chóng khi mạng xảy ra lỗi.</description>
+    </item>
+  </channel>
+</rss>
