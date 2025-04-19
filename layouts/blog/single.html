@@ -1,72 +1,72 @@
 {{ define "main" }}
 <article>
-<div class="row justify-content-center">
-  <div class="col-md-12 col-lg-9">
-    <div class="blog-header">
-      <h1>{{ .Title }}</h1>
-      {{ partial "main/blog-meta.html" . }}
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-9">
+      <div class="blog-header">
+        <h1>{{ .Title }}</h1>
+        {{ partial "main/blog-meta.html" . }}
+      </div>
     </div>
-  </div>
-  {{ if site.Params.doks.imageSingle -}}
+    {{ if site.Params.doks.imageSingle -}}
     {{- $images := .Resources.ByType "image" -}}
     {{- $featured := $images.GetMatch "*feature*" -}}
     {{- if not $featured }}{{ $featured = $images.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
     {{- if $featured -}}
-      <div class="col-md-13">
-        {{ partial "picture" (dict
-        "page" .
-        "src" $featured
-        "alt" .Title
-        "class" "img-post-single rounded-0"
-        )}}
+    <div class="col-md-13">
+      {{ partial "picture" (dict
+      "page" .
+      "src" $featured
+      "alt" .Title
+      "class" "img-post-single rounded-0"
+      )}}
+    </div>
+    {{ end -}}
+    {{ end -}}
+    <div class="col-md-12 col-lg-11">
+      <!-- {{ with .Params.summary -}}<p class="lead fs-4">{{ . }}</p>{{ end -}} -->
+      <div class="content-single fs-5">
+        {{ .Content }}
       </div>
-    {{ end -}}
-  {{ end -}}
-  <div class="col-md-12 col-lg-11">
-    <!-- {{ with .Params.summary -}}<p class="lead fs-4">{{ . }}</p>{{ end -}} -->
-    <div class="content-single fs-5">
-      {{ .Content }}
-    </div>
-    {{ if .Params.tags -}}
-    <div class="tag-list-single mt-4">
-      {{ range $index, $tag := .Params.tags -}}
-        <a class="btn btn-light" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" role="button">{{ . }}</a>
+      {{ if .Params.tags -}}
+      <div class="tag-list-single mt-4">
+        {{ range $index, $tag := .Params.tags -}}
+        <a class="btn btn-light" href="{{ " /tags/" | relLangURL }}{{ . | urlize }}/" role="button">{{ . }}</a>
+        {{ end -}}
+      </div>
       {{ end -}}
-    </div>
-    {{ end -}}
 
-<!-- Disqus Comment Section Start -->
-<div id="disqus_thread"></div>
-<script>
-var disqus_config = function () {
-    this.page.url = '{{ .Permalink }}';
-    this.page.identifier = '{{ .File.UniqueID }}';
-};
-(function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://ctnguyenvn.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>
-    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-</noscript>
-<!-- Disqus Comment Section End -->
-  </div>
-  <div class="col-md-12 col-lg-3 d-none d-lg-block">
-    <div class="sticky-top" style="top: 8rem;">
-      <div class="card">
-        <div class="card-body pt-0 px-3 b-1">
-          <h5 class="card-title mb-3">TOC</h5>
-          <div class="table-of-contents" style="max-height: calc(100vh - 200px); overflow-y: auto;">
-            {{ .TableOfContents }}
+      <!-- Disqus Comment Section Start -->
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = '{{ .Permalink }}';
+          this.page.identifier = '{{ .File.UniqueID }}';
+        };
+        (function () {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>
+        Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+      </noscript>
+      <!-- Disqus Comment Section End -->
+    </div>
+    <div class="col-md-12 col-lg-3 d-none d-lg-block">
+      <div class="sticky-top" style="top: 8rem;">
+        <div class="card">
+          <div class="card-body pt-0 px-3 b-1">
+            <h5 class="card-title mb-3">TOC</h5>
+            <div class="table-of-contents" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+              {{ .TableOfContents }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
 </article>
@@ -74,32 +74,32 @@ var disqus_config = function () {
 
 {{ define "sidebar-footer" }}
 {{ if site.Params.doks.relatedPosts -}}
-  {{ $related := .Site.RegularPages.Related . | first 3 -}}
-  {{ with $related -}}
-  <div class="bg-light">
-    <section class="section section-related container">
-      <div class="row justify-content-center">
-        <div class="col-md-12 col-lg-11">
-          <h2 class="section-title text-center">Bài viết liên quan</h2>
-        </div>
+{{ $related := .Site.RegularPages.Related . | first 3 -}}
+{{ with $related -}}
+<div class="bg-light">
+  <section class="section section-related container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-11">
+        <h2 class="section-title text-center">Bài viết liên quan</h2>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-11">
-          {{ range . -}}
-            <div class="card mb-4">
-              <div class="card-body p-4">
-                <article>
-                  <h2 class="h3"><a class="stretched-link text-body" href="{{ .RelPermalink }}">{{ .Params.title }}</a></h2>
-                  <p class="fs-5">{{ .Params.summary | safeHTML }}</p>
-                  {{ partial "main/blog-meta.html" . -}}
-                </article>
-              </div>
-            </div>
-          {{ end -}}
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-11">
+        {{ range . -}}
+        <div class="card mb-4">
+          <div class="card-body p-4">
+            <article>
+              <h2 class="h3"><a class="stretched-link text-body" href="{{ .RelPermalink }}">{{ .Params.title }}</a></h2>
+              <p class="fs-5">{{ .Params.summary | safeHTML }}</p>
+              {{ partial "main/blog-meta.html" . -}}
+            </article>
+          </div>
         </div>
+        {{ end -}}
       </div>
-    </section>
-  </div>
-  {{ end -}}
+    </div>
+  </section>
+</div>
+{{ end -}}
 {{ end -}}
 {{ end }}
