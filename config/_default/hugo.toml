@@ -1,5 +1,5 @@
 title = "pw Labs"
-baseurl = "https://ctnguyenvn.github.io/"
+baseurl = "http://localhost:1313"
 canonifyURLs = false
 disableAliases = true
 disableHugoGeneratorInject = true
