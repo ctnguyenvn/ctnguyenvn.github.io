@@ -77,6 +77,10 @@ copyRight = "Copyright (c) 2020-2025 pwLabs"
       name = "date"
       weight = 10
 
+[services]
+  [services.googleAnalytics]
+    ID = 'G-CD7KH506RE'
+
 [imaging]
   anchor = "Center"
   bgColor = "#ffffff"

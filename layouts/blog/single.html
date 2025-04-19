@@ -34,6 +34,25 @@
       {{ end -}}
     </div>
     {{ end -}}
+
+<!-- Disqus Comment Section Start -->
+<div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+    this.page.url = '{{ .Permalink }}';
+    this.page.identifier = '{{ .File.UniqueID }}';
+};
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+<!-- Disqus Comment Section End -->
   </div>
   <div class="col-md-12 col-lg-3 d-none d-lg-block">
     <div class="sticky-top" style="top: 8rem;">
@@ -42,11 +61,14 @@
           <h5 class="card-title mb-3">TOC</h5>
           <div class="table-of-contents" style="max-height: calc(100vh - 200px); overflow-y: auto;">
             {{ .TableOfContents }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 </article>
 {{ end }}
 

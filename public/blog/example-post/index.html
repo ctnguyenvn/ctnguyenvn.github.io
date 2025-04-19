@@ -127,6 +127,20 @@
 
 
 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-CD7KH506RE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-CD7KH506RE');
+        }
+      </script>
 
 </head>
 
@@ -342,7 +356,25 @@
 /></p>
 
     </div>
-    </div>
+    
+<div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+    this.page.url = 'http:\/\/localhost:1313\/blog\/example-post\/';
+    this.page.identifier = '714262a7f752f0ad076925f6a1acb2b6';
+};
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://ctnguyenvn.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+  </div>
   <div class="col-md-12 col-lg-3 d-none d-lg-block">
     <div class="sticky-top" style="top: 8rem;">
       <div class="card">
@@ -354,11 +386,14 @@
     <li><a href="#further-reading">Further reading</a></li>
   </ul>
 </nav>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 </article>
 
       
