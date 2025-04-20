@@ -1,4 +1,4 @@
-title = "pw Labs"
+title = "pwLabs"
 baseurl = "http://localhost:1313"
 canonifyURLs = false
 disableAliases = true
