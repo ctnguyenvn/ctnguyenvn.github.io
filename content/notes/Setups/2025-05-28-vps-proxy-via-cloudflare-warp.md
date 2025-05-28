@@ -30,10 +30,12 @@ These settings allow the Linux kernel to forward IP packets and route traffic to
 #### 2. Install and Initialize Cloudflare WARP in Proxy Mode
 
 ```sh
-sudo apt install cloudflare-warp
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+sudo apt-get update && sudo apt-get install cloudflare-warp
 ```
 
-Initialize WARP in proxy mode and set the proxy port (e.g., 40000):
+Initialize [WARP](https://pkg.cloudflareclient.com/) in proxy mode and set the proxy port (e.g., 40000):
 
 ```sh
 warp-cli registration new
@@ -54,11 +56,10 @@ Redirect traffic coming to your VPS on port 1089 to the WARP proxy running local
 
 ```sh
 sudo iptables -t nat -A PREROUTING \
-  -i eth0 \                   # Input interface eth0
-  -p tcp \                    # TCP protocol
-  --dport 1089 \              # Destination port 1089
-  -j DNAT \                   # Jump to DNAT target
-  --to-destination 127.0.0.1:40000  # Redirect to localhost:5556 by warp-svc listening
+  -p tcp            \
+  --dport 1089      \
+  -j DNAT           \
+  --to-destination 127.0.0.1:40000
 ```
 
 Make the rule persistent:
