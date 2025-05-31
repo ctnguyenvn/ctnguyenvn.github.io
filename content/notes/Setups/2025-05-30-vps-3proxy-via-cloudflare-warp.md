@@ -1,5 +1,5 @@
 ---
-title: "VPS Proxy with authentication via Cloudflare WARP"
+title: "VPS 3Proxy via Cloudflare WARP"
 description: "This guide walks you through setting up a proxy server on a VPS and redirect its traffic through Cloudflare WARP using SOCKS5 and 3proxy."
 summary: "Set up a lightweight proxy on your VPS that routes all traffic securely via Cloudflare WARP with minimal configuration."
 date: 2025-05-28T02:00:00+07:00
@@ -58,7 +58,7 @@ sudo dpkg -i 3proxy-0.9.5.x86_64.deb
 
 Open `/etc/3proxy/3proxy.cfg` and update config below
 
-```
+```conf
 nscache 65536
 log /var/log/3proxy/3proxy-%y%m%d.log D
 logformat "L%d-%m-%Y %H:%M:%S %N %U %C:%c %R:%r %O %I %T"
