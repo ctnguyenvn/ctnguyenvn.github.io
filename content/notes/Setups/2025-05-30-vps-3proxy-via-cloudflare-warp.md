@@ -67,7 +67,7 @@ rotate 60
 # ===== User account ===== 
 users youruser:CL:yourpassword
 
-# ===== Proxy to WARP: port 2246 =====
+# ===== Proxy to WARP: port 1089 =====
 auth strong
 allow youruser
 parent 1000 socks5 127.0.0.1 40000
