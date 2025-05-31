@@ -58,7 +58,7 @@ sudo dpkg -i 3proxy-0.9.5.x86_64.deb
 
 Open `/etc/3proxy/3proxy.cfg` and update config below
 
-```conf
+```txt
 nscache 65536
 log /var/log/3proxy/3proxy-%y%m%d.log D
 logformat "L%d-%m-%Y %H:%M:%S %N %U %C:%c %R:%r %O %I %T"
