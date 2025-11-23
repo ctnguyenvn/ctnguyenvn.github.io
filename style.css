@@ -1,0 +1,266 @@
+:root {
+  /* Default Theme (Dark) */
+  --bg-color: #18181b;
+  /* Softer dark gray */
+  --text-primary: #f4f4f5;
+  /* Slightly off-white for better readability */
+  --text-secondary: #a1a1aa;
+  --accent-color: #ffffff;
+  --icon-color: #f4f4f5;
+  --star-color: rgba(255, 255, 255, 0.8);
+  /* Bright stars for dark mode */
+}
+
+[data-theme="light"] {
+  /* Light Theme */
+  --bg-color: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #555555;
+  --accent-color: #000000;
+  --icon-color: #000000;
+  --star-color: rgba(0, 0, 0, 0.3);
+  /* Dark dust for light mode */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Remove background animation for minimalism */
+/* Background Animation */
+.background-animation {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  /* Brought forward */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: var(--star-color);
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-up linear infinite;
+  box-shadow: 0 0 4px var(--star-color);
+  /* Add glow */
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+    /* Fully visible */
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-10vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Theme Toggle Button */
+.theme-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  /* Ensure above background */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--icon-color);
+  padding: 8px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-btn:hover {
+  transform: rotate(15deg);
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.theme-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Hide/Show Icons based on theme */
+.sun-icon {
+  display: none;
+}
+
+.moon-icon {
+  display: block;
+}
+
+[data-theme="light"] .sun-icon {
+  display: block;
+}
+
+[data-theme="light"] .moon-icon {
+  display: none;
+}
+
+
+/* Main Container */
+.container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Minimal Card (Transparent) */
+.card {
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Profile Section */
+.profile-section {
+  margin-bottom: 0;
+}
+
+.image-container {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1a1a1a;
+  /* Subtle placeholder bg */
+  transition: background-color 0.3s ease;
+}
+
+[data-theme="light"] .image-container {
+  background: #f0f0f0;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  /* filter: grayscale(100%); Removed to show original color */
+  transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+
+
+/* Minimal Horizontal Links Menu */
+.links-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.link-item {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.link-item:hover {
+  color: var(--text-primary);
+}
+
+.link-item::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--text-primary);
+  transition: width 0.2s ease, background-color 0.3s ease;
+}
+
+.link-item:hover::after {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .links-menu {
+    gap: 24px;
+  }
+}
